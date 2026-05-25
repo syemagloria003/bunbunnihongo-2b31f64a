@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LEVELS, LOCKED_LEVELS } from "@/game/levels";
+import { LEVELS, KATAKANA_LEVELS_PREVIEW, type LevelDef } from "@/game/levels";
 import { loadProgress, type Progress } from "@/game/progress";
 
 export const Route = createFileRoute("/play")({
@@ -34,8 +34,15 @@ function LevelSelect() {
           <div className="w-16" />
         </div>
 
+        {p.crystal && (
+          <div className="honey-card rounded-2xl p-4 mb-4 text-center">
+            <p className="font-bold">💎 Kristal Hiragana milikmu!</p>
+            <p className="text-sm text-muted-foreground">Topik Katakana segera tersedia.</p>
+          </div>
+        )}
+
         <div className="grid sm:grid-cols-2 gap-4">
-          {LEVELS.map((l, i) => {
+          {LEVELS.map((l: LevelDef, i: number) => {
             const unlocked = p.unlocked.includes(l.id);
             return (
               <LevelCard
@@ -45,12 +52,13 @@ function LevelSelect() {
                 name={l.name}
                 subtitle={l.subtitle}
                 unlocked={unlocked}
+                stars={p.bestStars[l.id] ?? 0}
                 best={p.bestScore[l.id]}
                 bg={l.bg}
               />
             );
           })}
-          {LOCKED_LEVELS.map((l, i) => (
+          {KATAKANA_LEVELS_PREVIEW.map((l, i) => (
             <LevelCard
               key={l.id}
               num={LEVELS.length + i + 1}
@@ -58,6 +66,7 @@ function LevelSelect() {
               name={l.name}
               subtitle={l.subtitle}
               unlocked={false}
+              stars={0}
               comingSoon
               bg="linear-gradient(180deg,#aaa,#777)"
             />
@@ -69,10 +78,10 @@ function LevelSelect() {
 }
 
 function LevelCard({
-  num, id, name, subtitle, unlocked, best, bg, comingSoon,
+  num, id, name, subtitle, unlocked, best, bg, comingSoon, stars,
 }: {
   num: number; id: string; name: string; subtitle: string;
-  unlocked: boolean; best?: number; bg: string; comingSoon?: boolean;
+  unlocked: boolean; best?: number; bg: string; comingSoon?: boolean; stars: number;
 }) {
   const inner = (
     <div
@@ -92,9 +101,16 @@ function LevelCard({
         </div>
         <h3 className="font-display text-2xl font-bold">{name}</h3>
         <p className="text-sm text-muted-foreground">{subtitle}</p>
-        {best !== undefined && (
-          <p className="mt-2 text-xs font-semibold">⭐ Best: {best}</p>
-        )}
+        <div className="mt-2 flex items-center gap-3">
+          <div className="text-base">
+            {[1,2,3,4,5].map((i) => (
+              <span key={i} className={i <= stars ? "" : "opacity-25 grayscale"}>⭐</span>
+            ))}
+          </div>
+          {best !== undefined && (
+            <p className="text-xs font-semibold text-muted-foreground">Skor: {best}</p>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import {
   drawHoney, drawGate, drawHive,
 } from "./render";
 import { drawSky, drawFar, drawMid, drawClouds, drawForeground } from "./background";
+import { sfx } from "./audio";
 
 
 export const TILE = 40;
@@ -34,6 +35,7 @@ export interface Gate {
   x: number; y: number; w: number; h: number;
   open: boolean;
   triggered: boolean;
+  idx: number;
 }
 
 export interface Goal { x: number; y: number; w: number; h: number; }
@@ -44,7 +46,7 @@ export interface EngineCallbacks {
   onScore: (s: number) => void;
   onLives: (l: number) => void;
   onCoins: (c: number) => void;
-  onQuiz: () => void;
+  onQuiz: (gateIdx: number) => void;
   onWin: () => void;
   onLose: () => void;
 }
@@ -101,7 +103,7 @@ export class GameEngine {
           x: x * TILE, y: y * TILE, w: TILE - 6, h: TILE - 6,
           vx: 1.4, vy: 0, dir: 1, alive: true, kind: Math.random() > 0.5 ? "spider" : "fly",
         });
-        if (c === "?") this.gates.push({ x: x * TILE, y: y * TILE - TILE, w: TILE, h: TILE * 2, open: false, triggered: false });
+        if (c === "?") this.gates.push({ x: x * TILE, y: y * TILE - TILE, w: TILE, h: TILE * 2, open: false, triggered: false, idx: this.gates.length });
         if (c === "G") this.goal = { x: x * TILE, y: y * TILE - TILE, w: TILE, h: TILE * 2 };
       }
     }
@@ -124,11 +126,13 @@ export class GameEngine {
         this.pendingGate.open = true;
         this.score += 50;
         this.cbs.onScore(this.score);
+        sfx.correct();
       } else {
         this.lives = Math.max(0, this.lives - 1);
         this.cbs.onLives(this.lives);
         this.pendingGate.triggered = false; // can retry
-        if (this.lives <= 0) { this.state = "lost"; this.cbs.onLose(); return; }
+        sfx.wrong();
+        if (this.lives <= 0) { this.state = "lost"; sfx.lose(); this.cbs.onLose(); return; }
       }
       this.pendingGate = null;
     }
@@ -221,7 +225,8 @@ export class GameEngine {
     // fell off
     if (p.y > this.rows * TILE + 80) {
       this.lives--; this.cbs.onLives(this.lives);
-      if (this.lives <= 0) { this.state = "lost"; this.cbs.onLose(); return; }
+      sfx.hit();
+      if (this.lives <= 0) { this.state = "lost"; sfx.lose(); this.cbs.onLose(); return; }
       this.respawn();
     }
 
@@ -254,6 +259,7 @@ export class GameEngine {
         this.cbs.onScore(this.score);
         this.particles.burst(c.x + c.w / 2, c.y + c.h / 2, 12, "#ffd84a");
         this.particles.burst(c.x + c.w / 2, c.y + c.h / 2, 6, "#fff2a0", { size: 1.5, gravity: 0.05, life: 22, maxLife: 22 });
+        sfx.coin();
       }
     }
 
@@ -270,13 +276,15 @@ export class GameEngine {
           this.cbs.onScore(this.score);
           this.particles.burst(e.x + e.w / 2, e.y + e.h / 2, 14, e.kind === "spider" ? "#7a3a9a" : "#666");
           this.shake = 4;
+          sfx.stomp();
         } else if (p.invuln === 0) {
           this.lives--; this.cbs.onLives(this.lives);
           p.invuln = 80;
           p.vy = -8;
           this.shake = 12;
           this.particles.burst(p.x + p.w / 2, p.y + p.h / 2, 16, "#ff5252");
-          if (this.lives <= 0) { this.state = "lost"; this.cbs.onLose(); return; }
+          sfx.hit();
+          if (this.lives <= 0) { this.state = "lost"; sfx.lose(); this.cbs.onLose(); return; }
         }
       }
     }
@@ -289,7 +297,8 @@ export class GameEngine {
         g.triggered = true;
         this.pendingGate = g;
         this.state = "quiz";
-        this.cbs.onQuiz();
+        sfx.gate();
+        this.cbs.onQuiz(g.idx);
         return;
       }
     }
@@ -311,6 +320,7 @@ export class GameEngine {
       if (!this.wonBurstDone) {
         this.particles.confetti(this.goal.x + this.goal.w / 2, this.goal.y, 80);
         this.wonBurstDone = true;
+        sfx.win();
       }
       this.cbs.onWin();
     }
@@ -336,10 +346,12 @@ export class GameEngine {
       p.onGround = false;
       p.jumpsLeft = 1;
       p.flapCooldown = 8;
+      sfx.jump();
     } else if (p.jumpsLeft > 0) {
       p.vy = FLAP_V;
       p.jumpsLeft--;
       p.flapCooldown = 10;
+      sfx.flap();
     }
   }
 
