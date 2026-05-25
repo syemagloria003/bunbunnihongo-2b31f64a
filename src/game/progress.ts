@@ -57,7 +57,11 @@ export function completeLevel(
   p.bestStars[id] = Math.max(p.bestStars[id] ?? 0, stars);
   // unlock next level only when bestStars >= 3
   if (nextId && stars >= 3 && !p.unlocked.includes(nextId)) p.unlocked.push(nextId);
-  if (isFinalHiragana && stars >= 3) p.crystal = true;
+  // Earning the crystal also auto-unlocks Katakana level 1
+  if (isFinalHiragana && stars >= 3) {
+    p.crystal = true;
+    if (!p.unlocked.includes("k1")) p.unlocked.push("k1");
+  }
   saveProgress(p);
   return p;
 }
