@@ -103,22 +103,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id">
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
         {children}
-        <div
-          style={{
-            position: "fixed", right: 8, bottom: 6, zIndex: 9999,
-            fontSize: 11, color: "#fff", opacity: 0.85,
-            textShadow: "1px 1px 0 #6b2200", pointerEvents: "none",
-            fontWeight: 700, letterSpacing: ".5px",
-          }}
-        >
-          bunbunnihongo.my.id
-        </div>
         <Scripts />
       </body>
     </html>
