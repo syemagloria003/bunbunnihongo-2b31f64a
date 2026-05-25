@@ -166,23 +166,101 @@ export const LEVELS: LevelDef[] = [
   },
 ];
 
-// Katakana arc (unlocked by crystal)
-export const KATAKANA_LEVELS_PREVIEW = [
-  { id: "k1", name: "Gua Kristal", subtitle: "Katakana — vokal + K" },
-  { id: "k2", name: "Lautan Bintang", subtitle: "Katakana — S & T" },
-  { id: "boss", name: "Ratu Bintang", subtitle: "Boss Katakana" },
+// Katakana arc — unlocked by crystal earned from clearing final hiragana level.
+export const KATAKANA_LEVELS: LevelDef[] = [
+  {
+    id: "k1",
+    name: "Gua Kristal",
+    subtitle: "Katakana — vokal + K",
+    bg: "linear-gradient(180deg, #0a1a3a 0%, #4a7ab8 100%)",
+    ground: "#3a5a8a",
+    kanaTypes: ["katakana"],
+    kanaGroups: ["vowel", "k"],
+    tiles: genTiles({ length: 55, gates: 5, coins: 8, enemies: 2 }),
+  },
+  {
+    id: "k2",
+    name: "Lautan Bintang",
+    subtitle: "+ baris S & T",
+    bg: "linear-gradient(180deg, #0a0a2a 0%, #2a4a8a 100%)",
+    ground: "#1a3a6a",
+    kanaTypes: ["katakana"],
+    kanaGroups: ["vowel", "k", "s", "t"],
+    tiles: genTiles({ length: 72, gates: 8, coins: 10, enemies: 4, pits: pitsEvery(72, 18) }),
+  },
+  {
+    id: "k3",
+    name: "Awan Nebula",
+    subtitle: "+ baris N & H",
+    bg: "linear-gradient(180deg, #2a1a4a 0%, #8a5ac8 100%)",
+    ground: "#4a2a6a",
+    kanaTypes: ["katakana"],
+    kanaGroups: ["vowel", "k", "s", "t", "n", "h"],
+    tiles: genTiles({ length: 88, gates: 10, coins: 12, enemies: 5, pits: pitsEvery(88, 16) }),
+  },
+  {
+    id: "k4",
+    name: "Padang Salju",
+    subtitle: "+ baris M & Y",
+    bg: "linear-gradient(180deg, #e0f0ff 0%, #a0c8e8 100%)",
+    ground: "#7aa8c8",
+    kanaTypes: ["katakana"],
+    kanaGroups: ["vowel", "k", "s", "t", "n", "h", "m", "y"],
+    tiles: genTiles({ length: 102, gates: 12, coins: 14, enemies: 7, pits: pitsEvery(102, 14) }),
+  },
+  {
+    id: "k5",
+    name: "Reruntuhan Perak",
+    subtitle: "+ baris R & W",
+    bg: "linear-gradient(180deg, #3a3a4a 0%, #9aa0b0 100%)",
+    ground: "#6a6a7a",
+    kanaTypes: ["katakana"],
+    kanaGroups: ["vowel", "k", "s", "t", "n", "h", "m", "y", "r", "w"],
+    tiles: genTiles({ length: 118, gates: 14, coins: 16, enemies: 8, pits: pitsEvery(118, 12) }),
+  },
+  {
+    id: "k6",
+    name: "Sarang Komet",
+    subtitle: "+ Dakuon ﾞﾟ & vokal panjang ー",
+    bg: "linear-gradient(180deg, #2a0a1a 0%, #e85a2a 100%)",
+    ground: "#6a1a1a",
+    kanaTypes: ["katakana"],
+    kanaGroups: ["vowel", "k", "s", "t", "n", "h", "m", "y", "r", "w", "g", "z", "d", "b", "p", "choon"],
+    tiles: genTiles({ length: 134, gates: 18, coins: 18, enemies: 10, pits: pitsEvery(134, 10) }),
+  },
+  {
+    id: "k7",
+    name: "Ratu Bintang",
+    subtitle: "+ Youon ャュョ & Sokuon ッ",
+    bg: "linear-gradient(180deg, #050518 0%, #5a1a8a 100%)",
+    ground: "#2a0a4a",
+    kanaTypes: ["katakana"],
+    kanaGroups: [
+      "vowel", "k", "s", "t", "n", "h", "m", "y", "r", "w",
+      "g", "z", "d", "b", "p", "choon", "youon", "sokuon",
+    ],
+    tiles: genTiles({ length: 154, gates: 22, coins: 20, enemies: 12, pits: pitsEvery(154, 9) }),
+  },
 ];
 
+export const ALL_LEVELS: LevelDef[] = [...LEVELS, ...KATAKANA_LEVELS];
+
 export function getLevel(id: string): LevelDef | undefined {
-  return LEVELS.find((l) => l.id === id);
+  return ALL_LEVELS.find((l) => l.id === id);
 }
 
 export function nextLevelId(id: string): string | undefined {
-  const i = LEVELS.findIndex((l) => l.id === id);
+  const i = ALL_LEVELS.findIndex((l) => l.id === id);
   if (i < 0) return undefined;
-  return LEVELS[i + 1]?.id;
+  return ALL_LEVELS[i + 1]?.id;
 }
 
+// Final Hiragana boss — clearing this awards the crystal that unlocks Katakana.
 export function isFinalLevel(id: string): boolean {
   return LEVELS[LEVELS.length - 1].id === id;
+}
+
+// Final Katakana boss — clearing this completes the game.
+export function isFinalKatakanaLevel(id: string): boolean {
+  return KATAKANA_LEVELS[KATAKANA_LEVELS.length - 1].id === id;
 }
