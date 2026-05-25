@@ -1,4 +1,11 @@
 import type { LevelDef } from "./levels";
+import { Particles } from "./particles";
+import {
+  drawBee, drawSpider, drawFly, drawGround, drawPlatform,
+  drawHoney, drawGate, drawHive,
+} from "./render";
+import { drawSky, drawFar, drawMid, drawClouds, drawForeground } from "./background";
+
 
 export const TILE = 40;
 export const GRAVITY = 0.55;
@@ -64,11 +71,20 @@ export class GameEngine {
   state: GameState = "playing";
   pendingGate: Gate | null = null;
 
+  frame = 0;
+  shake = 0;
+  particles = new Particles();
+  levelNum = 1;
+  wonBurstDone = false;
+
   cbs: EngineCallbacks;
+
 
   constructor(level: LevelDef, cbs: EngineCallbacks) {
     this.level = level;
     this.cbs = cbs;
+    this.levelNum = parseInt(level.id) || 1;
+
     this.cols = level.tiles[0].length;
     this.rows = level.tiles.length;
 
@@ -177,8 +193,12 @@ export class GameEngine {
   }
 
   update() {
+    this.frame++;
+    this.particles.update();
+    if (this.shake > 0) this.shake--;
     if (this.state !== "playing") return;
     const p = this.player;
+
 
     // input
     let ax = 0;
@@ -232,8 +252,11 @@ export class GameEngine {
         this.score += 10;
         this.cbs.onCoins(this.coinsTaken);
         this.cbs.onScore(this.score);
+        this.particles.burst(c.x + c.w / 2, c.y + c.h / 2, 12, "#ffd84a");
+        this.particles.burst(c.x + c.w / 2, c.y + c.h / 2, 6, "#fff2a0", { size: 1.5, gravity: 0.05, life: 22, maxLife: 22 });
       }
     }
+
 
     // enemy collisions
     for (const e of this.enemies) {
@@ -245,14 +268,19 @@ export class GameEngine {
           p.vy = JUMP_V * 0.7;
           this.score += 30;
           this.cbs.onScore(this.score);
+          this.particles.burst(e.x + e.w / 2, e.y + e.h / 2, 14, e.kind === "spider" ? "#7a3a9a" : "#666");
+          this.shake = 4;
         } else if (p.invuln === 0) {
           this.lives--; this.cbs.onLives(this.lives);
           p.invuln = 80;
           p.vy = -8;
+          this.shake = 12;
+          this.particles.burst(p.x + p.w / 2, p.y + p.h / 2, 16, "#ff5252");
           if (this.lives <= 0) { this.state = "lost"; this.cbs.onLose(); return; }
         }
       }
     }
+
 
     // gate
     for (const g of this.gates) {
@@ -280,8 +308,13 @@ export class GameEngine {
       this.score += 200;
       this.cbs.onScore(this.score);
       this.state = "won";
+      if (!this.wonBurstDone) {
+        this.particles.confetti(this.goal.x + this.goal.w / 2, this.goal.y, 80);
+        this.wonBurstDone = true;
+      }
       this.cbs.onWin();
     }
+
 
     // camera
     this.camera.x = Math.max(0, Math.min(p.x - 320, this.cols * TILE - 800));
@@ -312,10 +345,19 @@ export class GameEngine {
 
   draw(ctx: CanvasRenderingContext2D, w: number, h: number) {
     ctx.clearRect(0, 0, w, h);
-    // sky gradient is drawn via CSS background of canvas wrapper
+
+    // background (screen-space, parallax driven by camera)
+    drawSky(ctx, w, h, this.levelNum);
+    drawFar(ctx, this.camera.x, w, h);
+    drawClouds(ctx, this.camera.x, w, this.frame);
+    drawMid(ctx, this.camera.x, w, h);
+
+    // shake offset
+    const sx = this.shake ? (Math.random() - 0.5) * this.shake : 0;
+    const sy = this.shake ? (Math.random() - 0.5) * this.shake : 0;
 
     ctx.save();
-    ctx.translate(-this.camera.x, -this.camera.y);
+    ctx.translate(-this.camera.x + sx, -this.camera.y + sy);
 
     // tiles
     for (let y = 0; y < this.rows; y++) {
@@ -323,136 +365,53 @@ export class GameEngine {
         const px = x * TILE, py = y * TILE;
         if (px + TILE < this.camera.x - 40 || px > this.camera.x + w + 40) continue;
         if (this.solids[y][x]) {
-          // hex sarang lebah ground
-          ctx.fillStyle = this.level.ground;
-          ctx.fillRect(px, py, TILE, TILE);
-          ctx.fillStyle = "rgba(0,0,0,0.12)";
-          ctx.fillRect(px, py, TILE, 6);
-          ctx.fillStyle = "rgba(255,255,255,0.18)";
-          ctx.beginPath();
-          ctx.arc(px + 12, py + 16, 3, 0, Math.PI * 2);
-          ctx.fill();
+          const topGrass = !(this.solids[y - 1]?.[x]);
+          drawGround(ctx, px, py, topGrass);
         } else if (this.platforms[y][x]) {
-          ctx.fillStyle = "#f0b94a";
-          ctx.fillRect(px, py + 8, TILE, 14);
-          ctx.fillStyle = "#c98c2a";
-          ctx.fillRect(px, py + 18, TILE, 4);
+          drawPlatform(ctx, px, py);
         }
       }
     }
 
     // goal — beehive
-    drawHive(ctx, this.goal.x, this.goal.y);
+    drawHive(ctx, this.goal.x, this.goal.y, this.frame);
 
     // gates
     for (const g of this.gates) {
       if (g.open) continue;
-      ctx.fillStyle = "rgba(199,120,40,0.85)";
-      ctx.fillRect(g.x + 4, g.y, g.w - 8, g.h);
-      ctx.fillStyle = "#fff";
-      ctx.font = "bold 22px system-ui";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText("?", g.x + g.w / 2, g.y + g.h / 2);
+      drawGate(ctx, g.x, g.y, g.w, g.h, this.frame);
     }
 
     // coins — honey drops
     for (const c of this.coins) {
       if (c.taken) continue;
-      ctx.fillStyle = "#ffcb3a";
-      ctx.beginPath();
-      ctx.ellipse(c.x + c.w / 2, c.y + c.h / 2 + 2, c.w / 2 - 2, c.h / 2, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = "#fff7c2";
-      ctx.beginPath();
-      ctx.arc(c.x + c.w / 2 - 4, c.y + c.h / 2 - 4, 3, 0, Math.PI * 2);
-      ctx.fill();
+      drawHoney(ctx, c.x, c.y, c.w, c.h, this.frame + c.x);
     }
 
     // enemies
     for (const e of this.enemies) {
       if (!e.alive) continue;
-      drawEnemy(ctx, e);
+      if (e.kind === "spider") drawSpider(ctx, e.x, e.y, e.w, e.h, this.frame, e.dir);
+      else drawFly(ctx, e.x, e.y, e.w, e.h, this.frame / 3);
     }
 
+    // particles (world-space)
+    this.particles.draw(ctx);
+
     // player (bee)
-    drawBee(ctx, this.player.x, this.player.y, this.player.vx, this.player.invuln > 0 && Math.floor(this.player.invuln / 6) % 2 === 0);
+    const p = this.player;
+    drawBee(
+      ctx, p.x, p.y, p.w, p.h, p.vx, p.vy, p.onGround, this.frame,
+      p.invuln > 0 && Math.floor(p.invuln / 6) % 2 === 0,
+    );
 
     ctx.restore();
+
+    // foreground (screen-space)
+    drawForeground(ctx, this.camera.x, w, h);
   }
 }
 
 function aabb(a: { x: number; y: number; w: number; h: number }, b: { x: number; y: number; w: number; h: number }) {
   return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
-}
-
-function drawBee(ctx: CanvasRenderingContext2D, x: number, y: number, vx: number, blink: boolean) {
-  if (blink) ctx.globalAlpha = 0.4;
-  const cx = x + 16, cy = y + 15;
-  // wings
-  ctx.fillStyle = "rgba(220,240,255,0.85)";
-  const t = Date.now() / 40;
-  const wingY = cy - 10 + Math.sin(t) * 2;
-  ctx.beginPath(); ctx.ellipse(cx - 6, wingY, 8, 5, -0.3, 0, Math.PI * 2); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(cx + 6, wingY, 8, 5, 0.3, 0, Math.PI * 2); ctx.fill();
-  // body
-  ctx.fillStyle = "#ffcc33";
-  ctx.beginPath(); ctx.ellipse(cx, cy, 16, 13, 0, 0, Math.PI * 2); ctx.fill();
-  // stripes
-  ctx.fillStyle = "#2a2a2a";
-  ctx.fillRect(cx - 8, cy - 6, 4, 14);
-  ctx.fillRect(cx + 2, cy - 7, 4, 15);
-  // face direction
-  const faceX = vx >= 0 ? cx + 8 : cx - 8;
-  ctx.fillStyle = "#fff";
-  ctx.beginPath(); ctx.arc(faceX, cy - 2, 3, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = "#222";
-  ctx.beginPath(); ctx.arc(faceX + (vx >= 0 ? 1 : -1), cy - 2, 1.5, 0, Math.PI * 2); ctx.fill();
-  // smile
-  ctx.strokeStyle = "#222"; ctx.lineWidth = 1.2;
-  ctx.beginPath(); ctx.arc(faceX - (vx >= 0 ? 1 : -1), cy + 3, 2.5, 0, Math.PI); ctx.stroke();
-  ctx.globalAlpha = 1;
-}
-
-function drawEnemy(ctx: CanvasRenderingContext2D, e: Enemy) {
-  const cx = e.x + e.w / 2, cy = e.y + e.h / 2;
-  if (e.kind === "spider") {
-    ctx.fillStyle = "#5a2a6e";
-    ctx.beginPath(); ctx.arc(cx, cy, 14, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = "#3a1a4a"; ctx.lineWidth = 2;
-    for (let i = -2; i <= 2; i++) {
-      ctx.beginPath(); ctx.moveTo(cx - 10, cy); ctx.lineTo(cx - 18, cy + i * 4); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(cx + 10, cy); ctx.lineTo(cx + 18, cy + i * 4); ctx.stroke();
-    }
-    ctx.fillStyle = "#fff";
-    ctx.beginPath(); ctx.arc(cx - 4, cy - 3, 2.5, 0, Math.PI * 2); ctx.arc(cx + 4, cy - 3, 2.5, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = "#000";
-    ctx.beginPath(); ctx.arc(cx - 4, cy - 3, 1, 0, Math.PI * 2); ctx.arc(cx + 4, cy - 3, 1, 0, Math.PI * 2); ctx.fill();
-  } else {
-    ctx.fillStyle = "#444";
-    ctx.beginPath(); ctx.ellipse(cx, cy, 12, 9, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = "rgba(180,220,255,0.8)";
-    ctx.beginPath(); ctx.ellipse(cx - 4, cy - 8, 6, 4, -0.3, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.ellipse(cx + 4, cy - 8, 6, 4, 0.3, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = "#ff5252";
-    ctx.beginPath(); ctx.arc(cx - 3, cy - 1, 2, 0, Math.PI * 2); ctx.arc(cx + 3, cy - 1, 2, 0, Math.PI * 2); ctx.fill();
-  }
-}
-
-function drawHive(ctx: CanvasRenderingContext2D, x: number, y: number) {
-  ctx.fillStyle = "#e0a040";
-  ctx.beginPath();
-  ctx.moveTo(x + 4, y + 80);
-  ctx.lineTo(x + 36, y + 80);
-  ctx.lineTo(x + 40, y + 40);
-  ctx.lineTo(x + 20, y + 4);
-  ctx.lineTo(x, y + 40);
-  ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = "#c98430";
-  for (let i = 0; i < 4; i++) {
-    ctx.fillRect(x + 2, y + 18 + i * 16, 36, 4);
-  }
-  ctx.fillStyle = "#222";
-  ctx.beginPath(); ctx.arc(x + 20, y + 60, 6, 0, Math.PI * 2); ctx.fill();
 }
