@@ -1,4 +1,11 @@
 import type { LevelDef } from "./levels";
+import { Particles } from "./particles";
+import {
+  drawBee, drawSpider, drawFly, drawGround, drawPlatform,
+  drawHoney, drawGate, drawHive,
+} from "./render";
+import { drawSky, drawFar, drawMid, drawClouds, drawForeground } from "./background";
+
 
 export const TILE = 40;
 export const GRAVITY = 0.55;
