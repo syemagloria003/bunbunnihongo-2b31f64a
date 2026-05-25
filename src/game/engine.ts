@@ -35,6 +35,7 @@ export interface Gate {
   x: number; y: number; w: number; h: number;
   open: boolean;
   triggered: boolean;
+  idx: number;
 }
 
 export interface Goal { x: number; y: number; w: number; h: number; }
@@ -45,7 +46,7 @@ export interface EngineCallbacks {
   onScore: (s: number) => void;
   onLives: (l: number) => void;
   onCoins: (c: number) => void;
-  onQuiz: () => void;
+  onQuiz: (gateIdx: number) => void;
   onWin: () => void;
   onLose: () => void;
 }
@@ -102,7 +103,7 @@ export class GameEngine {
           x: x * TILE, y: y * TILE, w: TILE - 6, h: TILE - 6,
           vx: 1.4, vy: 0, dir: 1, alive: true, kind: Math.random() > 0.5 ? "spider" : "fly",
         });
-        if (c === "?") this.gates.push({ x: x * TILE, y: y * TILE - TILE, w: TILE, h: TILE * 2, open: false, triggered: false });
+        if (c === "?") this.gates.push({ x: x * TILE, y: y * TILE - TILE, w: TILE, h: TILE * 2, open: false, triggered: false, idx: this.gates.length });
         if (c === "G") this.goal = { x: x * TILE, y: y * TILE - TILE, w: TILE, h: TILE * 2 };
       }
     }
@@ -125,11 +126,13 @@ export class GameEngine {
         this.pendingGate.open = true;
         this.score += 50;
         this.cbs.onScore(this.score);
+        sfx.correct();
       } else {
         this.lives = Math.max(0, this.lives - 1);
         this.cbs.onLives(this.lives);
         this.pendingGate.triggered = false; // can retry
-        if (this.lives <= 0) { this.state = "lost"; this.cbs.onLose(); return; }
+        sfx.wrong();
+        if (this.lives <= 0) { this.state = "lost"; sfx.lose(); this.cbs.onLose(); return; }
       }
       this.pendingGate = null;
     }
