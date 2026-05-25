@@ -1,62 +1,58 @@
-# Bikin BeeGana Secantik Mario Bros 🎨
+# Membuka Arc Katakana
 
-Sekarang game-nya masih pakai kotak-kotak warna polos. Mario Bros cantik karena: **sprite art**, **parallax background**, **tile yang detail**, **animasi karakter**, dan **partikel/efek**. Saya akan upgrade semua ini sambil tetap pakai canvas (tidak ganti engine).
+## Masalah saat ini
+Setelah menamatkan Ratu Tawon dan mendapat 💎 Kristal, kartu Katakana di peta tetap terkunci. Penyebabnya: `KATAKANA_LEVELS_PREVIEW` di `src/game/levels.ts` cuma 3 entri preview dan di `src/routes/play.tsx` di-hardcode `unlocked={false}` dengan label "SEGERA". Belum ada level Katakana yang benar-benar bisa dimainkan.
 
-## Yang akan diubah
+## Tujuan
+- Tambahkan **7 level Katakana** yang strukturnya mirror Hiragana.
+- Sisipkan **chōonpu (ー)** — tanda perpanjangan vokal seperti ケーキ (keeki), コーヒー (koohii) — di level Dakuon (level Katakana ke‑6), supaya kata memanjang ikut diuji.
+- Kristal dari Ratu Tawon **otomatis membuka** Katakana level 1.
+- Cukup suasana + huruf baru; mekanik gameplay tetap sama.
 
-### 1. Karakter Buzu (lebah) — dari kotak kuning → sprite lucu
-- Badan bulat dengan stripe hitam-kuning, mata besar, sayap transparan
-- Frame animasi: idle (sayap getar), walk (kaki ayun), jump (sayap kepak besar), hurt (kedip merah)
-- Sayap di-render terpisah dengan animasi flap cepat (4 frame, ~60ms)
-- Arah hadap kiri/kanan (flip horizontal)
+## Struktur 7 Level Katakana
 
-### 2. Tile & dunia — dari rectangle solid → tile bertekstur
-- **Ground**: rumput hijau di atas + tanah cokelat berlapis (seperti Mario), dengan garis tile halus dan bintik kerikil
-- **Platform (`=`)**: papan kayu madu / sarang heksagon dengan border emas
-- **Honey drop (`M`)**: tetes madu animasi (bobbing + glow pulse) bukan lingkaran statis
-- **Gate (`?`)**: pintu sarang heksagon dengan tanda tanya berputar di atas
-- **Goal (`G`)**: sarang lebah besar dengan bendera bergoyang
-- **Musuh (`E`)**: sprite laba-laba/lalat sederhana dengan animasi jalan 2-frame
+| # | id | Nama | Suasana | Kana pool |
+|---|----|------|---------|-----------|
+| 1 | k1 | Gua Kristal | gua biru berkilau | vokal + K |
+| 2 | k2 | Lautan Bintang | laut malam berbintang | + S, T |
+| 3 | k3 | Awan Nebula | langit ungu nebula | + N, H |
+| 4 | k4 | Padang Salju | tundra putih‑biru | + M, Y |
+| 5 | k5 | Reruntuhan Perak | reruntuhan metalik | + R, W |
+| 6 | k6 | Sarang Komet | merah‑oranye komet | + Dakuon/Handakuon **+ chōonpu (ー)** → kata memanjang seperti ケーキ, コーヒー, ビール |
+| 7 | k7 | Ratu Bintang | nebula gelap, boss final | + Youon + Sokuon (semua) |
 
-### 3. Background parallax (3 layer)
-- Layer jauh: bukit + matahari (gerak 0.2x)
-- Layer tengah: pohon + bunga raksasa (gerak 0.5x)
-- Layer dekat: rumput depan + bunga kecil (gerak 0.9x)
-- Awan animasi melintas pelan
+Palette `bg`/`ground` per level disesuaikan suasananya (dingin/kristal di awal, makin hangat ke arah boss).
 
-### 4. Efek & juice
-- Partikel saat ambil madu (kuning berhamburan)
-- Squash & stretch saat lompat & mendarat
-- Screen shake kecil saat kena musuh
-- Trail kuning samar saat double-flap
-- Confetti saat menang level
+## Yang perlu diubah
 
-### 5. UI polish
-- HUD dengan ikon (hati pixel, tetes madu, bintang) bukan emoji
-- Font display Fredoka dengan outline tebal seperti game retro
-- Frame canvas dengan border bergaya kayu/madu
+### 1. `src/game/kana-data.ts`
+- Tambah set Katakana lengkap (gojuuon, dakuon, handakuon, youon, sokuon ッ) dengan `type: "katakana"`.
+- Tambah penanda chōonpu `ー` sebagai entri khusus (atau group `"choon"`).
 
-## Cara teknis (singkat, non-teknis bisa skip)
+### 2. `src/game/words.ts`
+- `generateWords` untuk pool yang berisi `ー` harus menyisipkan `ー` setelah kana bervokal (mis. ケ + ー → ケー, lalu + キ → ケーキ).
+- Romaji target ikut memanjang: `ke` + `ー` → `kee`. Opsi jawaban tetap dibuat oleh `makeOptionsForWord` tapi membaca panjang yang sudah benar.
+- Jaminan "setiap kana keluar minimal sekali" tetap berlaku, dan saat pool memuat `ー`, minimal 1 kata memanjang muncul.
 
-- Tetap pakai Canvas 2D — semua sprite di-**generate procedural** lewat fungsi `drawBee`, `drawTile`, `drawEnemy` dengan path & gradient (tidak perlu file PNG eksternal). Ini lebih ringan dan tetap crisp.
-- Tambah `assets.ts` berisi fungsi render untuk tiap entity, dipanggil dari `engine.draw()`.
-- Tambah `particles.ts` untuk sistem partikel sederhana (array of `{x,y,vx,vy,life,color}`).
-- Background parallax: 3 fungsi `drawBgFar/Mid/Near(ctx, cameraX)`.
-- Frame animasi pakai counter `engine.frame % N` untuk pilih pose.
+### 3. `src/game/levels.ts`
+- Tambah `KATAKANA_LEVELS: LevelDef[]` berisi 7 entri di atas (pakai helper `genTiles` yang sudah ada, panjang/pits naik bertahap mirip Hiragana).
+- Update `nextLevelId` supaya setelah `7` (Ratu Tawon) lanjut ke `k1`, dan `k7` jadi level terakhir.
+- Tambah `isFinalLevel` varian untuk `k7` (boss Katakana) — beri reward khusus (mis. 💎 Kristal Bintang) atau cukup layar tamat.
+- Hapus/ganti `KATAKANA_LEVELS_PREVIEW`.
 
-## File yang berubah
+### 4. `src/game/progress.ts`
+- Saat `crystal === true`, otomatis tambahkan `"k1"` ke `unlocked` (lakukan migrasi ringan di `loadProgress`).
+- `completeLevel` untuk level Katakana ikut aturan ≥3⭐ untuk buka level berikutnya, sama seperti Hiragana.
 
-```text
-src/game/engine.ts        → tambah frame counter, particles, screen shake, squash/stretch
-src/game/render.ts (new)  → drawBee, drawTile, drawEnemy, drawHoney, drawGate, drawGoal
-src/game/background.ts(new)→ parallax layers (bukit, pohon, awan)
-src/game/particles.ts(new)→ sistem partikel
-src/components/GameCanvas.tsx → HUD ikon SVG (ganti emoji)
-src/styles.css            → font outline utility, sedikit polish
-```
+### 5. `src/routes/play.tsx`
+- Render `LEVELS` + `KATAKANA_LEVELS` dengan logika `unlocked` yang sama (baca dari `progress.unlocked`), bukan hardcoded `false`.
+- Pisahkan jadi 2 section visual: **Taman Hiragana 🌻** dan **Dunia Kristal 💎** (section kedua hanya muncul kalau `p.crystal` true, atau tetap muncul tapi terkunci dengan ikon 🔒 sebelum kristal didapat).
+- Hapus label "SEGERA".
 
-## Scope iterasi ini
+### 6. `src/components/GameCanvas.tsx`
+- Tidak ada perubahan mekanik. Pastikan `nextLevelId` dari engine sudah mengarah ke level Katakana setelah Ratu Tawon, supaya tombol "Level berikutnya →" otomatis lompat ke Gua Kristal.
 
-Fokus ke **visual + juice**, tidak menyentuh gameplay/level/kana logic. Setelah ini Buzu akan terasa hidup dan dunianya layak disebut "platformer cantik".
-
-Boleh saya mulai bangun?
+## Di luar scope
+- Tidak menambah mekanik baru (es licin, kristal pecah, bos terbang, dll).
+- Tidak mengubah engine/fisika, audio, atau sistem partikel.
+- Tidak menambah aset gambar eksternal — semua tetap procedural Canvas.
