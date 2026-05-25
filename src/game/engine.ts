@@ -5,6 +5,7 @@ import {
   drawHoney, drawGate, drawHive,
 } from "./render";
 import { drawSky, drawFar, drawMid, drawClouds, drawForeground } from "./background";
+import { sfx } from "./audio";
 
 
 export const TILE = 40;
