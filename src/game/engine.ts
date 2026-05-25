@@ -1,10 +1,11 @@
 import type { LevelDef } from "./levels";
 
 export const TILE = 40;
-export const GRAVITY = 0.7;
-export const JUMP_V = -12;
-export const FLAP_V = -9;
-export const MOVE_SPEED = 4;
+export const GRAVITY = 0.55;
+export const JUMP_V = -14;
+export const FLAP_V = -12;
+export const MOVE_SPEED = 4.8;
+export const MAX_FALL = 13;
 
 export interface Entity {
   x: number; y: number; w: number; h: number;
@@ -191,7 +192,7 @@ export class GameEngine {
 
     // gravity
     p.vy += GRAVITY;
-    if (p.vy > 14) p.vy = 14;
+    if (p.vy > MAX_FALL) p.vy = MAX_FALL;
 
     const landed = this.moveEntity(p, true);
     if (landed) { p.onGround = true; p.jumpsLeft = 2; }
