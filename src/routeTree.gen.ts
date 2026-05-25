@@ -9,38 +9,98 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PracticeRouteImport } from './routes/practice'
+import { Route as PlayRouteImport } from './routes/play'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PlayLevelIdRouteImport } from './routes/play.$levelId'
 
+const PracticeRoute = PracticeRouteImport.update({
+  id: '/practice',
+  path: '/practice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlayRoute = PlayRouteImport.update({
+  id: '/play',
+  path: '/play',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlayLevelIdRoute = PlayLevelIdRouteImport.update({
+  id: '/$levelId',
+  path: '/$levelId',
+  getParentRoute: () => PlayRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/play': typeof PlayRouteWithChildren
+  '/practice': typeof PracticeRoute
+  '/play/$levelId': typeof PlayLevelIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/play': typeof PlayRouteWithChildren
+  '/practice': typeof PracticeRoute
+  '/play/$levelId': typeof PlayLevelIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/play': typeof PlayRouteWithChildren
+  '/practice': typeof PracticeRoute
+  '/play/$levelId': typeof PlayLevelIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/about' | '/play' | '/practice' | '/play/$levelId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/about' | '/play' | '/practice' | '/play/$levelId'
+  id: '__root__' | '/' | '/about' | '/play' | '/practice' | '/play/$levelId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  PlayRoute: typeof PlayRouteWithChildren
+  PracticeRoute: typeof PracticeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/practice': {
+      id: '/practice'
+      path: '/practice'
+      fullPath: '/practice'
+      preLoaderRoute: typeof PracticeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/play': {
+      id: '/play'
+      path: '/play'
+      fullPath: '/play'
+      preLoaderRoute: typeof PlayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +108,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/play/$levelId': {
+      id: '/play/$levelId'
+      path: '/$levelId'
+      fullPath: '/play/$levelId'
+      preLoaderRoute: typeof PlayLevelIdRouteImport
+      parentRoute: typeof PlayRoute
+    }
   }
 }
 
+interface PlayRouteChildren {
+  PlayLevelIdRoute: typeof PlayLevelIdRoute
+}
+
+const PlayRouteChildren: PlayRouteChildren = {
+  PlayLevelIdRoute: PlayLevelIdRoute,
+}
+
+const PlayRouteWithChildren = PlayRoute._addFileChildren(PlayRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  PlayRoute: PlayRouteWithChildren,
+  PracticeRoute: PracticeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
