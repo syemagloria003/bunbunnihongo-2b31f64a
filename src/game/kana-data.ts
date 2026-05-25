@@ -2,7 +2,7 @@ export type KanaType = "hiragana" | "katakana";
 export type KanaGroup =
   | "vowel" | "k" | "s" | "t" | "n" | "h" | "m" | "y" | "r" | "w"
   | "g" | "z" | "d" | "b" | "p"
-  | "youon" | "sokuon";
+  | "youon" | "sokuon" | "choon";
 
 export interface Kana {
   char: string;   // may be multi-char for youon/sokuon
