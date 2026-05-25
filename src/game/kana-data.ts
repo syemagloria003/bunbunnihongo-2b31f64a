@@ -1,10 +1,11 @@
 export type KanaType = "hiragana" | "katakana";
 export type KanaGroup =
   | "vowel" | "k" | "s" | "t" | "n" | "h" | "m" | "y" | "r" | "w"
-  | "g" | "z" | "d" | "b" | "p";
+  | "g" | "z" | "d" | "b" | "p"
+  | "youon" | "sokuon";
 
 export interface Kana {
-  char: string;
+  char: string;   // may be multi-char for youon/sokuon
   romaji: string;
   type: KanaType;
   group: KanaGroup;
@@ -16,48 +17,119 @@ export const HIRAGANA: Kana[] = [
   { char: "う", romaji: "u", type: "hiragana", group: "vowel" },
   { char: "え", romaji: "e", type: "hiragana", group: "vowel" },
   { char: "お", romaji: "o", type: "hiragana", group: "vowel" },
+
   { char: "か", romaji: "ka", type: "hiragana", group: "k" },
   { char: "き", romaji: "ki", type: "hiragana", group: "k" },
   { char: "く", romaji: "ku", type: "hiragana", group: "k" },
   { char: "け", romaji: "ke", type: "hiragana", group: "k" },
   { char: "こ", romaji: "ko", type: "hiragana", group: "k" },
+
   { char: "さ", romaji: "sa", type: "hiragana", group: "s" },
   { char: "し", romaji: "shi", type: "hiragana", group: "s" },
   { char: "す", romaji: "su", type: "hiragana", group: "s" },
   { char: "せ", romaji: "se", type: "hiragana", group: "s" },
   { char: "そ", romaji: "so", type: "hiragana", group: "s" },
+
   { char: "た", romaji: "ta", type: "hiragana", group: "t" },
   { char: "ち", romaji: "chi", type: "hiragana", group: "t" },
   { char: "つ", romaji: "tsu", type: "hiragana", group: "t" },
   { char: "て", romaji: "te", type: "hiragana", group: "t" },
   { char: "と", romaji: "to", type: "hiragana", group: "t" },
+
   { char: "な", romaji: "na", type: "hiragana", group: "n" },
   { char: "に", romaji: "ni", type: "hiragana", group: "n" },
   { char: "ぬ", romaji: "nu", type: "hiragana", group: "n" },
   { char: "ね", romaji: "ne", type: "hiragana", group: "n" },
   { char: "の", romaji: "no", type: "hiragana", group: "n" },
+
   { char: "は", romaji: "ha", type: "hiragana", group: "h" },
   { char: "ひ", romaji: "hi", type: "hiragana", group: "h" },
   { char: "ふ", romaji: "fu", type: "hiragana", group: "h" },
   { char: "へ", romaji: "he", type: "hiragana", group: "h" },
   { char: "ほ", romaji: "ho", type: "hiragana", group: "h" },
+
   { char: "ま", romaji: "ma", type: "hiragana", group: "m" },
   { char: "み", romaji: "mi", type: "hiragana", group: "m" },
   { char: "む", romaji: "mu", type: "hiragana", group: "m" },
   { char: "め", romaji: "me", type: "hiragana", group: "m" },
   { char: "も", romaji: "mo", type: "hiragana", group: "m" },
+
   { char: "や", romaji: "ya", type: "hiragana", group: "y" },
   { char: "ゆ", romaji: "yu", type: "hiragana", group: "y" },
   { char: "よ", romaji: "yo", type: "hiragana", group: "y" },
+
   { char: "ら", romaji: "ra", type: "hiragana", group: "r" },
   { char: "り", romaji: "ri", type: "hiragana", group: "r" },
   { char: "る", romaji: "ru", type: "hiragana", group: "r" },
   { char: "れ", romaji: "re", type: "hiragana", group: "r" },
   { char: "ろ", romaji: "ro", type: "hiragana", group: "r" },
+
   { char: "わ", romaji: "wa", type: "hiragana", group: "w" },
   { char: "を", romaji: "wo", type: "hiragana", group: "w" },
-  { char: "ん", romaji: "n", type: "hiragana", group: "w" },
+  { char: "ん", romaji: "n",  type: "hiragana", group: "w" },
+
+  // Dakuon
+  { char: "が", romaji: "ga", type: "hiragana", group: "g" },
+  { char: "ぎ", romaji: "gi", type: "hiragana", group: "g" },
+  { char: "ぐ", romaji: "gu", type: "hiragana", group: "g" },
+  { char: "げ", romaji: "ge", type: "hiragana", group: "g" },
+  { char: "ご", romaji: "go", type: "hiragana", group: "g" },
+  { char: "ざ", romaji: "za", type: "hiragana", group: "z" },
+  { char: "じ", romaji: "ji", type: "hiragana", group: "z" },
+  { char: "ず", romaji: "zu", type: "hiragana", group: "z" },
+  { char: "ぜ", romaji: "ze", type: "hiragana", group: "z" },
+  { char: "ぞ", romaji: "zo", type: "hiragana", group: "z" },
+  { char: "だ", romaji: "da", type: "hiragana", group: "d" },
+  { char: "で", romaji: "de", type: "hiragana", group: "d" },
+  { char: "ど", romaji: "do", type: "hiragana", group: "d" },
+  { char: "ば", romaji: "ba", type: "hiragana", group: "b" },
+  { char: "び", romaji: "bi", type: "hiragana", group: "b" },
+  { char: "ぶ", romaji: "bu", type: "hiragana", group: "b" },
+  { char: "べ", romaji: "be", type: "hiragana", group: "b" },
+  { char: "ぼ", romaji: "bo", type: "hiragana", group: "b" },
+  // Handakuon (treated as 'p' group)
+  { char: "ぱ", romaji: "pa", type: "hiragana", group: "p" },
+  { char: "ぴ", romaji: "pi", type: "hiragana", group: "p" },
+  { char: "ぷ", romaji: "pu", type: "hiragana", group: "p" },
+  { char: "ぺ", romaji: "pe", type: "hiragana", group: "p" },
+  { char: "ぽ", romaji: "po", type: "hiragana", group: "p" },
 ];
+
+// Youon (i-row + small ya/yu/yo)
+const YOUON_BASE: Array<[string, string]> = [
+  ["き", "k"], ["し", "sh"], ["ち", "ch"], ["に", "n"], ["ひ", "h"],
+  ["み", "m"], ["り", "r"], ["ぎ", "g"], ["じ", "j"], ["び", "b"], ["ぴ", "p"],
+];
+const YOUON_SUFFIX: Array<[string, string]> = [["ゃ", "ya"], ["ゅ", "yu"], ["ょ", "yo"]];
+
+export const YOUON: Kana[] = YOUON_BASE.flatMap(([ch, pre]) =>
+  YOUON_SUFFIX.map(([sf, rsuf]) => {
+    // ji+ya => ja, chi+ya => cha, shi+ya => sha
+    let rom: string;
+    if (pre === "sh" || pre === "ch" || pre === "j") {
+      rom = pre + rsuf.slice(1); // sh + a => sha
+    } else {
+      rom = pre + rsuf;          // k + ya => kya
+    }
+    return { char: ch + sf, romaji: rom, type: "hiragana" as const, group: "youon" as const };
+  })
+);
+
+// Sokuon (small tsu doubling consonant) — combine with common kana
+const SOKUON_TARGETS: Array<[string, string]> = [
+  ["か", "ka"], ["き", "ki"], ["く", "ku"], ["こ", "ko"],
+  ["さ", "sa"], ["し", "shi"], ["す", "su"], ["せ", "se"],
+  ["た", "ta"], ["ち", "chi"], ["つ", "tsu"], ["て", "te"], ["と", "to"],
+  ["は", "ha"], ["ぱ", "pa"], ["ぴ", "pi"], ["ぷ", "pu"], ["ぽ", "po"],
+];
+
+export const SOKUON: Kana[] = SOKUON_TARGETS.map(([ch, rom]) => {
+  // double first consonant; for chi -> tchi, for tsu -> ttsu, for shi -> sshi
+  let prefix: string;
+  if (rom.startsWith("ch")) prefix = "t";
+  else prefix = rom[0];
+  return { char: "っ" + ch, romaji: prefix + rom, type: "hiragana" as const, group: "sokuon" as const };
+});
 
 export const KATAKANA: Kana[] = [
   { char: "ア", romaji: "a", type: "katakana", group: "vowel" },
@@ -97,12 +169,14 @@ export const KATAKANA: Kana[] = [
   { char: "モ", romaji: "mo", type: "katakana", group: "m" },
 ];
 
-export const ALL_KANA: Kana[] = [...HIRAGANA, ...KATAKANA];
+export const ALL_HIRAGANA: Kana[] = [...HIRAGANA, ...YOUON, ...SOKUON];
+export const ALL_KANA: Kana[] = [...ALL_HIRAGANA, ...KATAKANA];
 
 export function pickKanaPool(types: KanaType[], groups: KanaGroup[]): Kana[] {
   return ALL_KANA.filter((k) => types.includes(k.type) && groups.includes(k.group));
 }
 
+// Legacy single-kana question (still used by practice mode)
 export function makeQuestion(pool: Kana[], all: Kana[] = ALL_KANA) {
   const correct = pool[Math.floor(Math.random() * pool.length)];
   const wrongPool = all.filter((k) => k.romaji !== correct.romaji);
