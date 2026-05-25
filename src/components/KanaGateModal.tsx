@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
-import { type Kana } from "@/game/kana-data";
+import { type KanaWord } from "@/game/words";
 
 interface Props {
-  kana: Kana;
+  word: KanaWord;
   options: string[];
   onAnswer: (correct: boolean) => void;
 }
 
-export function KanaGateModal({ kana, options, onAnswer }: Props) {
+export function KanaGateModal({ word, options, onAnswer }: Props) {
   const [picked, setPicked] = useState<string | null>(null);
 
   useEffect(() => {
     setPicked(null);
-  }, [kana]);
+  }, [word]);
 
   function pick(opt: string) {
     if (picked) return;
     setPicked(opt);
-    const correct = opt === kana.romaji;
+    const correct = opt === word.romaji;
     setTimeout(() => onAnswer(correct), 700);
   }
 
@@ -26,35 +26,40 @@ export function KanaGateModal({ kana, options, onAnswer }: Props) {
       <div className="honey-card rounded-3xl p-6 w-full max-w-md">
         <div className="text-center">
           <p className="text-sm uppercase tracking-widest text-muted-foreground font-semibold">
-            Kana Gate · {kana.type}
+            Kana Gate
           </p>
           <div className="my-4 flex justify-center">
-            <div className="bg-background rounded-2xl border-4 border-primary px-10 py-6 shadow-inner">
-              <span className="text-7xl font-bold" style={{ fontFamily: "serif" }}>
-                {kana.char}
+            <div className="bg-background rounded-2xl border-4 border-primary px-8 py-5 shadow-inner">
+              <span
+                className="text-6xl font-bold tracking-wider"
+                style={{ fontFamily: "serif" }}
+              >
+                {word.chars}
               </span>
             </div>
           </div>
-          <p className="text-sm text-muted-foreground mb-3">Pilih romaji yang benar</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            Pilih bacaan romaji yang benar
+          </p>
         </div>
         <div className="grid grid-cols-2 gap-3">
           {options.map((opt) => {
             const isPicked = picked === opt;
-            const correct = picked && opt === kana.romaji;
-            const wrong = isPicked && opt !== kana.romaji;
+            const correct = picked && opt === word.romaji;
+            const wrong = isPicked && opt !== word.romaji;
             return (
               <button
                 key={opt}
                 onClick={() => pick(opt)}
                 disabled={!!picked}
                 className={[
-                  "rounded-2xl py-4 text-2xl font-bold transition-all border-2",
+                  "rounded-2xl py-4 text-xl font-bold transition-all border-2",
                   "active:translate-y-0.5",
                   correct
                     ? "bg-secondary text-secondary-foreground border-secondary"
                     : wrong
                     ? "bg-destructive text-destructive-foreground border-destructive"
-                    : picked && opt === kana.romaji
+                    : picked && opt === word.romaji
                     ? "bg-secondary text-secondary-foreground border-secondary"
                     : "bg-background border-border hover:border-primary hover:bg-primary/10",
                 ].join(" ")}
