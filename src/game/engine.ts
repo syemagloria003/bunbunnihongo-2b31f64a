@@ -83,6 +83,8 @@ export class GameEngine {
   constructor(level: LevelDef, cbs: EngineCallbacks) {
     this.level = level;
     this.cbs = cbs;
+    this.levelNum = parseInt(level.id) || 1;
+
     this.cols = level.tiles[0].length;
     this.rows = level.tiles.length;
 
