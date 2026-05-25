@@ -71,7 +71,14 @@ export class GameEngine {
   state: GameState = "playing";
   pendingGate: Gate | null = null;
 
+  frame = 0;
+  shake = 0;
+  particles = new Particles();
+  levelNum = 1;
+  wonBurstDone = false;
+
   cbs: EngineCallbacks;
+
 
   constructor(level: LevelDef, cbs: EngineCallbacks) {
     this.level = level;
