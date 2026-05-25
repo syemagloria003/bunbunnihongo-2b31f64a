@@ -357,12 +357,13 @@ export class GameEngine {
 
   draw(ctx: CanvasRenderingContext2D, w: number, h: number) {
     ctx.clearRect(0, 0, w, h);
+    const theme = this.level.theme;
 
     // background (screen-space, parallax driven by camera)
-    drawSky(ctx, w, h, this.levelNum);
-    drawFar(ctx, this.camera.x, w, h);
-    drawClouds(ctx, this.camera.x, w, this.frame);
-    drawMid(ctx, this.camera.x, w, h);
+    drawSky(ctx, w, h, theme, this.frame);
+    drawFar(ctx, this.camera.x, w, h, theme);
+    drawClouds(ctx, this.camera.x, w, this.frame, theme);
+    drawMid(ctx, this.camera.x, w, h, theme, this.frame);
 
     // shake offset
     const sx = this.shake ? (Math.random() - 0.5) * this.shake : 0;
@@ -378,33 +379,33 @@ export class GameEngine {
         if (px + TILE < this.camera.x - 40 || px > this.camera.x + w + 40) continue;
         if (this.solids[y][x]) {
           const topGrass = !(this.solids[y - 1]?.[x]);
-          drawGround(ctx, px, py, topGrass);
+          drawGround(ctx, px, py, topGrass, theme);
         } else if (this.platforms[y][x]) {
-          drawPlatform(ctx, px, py);
+          drawPlatform(ctx, px, py, theme);
         }
       }
     }
 
     // goal — beehive
-    drawHive(ctx, this.goal.x, this.goal.y, this.frame);
+    drawHive(ctx, this.goal.x, this.goal.y, this.frame, theme);
 
     // gates
     for (const g of this.gates) {
       if (g.open) continue;
-      drawGate(ctx, g.x, g.y, g.w, g.h, this.frame);
+      drawGate(ctx, g.x, g.y, g.w, g.h, this.frame, theme);
     }
 
     // coins — honey drops
     for (const c of this.coins) {
       if (c.taken) continue;
-      drawHoney(ctx, c.x, c.y, c.w, c.h, this.frame + c.x);
+      drawHoney(ctx, c.x, c.y, c.w, c.h, this.frame + c.x, theme);
     }
 
     // enemies
     for (const e of this.enemies) {
       if (!e.alive) continue;
-      if (e.kind === "spider") drawSpider(ctx, e.x, e.y, e.w, e.h, this.frame, e.dir);
-      else drawFly(ctx, e.x, e.y, e.w, e.h, this.frame / 3);
+      if (e.kind === "spider") drawSpider(ctx, e.x, e.y, e.w, e.h, this.frame, e.dir, theme);
+      else drawFly(ctx, e.x, e.y, e.w, e.h, this.frame / 3, theme);
     }
 
     // particles (world-space)
@@ -420,9 +421,10 @@ export class GameEngine {
     ctx.restore();
 
     // foreground (screen-space)
-    drawForeground(ctx, this.camera.x, w, h);
+    drawForeground(ctx, this.camera.x, w, h, theme, this.frame);
   }
 }
+
 
 function aabb(a: { x: number; y: number; w: number; h: number }, b: { x: number; y: number; w: number; h: number }) {
   return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
