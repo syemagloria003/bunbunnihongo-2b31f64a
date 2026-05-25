@@ -95,6 +95,7 @@ function pitsEvery(length: number, step: number, start = 12): number[] {
 export const LEVELS: LevelDef[] = [
   {
     id: "1",
+    theme: "garden",
     name: "Padang Bunga",
     subtitle: "Vokal + baris K",
     bg: "linear-gradient(180deg, #bfe3ff 0%, #ffe8b3 100%)",
@@ -105,6 +106,7 @@ export const LEVELS: LevelDef[] = [
   },
   {
     id: "2",
+    theme: "garden",
     name: "Hutan Madu",
     subtitle: "+ baris S & T",
     bg: "linear-gradient(180deg, #ffd29e 0%, #ffe8b3 100%)",
@@ -115,6 +117,7 @@ export const LEVELS: LevelDef[] = [
   },
   {
     id: "3",
+    theme: "garden",
     name: "Sungai Polen",
     subtitle: "+ baris N & H",
     bg: "linear-gradient(180deg, #a5d8ff 0%, #d4f1c5 100%)",
@@ -125,6 +128,7 @@ export const LEVELS: LevelDef[] = [
   },
   {
     id: "4",
+    theme: "garden",
     name: "Bukit Liar",
     subtitle: "+ baris M & Y",
     bg: "linear-gradient(180deg, #ffb380 0%, #ffd4a3 100%)",
@@ -135,6 +139,7 @@ export const LEVELS: LevelDef[] = [
   },
   {
     id: "5",
+    theme: "garden",
     name: "Lembah Senja",
     subtitle: "+ baris R & W",
     bg: "linear-gradient(180deg, #6f5fa8 0%, #ffb3a3 100%)",
@@ -145,6 +150,7 @@ export const LEVELS: LevelDef[] = [
   },
   {
     id: "6",
+    theme: "garden",
     name: "Sarang Dakuon",
     subtitle: "+ Dakuon ﾞ & Handakuon ﾟ",
     bg: "linear-gradient(180deg, #2a2a4a 0%, #8a5a9a 100%)",
@@ -155,6 +161,7 @@ export const LEVELS: LevelDef[] = [
   },
   {
     id: "7",
+    theme: "garden",
     name: "Ratu Tawon",
     subtitle: "+ Youon ゃゅょ & Sokuon っ",
     bg: "linear-gradient(180deg, #1a0a2e 0%, #c44569 100%)",
@@ -172,6 +179,7 @@ export const LEVELS: LevelDef[] = [
 export const KATAKANA_LEVELS: LevelDef[] = [
   {
     id: "k1",
+    theme: "crystal_cave",
     name: "Gua Kristal",
     subtitle: "Katakana — vokal + K",
     bg: "linear-gradient(180deg, #0a1a3a 0%, #4a7ab8 100%)",
@@ -182,6 +190,7 @@ export const KATAKANA_LEVELS: LevelDef[] = [
   },
   {
     id: "k2",
+    theme: "starry_sea",
     name: "Lautan Bintang",
     subtitle: "+ baris S & T",
     bg: "linear-gradient(180deg, #0a0a2a 0%, #2a4a8a 100%)",
@@ -192,6 +201,7 @@ export const KATAKANA_LEVELS: LevelDef[] = [
   },
   {
     id: "k3",
+    theme: "nebula_sky",
     name: "Awan Nebula",
     subtitle: "+ baris N & H",
     bg: "linear-gradient(180deg, #2a1a4a 0%, #8a5ac8 100%)",
@@ -202,6 +212,7 @@ export const KATAKANA_LEVELS: LevelDef[] = [
   },
   {
     id: "k4",
+    theme: "snow_field",
     name: "Padang Salju",
     subtitle: "+ baris M & Y",
     bg: "linear-gradient(180deg, #e0f0ff 0%, #a0c8e8 100%)",
@@ -212,6 +223,7 @@ export const KATAKANA_LEVELS: LevelDef[] = [
   },
   {
     id: "k5",
+    theme: "silver_ruins",
     name: "Reruntuhan Perak",
     subtitle: "+ baris R & W",
     bg: "linear-gradient(180deg, #3a3a4a 0%, #9aa0b0 100%)",
@@ -222,6 +234,7 @@ export const KATAKANA_LEVELS: LevelDef[] = [
   },
   {
     id: "k6",
+    theme: "comet_nest",
     name: "Sarang Komet",
     subtitle: "+ Dakuon ﾞﾟ & vokal panjang ー",
     bg: "linear-gradient(180deg, #2a0a1a 0%, #e85a2a 100%)",
@@ -232,6 +245,7 @@ export const KATAKANA_LEVELS: LevelDef[] = [
   },
   {
     id: "k7",
+    theme: "cosmic_void",
     name: "Ratu Bintang",
     subtitle: "+ Youon ャュョ & Sokuon ッ",
     bg: "linear-gradient(180deg, #050518 0%, #5a1a8a 100%)",
