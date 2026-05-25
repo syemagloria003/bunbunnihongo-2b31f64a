@@ -2,7 +2,7 @@ export type KanaType = "hiragana" | "katakana";
 export type KanaGroup =
   | "vowel" | "k" | "s" | "t" | "n" | "h" | "m" | "y" | "r" | "w"
   | "g" | "z" | "d" | "b" | "p"
-  | "youon" | "sokuon";
+  | "youon" | "sokuon" | "choon";
 
 export interface Kana {
   char: string;   // may be multi-char for youon/sokuon
@@ -137,40 +137,118 @@ export const KATAKANA: Kana[] = [
   { char: "ウ", romaji: "u", type: "katakana", group: "vowel" },
   { char: "エ", romaji: "e", type: "katakana", group: "vowel" },
   { char: "オ", romaji: "o", type: "katakana", group: "vowel" },
+
   { char: "カ", romaji: "ka", type: "katakana", group: "k" },
   { char: "キ", romaji: "ki", type: "katakana", group: "k" },
   { char: "ク", romaji: "ku", type: "katakana", group: "k" },
   { char: "ケ", romaji: "ke", type: "katakana", group: "k" },
   { char: "コ", romaji: "ko", type: "katakana", group: "k" },
+
   { char: "サ", romaji: "sa", type: "katakana", group: "s" },
   { char: "シ", romaji: "shi", type: "katakana", group: "s" },
   { char: "ス", romaji: "su", type: "katakana", group: "s" },
   { char: "セ", romaji: "se", type: "katakana", group: "s" },
   { char: "ソ", romaji: "so", type: "katakana", group: "s" },
+
   { char: "タ", romaji: "ta", type: "katakana", group: "t" },
   { char: "チ", romaji: "chi", type: "katakana", group: "t" },
   { char: "ツ", romaji: "tsu", type: "katakana", group: "t" },
   { char: "テ", romaji: "te", type: "katakana", group: "t" },
   { char: "ト", romaji: "to", type: "katakana", group: "t" },
+
   { char: "ナ", romaji: "na", type: "katakana", group: "n" },
   { char: "ニ", romaji: "ni", type: "katakana", group: "n" },
   { char: "ヌ", romaji: "nu", type: "katakana", group: "n" },
   { char: "ネ", romaji: "ne", type: "katakana", group: "n" },
   { char: "ノ", romaji: "no", type: "katakana", group: "n" },
+
   { char: "ハ", romaji: "ha", type: "katakana", group: "h" },
   { char: "ヒ", romaji: "hi", type: "katakana", group: "h" },
   { char: "フ", romaji: "fu", type: "katakana", group: "h" },
   { char: "ヘ", romaji: "he", type: "katakana", group: "h" },
   { char: "ホ", romaji: "ho", type: "katakana", group: "h" },
+
   { char: "マ", romaji: "ma", type: "katakana", group: "m" },
   { char: "ミ", romaji: "mi", type: "katakana", group: "m" },
   { char: "ム", romaji: "mu", type: "katakana", group: "m" },
   { char: "メ", romaji: "me", type: "katakana", group: "m" },
   { char: "モ", romaji: "mo", type: "katakana", group: "m" },
+
+  { char: "ヤ", romaji: "ya", type: "katakana", group: "y" },
+  { char: "ユ", romaji: "yu", type: "katakana", group: "y" },
+  { char: "ヨ", romaji: "yo", type: "katakana", group: "y" },
+
+  { char: "ラ", romaji: "ra", type: "katakana", group: "r" },
+  { char: "リ", romaji: "ri", type: "katakana", group: "r" },
+  { char: "ル", romaji: "ru", type: "katakana", group: "r" },
+  { char: "レ", romaji: "re", type: "katakana", group: "r" },
+  { char: "ロ", romaji: "ro", type: "katakana", group: "r" },
+
+  { char: "ワ", romaji: "wa", type: "katakana", group: "w" },
+  { char: "ヲ", romaji: "wo", type: "katakana", group: "w" },
+  { char: "ン", romaji: "n",  type: "katakana", group: "w" },
+
+  // Dakuon
+  { char: "ガ", romaji: "ga", type: "katakana", group: "g" },
+  { char: "ギ", romaji: "gi", type: "katakana", group: "g" },
+  { char: "グ", romaji: "gu", type: "katakana", group: "g" },
+  { char: "ゲ", romaji: "ge", type: "katakana", group: "g" },
+  { char: "ゴ", romaji: "go", type: "katakana", group: "g" },
+  { char: "ザ", romaji: "za", type: "katakana", group: "z" },
+  { char: "ジ", romaji: "ji", type: "katakana", group: "z" },
+  { char: "ズ", romaji: "zu", type: "katakana", group: "z" },
+  { char: "ゼ", romaji: "ze", type: "katakana", group: "z" },
+  { char: "ゾ", romaji: "zo", type: "katakana", group: "z" },
+  { char: "ダ", romaji: "da", type: "katakana", group: "d" },
+  { char: "デ", romaji: "de", type: "katakana", group: "d" },
+  { char: "ド", romaji: "do", type: "katakana", group: "d" },
+  { char: "バ", romaji: "ba", type: "katakana", group: "b" },
+  { char: "ビ", romaji: "bi", type: "katakana", group: "b" },
+  { char: "ブ", romaji: "bu", type: "katakana", group: "b" },
+  { char: "ベ", romaji: "be", type: "katakana", group: "b" },
+  { char: "ボ", romaji: "bo", type: "katakana", group: "b" },
+  // Handakuon
+  { char: "パ", romaji: "pa", type: "katakana", group: "p" },
+  { char: "ピ", romaji: "pi", type: "katakana", group: "p" },
+  { char: "プ", romaji: "pu", type: "katakana", group: "p" },
+  { char: "ペ", romaji: "pe", type: "katakana", group: "p" },
+  { char: "ポ", romaji: "po", type: "katakana", group: "p" },
+
+  // Chōonpu (long-vowel marker) — special: romaji resolved from previous kana
+  { char: "ー", romaji: "-", type: "katakana", group: "choon" },
 ];
 
+// Katakana youon (i-row + small ャュョ)
+const K_YOUON_BASE: Array<[string, string]> = [
+  ["キ", "k"], ["シ", "sh"], ["チ", "ch"], ["ニ", "n"], ["ヒ", "h"],
+  ["ミ", "m"], ["リ", "r"], ["ギ", "g"], ["ジ", "j"], ["ビ", "b"], ["ピ", "p"],
+];
+const K_YOUON_SUFFIX: Array<[string, string]> = [["ャ", "ya"], ["ュ", "yu"], ["ョ", "yo"]];
+
+export const KATAKANA_YOUON: Kana[] = K_YOUON_BASE.flatMap(([ch, pre]) =>
+  K_YOUON_SUFFIX.map(([sf, rsuf]) => {
+    let rom: string;
+    if (pre === "sh" || pre === "ch" || pre === "j") rom = pre + rsuf.slice(1);
+    else rom = pre + rsuf;
+    return { char: ch + sf, romaji: rom, type: "katakana" as const, group: "youon" as const };
+  })
+);
+
+// Katakana sokuon (small ッ + consonant doubling)
+const K_SOKUON_TARGETS: Array<[string, string]> = [
+  ["カ", "ka"], ["キ", "ki"], ["ク", "ku"], ["コ", "ko"],
+  ["サ", "sa"], ["シ", "shi"], ["ス", "su"], ["セ", "se"],
+  ["タ", "ta"], ["チ", "chi"], ["ツ", "tsu"], ["テ", "te"], ["ト", "to"],
+  ["ハ", "ha"], ["パ", "pa"], ["ピ", "pi"], ["プ", "pu"], ["ポ", "po"],
+];
+export const KATAKANA_SOKUON: Kana[] = K_SOKUON_TARGETS.map(([ch, rom]) => {
+  const prefix = rom.startsWith("ch") ? "t" : rom[0];
+  return { char: "ッ" + ch, romaji: prefix + rom, type: "katakana" as const, group: "sokuon" as const };
+});
+
 export const ALL_HIRAGANA: Kana[] = [...HIRAGANA, ...YOUON, ...SOKUON];
-export const ALL_KANA: Kana[] = [...ALL_HIRAGANA, ...KATAKANA];
+export const ALL_KATAKANA: Kana[] = [...KATAKANA, ...KATAKANA_YOUON, ...KATAKANA_SOKUON];
+export const ALL_KANA: Kana[] = [...ALL_HIRAGANA, ...ALL_KATAKANA];
 
 export function pickKanaPool(types: KanaType[], groups: KanaGroup[]): Kana[] {
   return ALL_KANA.filter((k) => types.includes(k.type) && groups.includes(k.group));

@@ -57,13 +57,64 @@ export function generateWords(pool: Kana[], gateCount: number): KanaWord[] {
       while (chunk.length < minLen) chunk.push(pool[Math.floor(Math.random() * pool.length)]);
     }
     if (chunk.length > maxLen) chunk = chunk.slice(0, maxLen);
+
+    // Fix chōonpu (ー) positions: must follow a vowel-bearing kana, never at start
+    // or consecutive. If invalid, swap with the next non-choon entry.
+    chunk = fixChoon(chunk, pool);
+
     words.push({
       chars: chunk.map((k) => k.char).join(""),
-      romaji: chunk.map((k) => k.romaji).join(""),
+      romaji: chunk.map((k, idx) => resolveRomaji(k, chunk, idx)).join(""),
       entries: chunk,
     });
   }
   return words;
+}
+
+function isChoon(k: Kana): boolean {
+  return k.group === "choon";
+}
+
+/** Return last vowel character (a/i/u/e/o) of a romaji string, or "" if none. */
+function lastVowel(rom: string): string {
+  for (let i = rom.length - 1; i >= 0; i--) {
+    const c = rom[i];
+    if ("aiueo".includes(c)) return c;
+  }
+  return "";
+}
+
+function resolveRomaji(k: Kana, chunk: Kana[], idx: number): string {
+  if (!isChoon(k)) return k.romaji;
+  // chōon: repeat the last vowel of the previous entry's resolved romaji
+  if (idx === 0) return "";
+  const prev = chunk[idx - 1];
+  return lastVowel(prev.romaji);
+}
+
+function fixChoon(chunk: Kana[], pool: Kana[]): Kana[] {
+  const out = chunk.slice();
+  const nonChoonPool = pool.filter((p) => !isChoon(p));
+  for (let i = 0; i < out.length; i++) {
+    if (!isChoon(out[i])) continue;
+    const badStart = i === 0;
+    const badAfterChoon = i > 0 && isChoon(out[i - 1]);
+    const prevNoVowel = i > 0 && !isChoon(out[i - 1]) && lastVowel(out[i - 1].romaji) === "";
+    if (badStart || badAfterChoon || prevNoVowel) {
+      // find a later non-choon to swap with
+      let j = -1;
+      for (let k = i + 1; k < out.length; k++) {
+        if (!isChoon(out[k]) && lastVowel(out[k].romaji) !== "") { j = k; break; }
+      }
+      if (j > -1) {
+        [out[i], out[j]] = [out[j], out[i]];
+      } else if (nonChoonPool.length > 0) {
+        // no swap target; replace with a random non-choon
+        out[i] = nonChoonPool[Math.floor(Math.random() * nonChoonPool.length)];
+      }
+    }
+  }
+  return out;
 }
 
 /**
@@ -72,19 +123,27 @@ export function generateWords(pool: Kana[], gateCount: number): KanaWord[] {
  */
 export function makeOptionsForWord(word: KanaWord, allKana: Kana[]): string[] {
   const opts = new Set<string>([word.romaji]);
+  const swapPool = allKana.filter((k) => k.group !== "choon");
   let tries = 0;
   while (opts.size < 4 && tries++ < 80) {
-    const idx = Math.floor(Math.random() * word.entries.length);
-    const swap = allKana[Math.floor(Math.random() * allKana.length)];
+    // pick a non-choon index to mutate
+    const swappable = word.entries
+      .map((e, i) => (isChoon(e) ? -1 : i))
+      .filter((i) => i >= 0);
+    if (swappable.length === 0) break;
+    const idx = swappable[Math.floor(Math.random() * swappable.length)];
+    const swap = swapPool[Math.floor(Math.random() * swapPool.length)];
     if (swap.romaji === word.entries[idx].romaji) continue;
-    const newRom = word.entries
-      .map((e, i) => (i === idx ? swap.romaji : e.romaji))
+    const newEntries = word.entries.map((e, i) => (i === idx ? swap : e));
+    const newRom = newEntries
+      .map((e, i) => (isChoon(e) ? lastVowel(newEntries[i - 1]?.romaji ?? "") : e.romaji))
       .join("");
-    if (newRom !== word.romaji) opts.add(newRom);
+    if (newRom !== word.romaji && newRom.length > 0) opts.add(newRom);
   }
   // pad with random if still short
   while (opts.size < 4) {
-    const r = allKana[Math.floor(Math.random() * allKana.length)].romaji + allKana[Math.floor(Math.random() * allKana.length)].romaji;
+    const r = swapPool[Math.floor(Math.random() * swapPool.length)].romaji
+      + swapPool[Math.floor(Math.random() * swapPool.length)].romaji;
     if (r !== word.romaji) opts.add(r);
   }
   return shuffle(Array.from(opts));
