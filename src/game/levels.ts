@@ -1,4 +1,5 @@
 import type { KanaGroup, KanaType } from "./kana-data";
+import type { WorldTheme } from "./themes";
 
 export interface LevelDef {
   id: string;
@@ -9,6 +10,7 @@ export interface LevelDef {
   tiles: string[];
   kanaTypes: KanaType[];
   kanaGroups: KanaGroup[];
+  theme: WorldTheme;
 }
 
 /*
