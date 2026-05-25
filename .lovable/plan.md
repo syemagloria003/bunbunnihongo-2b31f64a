@@ -1,58 +1,65 @@
-# Membuka Arc Katakana
+# Tema Dunia Katakana — Reskin Penuh
 
-## Masalah saat ini
-Setelah menamatkan Ratu Tawon dan mendapat 💎 Kristal, kartu Katakana di peta tetap terkunci. Penyebabnya: `KATAKANA_LEVELS_PREVIEW` di `src/game/levels.ts` cuma 3 entri preview dan di `src/routes/play.tsx` di-hardcode `unlocked={false}` dengan label "SEGERA". Belum ada level Katakana yang benar-benar bisa dimainkan.
+## Masalah
+Setiap level Katakana sekarang cuma berbeda gradient `bg` + `ground`. Sisanya (background bukit hijau + bunga pink, awan, rumput, koin madu, sarang lebah, laba‑laba/lalat) di-render dengan fungsi yang sama persis seperti dunia Hiragana. `engine.ts` juga melakukan `parseInt("k1") → NaN → 1`, jadi `drawSky` malah pakai cabang Hiragana.
 
-## Tujuan
-- Tambahkan **7 level Katakana** yang strukturnya mirror Hiragana.
-- Sisipkan **chōonpu (ー)** — tanda perpanjangan vokal seperti ケーキ (keeki), コーヒー (koohii) — di level Dakuon (level Katakana ke‑6), supaya kata memanjang ikut diuji.
-- Kristal dari Ratu Tawon **otomatis membuka** Katakana level 1.
-- Cukup suasana + huruf baru; mekanik gameplay tetap sama.
+## Pendekatan
+Tambahkan satu konsep tunggal: **`theme`** per level. Setiap modul render bercabang berdasarkan tema, bukan berdasarkan `levelNum`. Semua dunia Hiragana memakai tema `"garden"` (perilaku saat ini, tidak berubah). 7 dunia Katakana mendapat tema masing‑masing.
 
-## Struktur 7 Level Katakana
+```text
+Tema Katakana:
+  k1 crystal_cave   — gua biru, stalaktit, kristal berkilau, kelelawar gelap
+  k2 starry_sea     — laut malam, bulan, bintang, gelombang, ubur-ubur silau
+  k3 nebula_sky     — pulau melayang, awan ungu, galaksi, lalat bercahaya
+  k4 snow_field     — bukit salju, pinus, salju turun, rubah putih
+  k5 silver_ruins   — pilar metal patah, kabut, awan kelabu, robot kecil
+  k6 comet_nest     — langit api, komet melintas, batu magma, imp api
+  k7 cosmic_void    — kosmos hitam, spiral galaksi, void wisp (boss arena)
+```
 
-| # | id | Nama | Suasana | Kana pool |
-|---|----|------|---------|-----------|
-| 1 | k1 | Gua Kristal | gua biru berkilau | vokal + K |
-| 2 | k2 | Lautan Bintang | laut malam berbintang | + S, T |
-| 3 | k3 | Awan Nebula | langit ungu nebula | + N, H |
-| 4 | k4 | Padang Salju | tundra putih‑biru | + M, Y |
-| 5 | k5 | Reruntuhan Perak | reruntuhan metalik | + R, W |
-| 6 | k6 | Sarang Komet | merah‑oranye komet | + Dakuon/Handakuon **+ chōonpu (ー)** → kata memanjang seperti ケーキ, コーヒー, ビール |
-| 7 | k7 | Ratu Bintang | nebula gelap, boss final | + Youon + Sokuon (semua) |
+Skema warna setiap tema sudah implisit dari gradient `bg` yang ada — palette tinggal diturunkan dari sana.
 
-Palette `bg`/`ground` per level disesuaikan suasananya (dingin/kristal di awal, makin hangat ke arah boss).
+## Yang Dibongkar
 
-## Yang perlu diubah
+### 1. `src/game/levels.ts`
+- Tambah field `theme: WorldTheme` di `LevelDef`.
+- Semua entri `LEVELS` (Hiragana) → `theme: "garden"`.
+- `KATAKANA_LEVELS` → tema sesuai tabel di atas.
+- Export type `WorldTheme = "garden" | "crystal_cave" | "starry_sea" | "nebula_sky" | "snow_field" | "silver_ruins" | "comet_nest" | "cosmic_void"`.
 
-### 1. `src/game/kana-data.ts`
-- Tambah set Katakana lengkap (gojuuon, dakuon, handakuon, youon, sokuon ッ) dengan `type: "katakana"`.
-- Tambah penanda chōonpu `ー` sebagai entri khusus (atau group `"choon"`).
+### 2. `src/game/background.ts` — bercabang per tema
+Setiap fungsi (`drawSky`, `drawFar`, `drawMid`, `drawClouds`, `drawForeground`) menerima `theme: WorldTheme` (bukan `level: number`).
+- `drawSky`: gradient & sumber cahaya berbeda — matahari (garden), bulan (sea/void), kristal pendar (cave), aurora (nebula), matahari pucat (snow), kabut (ruins), letupan komet (comet).
+- `drawFar`: bukit hijau (garden) · siluet stalaktit terbalik (cave) · garis ombak + pulau jauh (sea) · pulau melayang (nebula) · bukit salju + pinus jauh (snow) · pilar runtuh (ruins) · gunung magma (comet) · spiral galaksi (void).
+- `drawMid`: bunga (garden) · kristal berkilau di lantai gua (cave) · ubur‑ubur melayang (sea) · gumpalan nebula (nebula) · pohon pinus salju (snow) · kolom + roda gigi raksasa (ruins) · ember & lava bubble (comet) · planet/cincin (void).
+- `drawClouds`: awan biasa (garden/snow) · kabut tipis (cave/ruins) · gelombang awan ungu (nebula) · asap komet horizontal (comet) · debu bintang (sea/void).
+- `drawForeground`: rumput (garden) · serpihan kristal di tepi (cave) · gelembung air (sea) · awan tipis depan (nebula) · serpihan salju jatuh (snow) · debu logam (ruins) · ember melayang (comet) · partikel bintang (void).
 
-### 2. `src/game/words.ts`
-- `generateWords` untuk pool yang berisi `ー` harus menyisipkan `ー` setelah kana bervokal (mis. ケ + ー → ケー, lalu + キ → ケーキ).
-- Romaji target ikut memanjang: `ke` + `ー` → `kee`. Opsi jawaban tetap dibuat oleh `makeOptionsForWord` tapi membaca panjang yang sudah benar.
-- Jaminan "setiap kana keluar minimal sekali" tetap berlaku, dan saat pool memuat `ー`, minimal 1 kata memanjang muncul.
+### 3. `src/game/render.ts` — bercabang per tema
+Sebagian besar fungsi `draw*` dapat parameter `theme`. Hero `drawBee` (Buzu) **tidak berubah** — dia maskot lintas dunia.
+- `drawGround`: rumput+tanah (garden) · batu+kristal kecil (cave) · pasir basah+karang (sea) · awan padat (nebula) · salju+es (snow) · ubin metal (ruins) · batu magma+retakan pijar (comet) · void+stardust (void).
+- `drawPlatform`: honeycomb (garden) · serpihan kristal (cave) · papan kayu apung (sea) · awan padat (nebula) · balok es (snow) · pelat metal (ruins) · batu lava (comet) · cakram bintang (void).
+- `drawHoney` (koin): madu (garden) · kristal (cave) · bintang (sea) · gumpalan nebula (nebula) · kepingan salju (snow) · roda gigi (ruins) · ember api (comet) · galaksi mini (void). Warna burst particle ikut.
+- `drawGate` (gerbang kana): bingkai sesuai tema (kayu+madu / kristal / koral / cincin nebula / es / metal / batu pijar / cincin bintang).
+- `drawHive` (goal): sarang lebah (garden) · portal kristal (cave) · mercusuar (sea) · gerbang awan (nebula) · iglo (snow) · monolit (ruins) · portal komet (comet) · singgasana bintang (void) — bendera kecil tetap melambai.
+- `drawSpider` & `drawFly`: reskin warna + sedikit aksen bentuk per tema (kelelawar gelap dengan mata merah untuk cave, ubur‑ubur untuk sea, dst). Mekanik & hitbox identik.
 
-### 3. `src/game/levels.ts`
-- Tambah `KATAKANA_LEVELS: LevelDef[]` berisi 7 entri di atas (pakai helper `genTiles` yang sudah ada, panjang/pits naik bertahap mirip Hiragana).
-- Update `nextLevelId` supaya setelah `7` (Ratu Tawon) lanjut ke `k1`, dan `k7` jadi level terakhir.
-- Tambah `isFinalLevel` varian untuk `k7` (boss Katakana) — beri reward khusus (mis. 💎 Kristal Bintang) atau cukup layar tamat.
-- Hapus/ganti `KATAKANA_LEVELS_PREVIEW`.
+### 4. `src/game/particles.ts`
+`burst()` dapat opsional `palette: string[]` agar warna percikan cocok per tema. `confetti()` di akhir level pakai palette tema.
 
-### 4. `src/game/progress.ts`
-- Saat `crystal === true`, otomatis tambahkan `"k1"` ke `unlocked` (lakukan migrasi ringan di `loadProgress`).
-- `completeLevel` untuk level Katakana ikut aturan ≥3⭐ untuk buka level berikutnya, sama seperti Hiragana.
+### 5. `src/game/engine.ts`
+- Hapus `levelNum`; ganti dengan `this.theme = level.theme`.
+- Teruskan `this.theme` ke semua call `drawSky/drawFar/drawMid/drawClouds/drawForeground/drawGround/drawPlatform/drawHive/drawHoney/drawGate/drawSpider/drawFly`.
+- Saat coin diambil & saat menang, pilih palette particle dari tabel tema.
 
-### 5. `src/routes/play.tsx`
-- Render `LEVELS` + `KATAKANA_LEVELS` dengan logika `unlocked` yang sama (baca dari `progress.unlocked`), bukan hardcoded `false`.
-- Pisahkan jadi 2 section visual: **Taman Hiragana 🌻** dan **Dunia Kristal 💎** (section kedua hanya muncul kalau `p.crystal` true, atau tetap muncul tapi terkunci dengan ikon 🔒 sebelum kristal didapat).
-- Hapus label "SEGERA".
-
-### 6. `src/components/GameCanvas.tsx`
-- Tidak ada perubahan mekanik. Pastikan `nextLevelId` dari engine sudah mengarah ke level Katakana setelah Ratu Tawon, supaya tombol "Level berikutnya →" otomatis lompat ke Gua Kristal.
+### 6. Modal kana (`KanaGateModal.tsx`) — opsional ringan
+Tidak diubah. Visual gerbang sudah ditangani oleh `drawGate` di canvas; modal tetap kartu putih netral biar fokus baca huruf.
 
 ## Di luar scope
-- Tidak menambah mekanik baru (es licin, kristal pecah, bos terbang, dll).
-- Tidak mengubah engine/fisika, audio, atau sistem partikel.
-- Tidak menambah aset gambar eksternal — semua tetap procedural Canvas.
+- Tidak menambah mekanik baru (es licin, kristal pecah, gravitasi berbeda).
+- Tidak menambah pola pergerakan musuh baru — cuma reskin visual.
+- Buzu si lebah tetap sama bentuknya di semua dunia.
+- Hiragana 7 dunia tidak diubah tampilannya (tema `garden` = perilaku saat ini).
+
+## Hasil yang diharapkan
+Begitu masuk Gua Kristal: langit gelap kebiruan, stalaktit menggantung, lantai berbatu+kristal kecil, koin jadi kristal pendar, sarang lebah jadi portal kristal, "laba‑laba" jadi kelelawar gelap. Setiap dunia berikutnya terasa naik tingkat suasana — bukan sekadar warna langit berbeda.
