@@ -193,8 +193,12 @@ export class GameEngine {
   }
 
   update() {
+    this.frame++;
+    this.particles.update();
+    if (this.shake > 0) this.shake--;
     if (this.state !== "playing") return;
     const p = this.player;
+
 
     // input
     let ax = 0;
