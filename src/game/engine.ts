@@ -308,8 +308,13 @@ export class GameEngine {
       this.score += 200;
       this.cbs.onScore(this.score);
       this.state = "won";
+      if (!this.wonBurstDone) {
+        this.particles.confetti(this.goal.x + this.goal.w / 2, this.goal.y, 80);
+        this.wonBurstDone = true;
+      }
       this.cbs.onWin();
     }
+
 
     // camera
     this.camera.x = Math.max(0, Math.min(p.x - 320, this.cols * TILE - 800));
