@@ -252,8 +252,11 @@ export class GameEngine {
         this.score += 10;
         this.cbs.onCoins(this.coinsTaken);
         this.cbs.onScore(this.score);
+        this.particles.burst(c.x + c.w / 2, c.y + c.h / 2, 12, "#ffd84a");
+        this.particles.burst(c.x + c.w / 2, c.y + c.h / 2, 6, "#fff2a0", { size: 1.5, gravity: 0.05, life: 22, maxLife: 22 });
       }
     }
+
 
     // enemy collisions
     for (const e of this.enemies) {
