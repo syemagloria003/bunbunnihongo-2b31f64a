@@ -268,14 +268,19 @@ export class GameEngine {
           p.vy = JUMP_V * 0.7;
           this.score += 30;
           this.cbs.onScore(this.score);
+          this.particles.burst(e.x + e.w / 2, e.y + e.h / 2, 14, e.kind === "spider" ? "#7a3a9a" : "#666");
+          this.shake = 4;
         } else if (p.invuln === 0) {
           this.lives--; this.cbs.onLives(this.lives);
           p.invuln = 80;
           p.vy = -8;
+          this.shake = 12;
+          this.particles.burst(p.x + p.w / 2, p.y + p.h / 2, 16, "#ff5252");
           if (this.lives <= 0) { this.state = "lost"; this.cbs.onLose(); return; }
         }
       }
     }
+
 
     // gate
     for (const g of this.gates) {
