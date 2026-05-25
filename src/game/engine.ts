@@ -225,7 +225,8 @@ export class GameEngine {
     // fell off
     if (p.y > this.rows * TILE + 80) {
       this.lives--; this.cbs.onLives(this.lives);
-      if (this.lives <= 0) { this.state = "lost"; this.cbs.onLose(); return; }
+      sfx.hit();
+      if (this.lives <= 0) { this.state = "lost"; sfx.lose(); this.cbs.onLose(); return; }
       this.respawn();
     }
 
@@ -258,6 +259,7 @@ export class GameEngine {
         this.cbs.onScore(this.score);
         this.particles.burst(c.x + c.w / 2, c.y + c.h / 2, 12, "#ffd84a");
         this.particles.burst(c.x + c.w / 2, c.y + c.h / 2, 6, "#fff2a0", { size: 1.5, gravity: 0.05, life: 22, maxLife: 22 });
+        sfx.coin();
       }
     }
 
@@ -274,13 +276,15 @@ export class GameEngine {
           this.cbs.onScore(this.score);
           this.particles.burst(e.x + e.w / 2, e.y + e.h / 2, 14, e.kind === "spider" ? "#7a3a9a" : "#666");
           this.shake = 4;
+          sfx.stomp();
         } else if (p.invuln === 0) {
           this.lives--; this.cbs.onLives(this.lives);
           p.invuln = 80;
           p.vy = -8;
           this.shake = 12;
           this.particles.burst(p.x + p.w / 2, p.y + p.h / 2, 16, "#ff5252");
-          if (this.lives <= 0) { this.state = "lost"; this.cbs.onLose(); return; }
+          sfx.hit();
+          if (this.lives <= 0) { this.state = "lost"; sfx.lose(); this.cbs.onLose(); return; }
         }
       }
     }
