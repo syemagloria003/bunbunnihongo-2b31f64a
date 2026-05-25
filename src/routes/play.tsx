@@ -30,18 +30,19 @@ function LevelSelect() {
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
-          <h1 className="font-display text-3xl md:text-4xl font-bold">Peta Taman 🌻</h1>
+          <h1 className="font-display text-3xl md:text-4xl font-bold">Peta Petualangan 🗺️</h1>
           <div className="w-16" />
         </div>
 
         {p.crystal && (
           <div className="honey-card rounded-2xl p-4 mb-4 text-center">
             <p className="font-bold">💎 Kristal Hiragana milikmu!</p>
-            <p className="text-sm text-muted-foreground">Topik Katakana segera tersedia.</p>
+            <p className="text-sm text-muted-foreground">Dunia Kristal Katakana sudah terbuka di bawah.</p>
           </div>
         )}
 
-        <div className="grid sm:grid-cols-2 gap-4">
+        <h2 className="font-display text-2xl font-bold mb-3">🌻 Taman Hiragana</h2>
+        <div className="grid sm:grid-cols-2 gap-4 mb-8">
           {LEVELS.map((l: LevelDef, i: number) => {
             const unlocked = p.unlocked.includes(l.id);
             return (
@@ -58,19 +59,31 @@ function LevelSelect() {
               />
             );
           })}
-          {KATAKANA_LEVELS_PREVIEW.map((l, i) => (
-            <LevelCard
-              key={l.id}
-              num={LEVELS.length + i + 1}
-              id={l.id}
-              name={l.name}
-              subtitle={l.subtitle}
-              unlocked={false}
-              stars={0}
-              comingSoon
-              bg="linear-gradient(180deg,#aaa,#777)"
-            />
-          ))}
+        </div>
+
+        <h2 className="font-display text-2xl font-bold mb-3">💎 Dunia Kristal (Katakana)</h2>
+        {!p.crystal && (
+          <p className="text-sm text-muted-foreground mb-3">
+            Tamatkan <b>Ratu Tawon</b> dengan ⭐⭐⭐ untuk mendapatkan Kristal dan membuka dunia ini.
+          </p>
+        )}
+        <div className="grid sm:grid-cols-2 gap-4">
+          {KATAKANA_LEVELS.map((l: LevelDef, i: number) => {
+            const unlocked = p.unlocked.includes(l.id);
+            return (
+              <LevelCard
+                key={l.id}
+                num={LEVELS.length + i + 1}
+                id={l.id}
+                name={l.name}
+                subtitle={l.subtitle}
+                unlocked={unlocked}
+                stars={p.bestStars[l.id] ?? 0}
+                best={p.bestScore[l.id]}
+                bg={l.bg}
+              />
+            );
+          })}
         </div>
       </div>
     </div>
