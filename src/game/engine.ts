@@ -297,7 +297,8 @@ export class GameEngine {
         g.triggered = true;
         this.pendingGate = g;
         this.state = "quiz";
-        this.cbs.onQuiz();
+        sfx.gate();
+        this.cbs.onQuiz(g.idx);
         return;
       }
     }
@@ -319,6 +320,7 @@ export class GameEngine {
       if (!this.wonBurstDone) {
         this.particles.confetti(this.goal.x + this.goal.w / 2, this.goal.y, 80);
         this.wonBurstDone = true;
+        sfx.win();
       }
       this.cbs.onWin();
     }
@@ -344,10 +346,12 @@ export class GameEngine {
       p.onGround = false;
       p.jumpsLeft = 1;
       p.flapCooldown = 8;
+      sfx.jump();
     } else if (p.jumpsLeft > 0) {
       p.vy = FLAP_V;
       p.jumpsLeft--;
       p.flapCooldown = 10;
+      sfx.flap();
     }
   }
 
