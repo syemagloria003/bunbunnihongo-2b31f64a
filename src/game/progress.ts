@@ -21,7 +21,10 @@ export function loadProgress(): Progress {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return DEFAULT;
-    return { ...DEFAULT, ...JSON.parse(raw) };
+    const p: Progress = { ...DEFAULT, ...JSON.parse(raw) };
+    // Migration: if crystal earned, ensure k1 is unlocked
+    if (p.crystal && !p.unlocked.includes("k1")) p.unlocked = [...p.unlocked, "k1"];
+    return p;
   } catch { return DEFAULT; }
 }
 
