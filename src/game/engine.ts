@@ -192,7 +192,7 @@ export class GameEngine {
 
     // gravity
     p.vy += GRAVITY;
-    if (p.vy > 14) p.vy = 14;
+    if (p.vy > MAX_FALL) p.vy = MAX_FALL;
 
     const landed = this.moveEntity(p, true);
     if (landed) { p.onGround = true; p.jumpsLeft = 2; }
