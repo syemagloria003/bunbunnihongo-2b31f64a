@@ -9,11 +9,18 @@ function rand(seed: number) {
   };
 }
 
-export function drawSky(ctx: CanvasRenderingContext2D, w: number, h: number, theme: WorldTheme, t: number) {
+export function drawSky(
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  theme: WorldTheme,
+  t: number,
+  skyOverride?: { top: string; bottom: string },
+) {
   const p = getTheme(theme);
   const g = ctx.createLinearGradient(0, 0, 0, h);
-  g.addColorStop(0, p.skyTop);
-  g.addColorStop(1, p.skyBottom);
+  g.addColorStop(0, skyOverride?.top ?? p.skyTop);
+  g.addColorStop(1, skyOverride?.bottom ?? p.skyBottom);
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, w, h);
 
