@@ -90,6 +90,32 @@ function LevelSelect() {
   );
 }
 
+function AdminUnlock({ onUnlock }: { onUnlock: (p: Progress) => void }) {
+  const handleClick = () => {
+    const code = window.prompt("Kode admin:");
+    if (code === null) return;
+    if (code !== "seisho11") {
+      window.alert("Kode salah.");
+      return;
+    }
+    const p = loadProgress();
+    p.unlocked = ALL_LEVELS.map((l) => l.id);
+    p.crystal = true;
+    saveProgress(p);
+    onUnlock(p);
+    window.alert("Semua level dibuka. 🔓");
+  };
+  return (
+    <button
+      onClick={handleClick}
+      className="text-xs font-semibold px-2 py-1 rounded-md border border-border text-muted-foreground hover:text-primary hover:border-primary"
+      title="Admin"
+    >
+      🔑 Admin
+    </button>
+  );
+}
+
 function LevelCard({
   num, id, name, subtitle, unlocked, best, bg, comingSoon, stars,
 }: {
