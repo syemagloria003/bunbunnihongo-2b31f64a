@@ -197,7 +197,7 @@ function Landing() {
 
 
       {/* Testimoni — WA screenshots */}
-      <section className="px-6 py-16 bg-gradient-to-b from-background via-secondary/10 to-background">
+      <section id="testimoni" className="px-6 py-16 bg-gradient-to-b from-background via-secondary/10 to-background scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <span className="inline-block bg-primary/15 text-primary text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wider uppercase">
