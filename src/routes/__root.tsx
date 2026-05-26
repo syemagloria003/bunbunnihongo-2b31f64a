@@ -124,7 +124,51 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <AuthGate>
+        <Outlet />
+      </AuthGate>
     </QueryClientProvider>
   );
+}
+
+function AuthGate({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [checked, setChecked] = useState(false);
+  const [signedIn, setSignedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    let mounted = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (!mounted) return;
+      setSignedIn(!!data.session);
+      setChecked(true);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
+      setSignedIn(!!session);
+      router.invalidate();
+      queryClient.invalidateQueries();
+    });
+    return () => { mounted = false; subscription.unsubscribe(); };
+  }, [router, queryClient]);
+
+  const isPublic = pathname === "/login";
+
+  useEffect(() => {
+    if (!checked) return;
+    if (!signedIn && !isPublic) {
+      router.navigate({ to: "/login" });
+    }
+  }, [checked, signedIn, isPublic, router]);
+
+  if (!checked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">Memuat…</p>
+      </div>
+    );
+  }
+  if (!signedIn && !isPublic) return null;
+  return <>{children}</>;
 }
