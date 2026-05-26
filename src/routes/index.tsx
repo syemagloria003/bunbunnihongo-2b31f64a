@@ -292,20 +292,25 @@ function Landing() {
           <p className="text-center text-muted-foreground mb-8 text-sm">
             Cuplikan dari batch-batch sebelumnya
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {gallery.map((g) => (
-              <figure key={g.src} className="group relative overflow-hidden rounded-2xl border-2 border-border bg-card shadow-sm">
-                <img
-                  src={g.src}
-                  alt={g.label}
-                  loading="lazy"
-                  className="w-full h-40 md:h-44 object-cover group-hover:scale-105 transition duration-300"
-                />
-                <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white text-xs font-semibold px-3 py-2">
-                  {g.label}
-                </figcaption>
-              </figure>
-            ))}
+          <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+            <div className="flex gap-4 animate-marquee w-max">
+              {[...gallery, ...gallery].map((g, i) => (
+                <figure
+                  key={`${g.src}-${i}`}
+                  className="relative shrink-0 w-64 md:w-80 h-48 md:h-56 rounded-2xl border-2 border-border bg-card shadow-sm overflow-hidden flex items-center justify-center"
+                >
+                  <img
+                    src={g.src}
+                    alt={g.label}
+                    loading="lazy"
+                    className="max-w-full max-h-full object-contain"
+                  />
+                  <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white text-xs font-semibold px-3 py-2">
+                    {g.label}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
         </div>
       </section>
