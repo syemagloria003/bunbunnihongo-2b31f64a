@@ -317,7 +317,7 @@ function Landing() {
             Siap mulai perjalanan Bahasa Jepangmu? 🚀
           </h2>
           <p className="text-foreground/80 mb-6">
-            Chat admin atau follow Instagram kami untuk info kelas terbaru.
+            Chat admin untuk daftar kelas dan konsultasi gratis.
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <a
@@ -327,22 +327,12 @@ function Landing() {
             >
               💬 Daftar via WhatsApp
             </a>
-            <a
-              href={IG_LINK}
-              target="_blank" rel="noopener noreferrer"
-              className="px-6 py-3 rounded-2xl border-2 border-primary bg-background font-bold text-lg hover:bg-primary/10"
-            >
-              📷 @bunbun_nihongo
-            </a>
-            {loggedIn && (
-              <Link
-                to="/play"
-                className="px-6 py-3 rounded-2xl border-2 border-border bg-background font-bold text-lg hover:bg-muted"
-              >
-                🎮 Lanjut Latihan
-              </Link>
-            )}
           </div>
+          <p className="text-sm text-muted-foreground mt-6">
+            Sudah jadi murid Bunbun?{" "}
+            <Link to="/login" className="text-primary font-semibold underline">Login</Link>{" "}
+            untuk akses game sebagai latihan tambahan setelah kelas.
+          </p>
         </div>
       </section>
 
