@@ -12,7 +12,7 @@ export const Route = createFileRoute("/login")({
   }),
   beforeLoad: async () => {
     const { data } = await supabase.auth.getSession();
-    if (data.session) throw redirect({ to: "/" });
+    if (data.session) throw redirect({ to: "/play" });
   },
   component: LoginPage,
 });
@@ -34,7 +34,7 @@ function LoginPage() {
       setErr("Email atau password salah. Hubungi admin kalau lupa.");
       return;
     }
-    await navigate({ to: "/" });
+    await navigate({ to: "/play" });
   }
 
   return (
