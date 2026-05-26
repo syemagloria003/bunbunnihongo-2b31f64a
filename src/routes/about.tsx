@@ -57,6 +57,30 @@ function About() {
           </div>
         </section>
 
+        <section className="honey-card rounded-2xl p-5">
+          <h2 className="font-display text-xl font-bold mb-2">🙏 Kredit</h2>
+          <p className="text-xs text-muted-foreground">
+            Animasi urutan goresan kanji menggunakan data dari{" "}
+            <a
+              href="https://kanjivg.tagaini.net"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-primary"
+            >
+              KanjiVG
+            </a>{" "}
+            oleh Ulrich Apel, dilisensikan di bawah{" "}
+            <a
+              href="https://creativecommons.org/licenses/by-sa/3.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-primary"
+            >
+              CC BY-SA 3.0
+            </a>.
+          </p>
+        </section>
+
         <div className="flex justify-center">
           <Link to="/play" className="px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold text-lg shadow-lg hover:brightness-105">
             🎮 Siap Main!
