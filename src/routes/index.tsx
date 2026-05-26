@@ -404,7 +404,7 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
         <a href="#sensei" className="hidden sm:inline hover:text-primary">Sensei</a>
         {loggedIn ? (
           <Link to="/play" className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground hover:brightness-110">
-            Main Game
+            LOGIN
           </Link>
         ) : (
           <>
