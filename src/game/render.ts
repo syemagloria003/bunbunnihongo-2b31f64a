@@ -128,6 +128,17 @@ export function drawGround(
     } else if (theme === "cosmic_void") {
       ctx.fillStyle = "rgba(255,255,255,0.5)";
       ctx.fillRect(x, y, TILE, 1);
+    } else if (theme === "crystal_cave") {
+      // sparkly crystal shards on the cap
+      ctx.fillStyle = "#ffffff";
+      for (let i = 0; i < 3; i++) {
+        const bx = x + 6 + i * 12;
+        ctx.beginPath();
+        ctx.moveTo(bx, y + 9); ctx.lineTo(bx + 3, y + 1); ctx.lineTo(bx + 6, y + 9);
+        ctx.closePath(); ctx.fill();
+      }
+      ctx.fillStyle = "rgba(174,240,255,0.9)";
+      ctx.fillRect(x, y, TILE, 2);
     }
     ctx.fillStyle = "rgba(255,255,255,0.25)";
     ctx.fillRect(x, y, TILE, 1);
