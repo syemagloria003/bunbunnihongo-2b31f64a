@@ -7,6 +7,7 @@ import { ALL_KANJI } from "@/game/kanji-data";
 import { generateWords, makeOptionsForWord, type KanaWord } from "@/game/words";
 import { KanaGateModal } from "./KanaGateModal";
 import { completeLevel, computeStars } from "@/game/progress";
+import { submitScore } from "@/game/leaderboard";
 import { unlockAudio, setMuted, isMuted } from "@/game/audio";
 
 const W = 800;
@@ -92,6 +93,8 @@ export function GameCanvas({ level }: { level: LevelDef }) {
         isFinalLevel(level.id),
         isFinalKatakanaLevel(level.id),
       );
+      // Kirim skor ke leaderboard (silently fail kalau endpoint PHP belum ada).
+      void submitScore(score, level.id, level.name);
     }
   }, [result]); // eslint-disable-line react-hooks/exhaustive-deps
 
