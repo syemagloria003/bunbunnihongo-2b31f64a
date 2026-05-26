@@ -151,7 +151,7 @@ function Landing() {
       </section>
 
       {/* Meet the Sensei — poster */}
-      <section className="px-6 py-16 bg-muted/20">
+      <section id="sensei" className="px-6 py-16 bg-muted/20 scroll-mt-20">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8">
             <span className="inline-block bg-accent/15 text-accent text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wider uppercase">
