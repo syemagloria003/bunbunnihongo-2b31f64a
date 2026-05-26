@@ -12,6 +12,7 @@ import galN3Absen from "@/assets/gallery/kelas-n3-absen.jpg";
 import posterRegN4 from "@/assets/posters/kelas-reguler-n4.png";
 import posterJlptN3 from "@/assets/posters/kelas-jlpt-n3.png";
 import posterSensei from "@/assets/sensei-syema.png";
+import posterTim from "@/assets/tim-pengajar.png";
 
 import wa1 from "@/assets/testimoni/wa1.jpeg";
 import wa2 from "@/assets/testimoni/wa2.jpeg";
@@ -160,16 +161,33 @@ function Landing() {
               Diajar langsung oleh founder kami 🎓
             </h2>
             <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-              Founder kami, <strong>Syema Sensei</strong>, lulusan terbaik UNESA & bersertifikat <strong>JLPT N2</strong>.
-              Kelas Bunbun juga didukung oleh pengajar JLPT bersertifikat <strong>(N2 / N1 Only!)</strong> yang telah melalui proses seleksi dan pelatihan metode Bunbun.
+              Founder kami, <strong>Syema Sensei</strong>, lulusan terbaik UNESA & bersertifikat <strong>JLPT N2</strong> — sabar, detail, dan paham banget cara ngajar dari nol sampai mahir.
             </p>
           </div>
 
           {/* Founder poster */}
-          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card">
+          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card mb-12">
             <img
               src={posterSensei}
               alt="Profil Syema Sensei — Founder Bunbun Nihongo, JLPT N2, S1 Pendidikan Bahasa Jepang UNESA"
+              loading="lazy"
+              className="w-full h-auto block"
+            />
+          </div>
+
+          {/* Tim pengajar */}
+          <div className="text-center mb-6">
+            <h3 className="text-xl md:text-2xl font-display font-bold mb-2">
+              Tim pengajar Bunbun 🐝
+            </h3>
+            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+              Kelas Bunbun juga didukung oleh pengajar JLPT bersertifikat <strong>(N2 / N1 Only!)</strong> yang telah melalui proses seleksi dan pelatihan metode Bunbun.
+            </p>
+          </div>
+          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card">
+            <img
+              src={posterTim}
+              alt="Tim pengajar Bunbun Nihongo — bersertifikat JLPT N2 / N1"
               loading="lazy"
               className="w-full h-auto block"
             />
