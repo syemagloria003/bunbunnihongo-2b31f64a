@@ -80,7 +80,7 @@ function LoginPage() {
           </button>
         </form>
         <p className="text-xs text-center text-muted-foreground mt-6">
-          Belum punya akun? Hubungi <Link to="/" className="text-primary font-semibold">admin/guru</Link> untuk daftar.
+          Belum punya akun? Hubungi <a href="https://wa.me/62895328671000" target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">admin/guru</a> untuk daftar.
         </p>
       </div>
     </div>
