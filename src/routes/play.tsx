@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { LEVELS, KATAKANA_LEVELS, KANJI_LEVELS, ALL_LEVELS, type LevelDef } from "@/game/levels";
 import { loadProgress, saveProgress, type Progress } from "@/game/progress";
 import { supabase } from "@/integrations/supabase/client";
+import { LevelPreview } from "@/components/LevelPreview";
 
 export const Route = createFileRoute("/play")({
   head: () => ({
@@ -177,7 +178,7 @@ function LevelSelect() {
           </div>
         )}
 
-        <h2 className="font-display text-2xl font-bold mb-3">🌻 Taman Hiragana</h2>
+        <h2 className="font-display text-2xl font-bold mb-3">🌻 Taman Bunga (Hiragana)</h2>
         <div className="grid sm:grid-cols-2 gap-4 mb-8">
           {LEVELS.map((l: LevelDef, i: number) => {
             const unlocked = p.unlocked.includes(l.id);
@@ -192,6 +193,7 @@ function LevelSelect() {
                 stars={p.bestStars[l.id] ?? 0}
                 best={p.bestScore[l.id]}
                 bg={l.bg}
+                theme={l.theme}
               />
             );
           })}
@@ -217,6 +219,7 @@ function LevelSelect() {
                 stars={p.bestStars[l.id] ?? 0}
                 best={p.bestScore[l.id]}
                 bg={l.bg}
+                theme={l.theme}
               />
             );
           })}
@@ -249,6 +252,7 @@ function LevelSelect() {
                 stars={p.bestStars[l.id] ?? 0}
                 best={p.bestScore[l.id]}
                 bg={l.bg}
+                theme={l.theme}
               />
             );
           })}
@@ -285,10 +289,11 @@ function AdminUnlock({ onUnlock }: { onUnlock: (p: Progress) => void }) {
 }
 
 function LevelCard({
-  num, id, name, subtitle, unlocked, best, bg, comingSoon, stars,
+  num, id, name, subtitle, unlocked, best, theme, comingSoon, stars,
 }: {
   num: number; id: string; name: string; subtitle: string;
-  unlocked: boolean; best?: number; bg: string; comingSoon?: boolean; stars: number;
+  unlocked: boolean; best?: number; bg: string; theme: import("@/game/themes").WorldTheme;
+  comingSoon?: boolean; stars: number;
 }) {
   const inner = (
     <div
@@ -297,7 +302,7 @@ function LevelCard({
         unlocked ? "hover:-translate-y-1 cursor-pointer" : "opacity-60",
       ].join(" ")}
     >
-      <div className="absolute inset-x-0 top-0 h-16" style={{ background: bg }} />
+      <LevelPreview theme={theme} locked={!unlocked && !comingSoon} />
       <div className="relative pt-12">
         <div className="flex items-center gap-2 mb-1">
           <span className="bg-primary text-primary-foreground text-xs font-bold px-2 py-0.5 rounded-full">
