@@ -325,6 +325,30 @@ function Feature({ icon, title, desc }: { icon: string; title: string; desc: str
   );
 }
 
+function Perk({ icon, title, desc }: { icon: string; title: string; desc: string }) {
+  return (
+    <div className="rounded-2xl p-6 bg-card border-2 border-border/60 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition">
+      <div className="w-12 h-12 rounded-xl bg-primary/15 text-primary flex items-center justify-center text-2xl mb-3">
+        {icon}
+      </div>
+      <h3 className="font-bold text-base mb-1">{title}</h3>
+      <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+    </div>
+  );
+}
+
+function SenseiCard({ initial, name }: { initial: string; name: string }) {
+  return (
+    <div className="rounded-2xl p-5 bg-card border-2 border-border/60 text-center shadow-sm">
+      <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-3xl font-display font-extrabold text-primary-foreground ring-4 ring-background shadow">
+        {initial}
+      </div>
+      <h3 className="font-display font-bold text-lg mt-3">{name}</h3>
+      <span className="inline-block mt-1 bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">JLPT N2</span>
+    </div>
+  );
+}
+
 function PosterCard({
   src, alt, title, subtitle, schedule,
 }: { src: string; alt: string; title: string; subtitle: string; schedule: string }) {
