@@ -47,31 +47,9 @@ export async function submitScore(
 }
 
 export async function fetchLeaderboard(limit = 20): Promise<LeaderboardEntry[]> {
-  const { data: scoreRows, error } = await supabase
-    .from("scores")
-    .select("user_id, skor, tanggal")
-    .order("skor", { ascending: false })
-    .limit(limit * 10);
-  if (error || !scoreRows) return [];
-
-  // Dedup per user, ambil skor tertinggi saja
-  const best = new Map<string, { user_id: string; skor: number; tanggal: string }>();
-  for (const row of scoreRows) {
-    const existing = best.get(row.user_id);
-    if (!existing || row.skor > existing.skor) best.set(row.user_id, row);
-  }
-
-  const userIds = Array.from(best.keys());
-  if (userIds.length === 0) return [];
-
-  const { data: profiles } = await supabase
-    .from("profiles")
-    .select("id, nama_lengkap")
-    .in("id", userIds);
-  const nameMap = new Map((profiles ?? []).map((p) => [p.id, p.nama_lengkap]));
-
-  return Array.from(best.values())
-    .map((r) => ({ ...r, nama: nameMap.get(r.user_id) ?? "Murid" }))
+  const { data, error } = await supabase.rpc("get_leaderboard", { _limit: limit });
+  if (error || !data) return [];
+  return (data as LeaderboardEntry[])
     .sort((a, b) => b.skor - a.skor)
     .slice(0, limit);
 }
