@@ -34,7 +34,7 @@ function LoginPage() {
       setErr("Email atau password salah. Hubungi admin kalau lupa.");
       return;
     }
-    await navigate({ to: "/" });
+    await navigate({ to: "/play" });
   }
 
   return (
