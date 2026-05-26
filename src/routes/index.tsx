@@ -19,7 +19,7 @@ import wa2 from "@/assets/testimoni/wa2.jpeg";
 import wa3 from "@/assets/testimoni/wa3.jpeg";
 import wa4 from "@/assets/testimoni/wa4.jpeg";
 
-const WA_LINK = "https://wa.me/6289532867100?text=Halo%20Bunbun%20Nihongo,%20saya%20mau%20tanya%20kelas%20yang%20sedang%20dibuka.";
+const WA_LINK = "https://wa.me/62895328671000?text=Halo%20Bunbun%20Nihongo,%20saya%20mau%20tanya%20kelas%20yang%20sedang%20dibuka.";
 const IG_LINK = "https://instagram.com/bunbun_nihongo";
 
 export const Route = createFileRoute("/")({
