@@ -55,11 +55,11 @@ function LeaderboardPage() {
   return (
     <div className="min-h-screen px-6 py-8">
       <div className="max-w-2xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
-          <h1 className="font-display text-3xl md:text-4xl font-bold">🏆 Papan Peringkat</h1>
-          <Link to="/play" className="text-sm font-semibold hover:text-primary">Main →</Link>
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <Link to="/" className="text-sm font-semibold hover:text-primary shrink-0">← Beranda</Link>
+          <Link to="/play" className="text-sm font-semibold hover:text-primary shrink-0">Main →</Link>
         </div>
+        <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6">🏆 Papan Peringkat</h1>
 
         {me && (
           <p className="text-center text-sm text-muted-foreground mb-4">

@@ -14,11 +14,10 @@ function About() {
   return (
     <div className="min-h-screen px-6 py-8">
       <div className="max-w-2xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
-          <h1 className="font-display text-3xl font-bold">Cara Main</h1>
-          <div className="w-16" />
+        <div className="flex items-center">
+          <Link to="/" className="text-sm font-semibold hover:text-primary shrink-0">← Beranda</Link>
         </div>
+        <h1 className="font-display text-2xl sm:text-3xl font-bold text-center">Cara Main</h1>
 
         <section className="honey-card rounded-2xl p-5">
           <h2 className="font-display text-xl font-bold mb-2">🎮 Kontrol</h2>
