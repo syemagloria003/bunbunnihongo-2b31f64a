@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { GameEngine } from "@/game/engine";
-import { type LevelDef, LEVELS, nextLevelId, isFinalLevel } from "@/game/levels";
+import { type LevelDef, LEVELS, nextLevelId, isFinalLevel, isFinalKatakanaLevel } from "@/game/levels";
 import { pickKanaPool, ALL_KANA } from "@/game/kana-data";
+import { ALL_KANJI } from "@/game/kanji-data";
 import { generateWords, makeOptionsForWord, type KanaWord } from "@/game/words";
 import { KanaGateModal } from "./KanaGateModal";
 import { completeLevel, computeStars } from "@/game/progress";
@@ -28,8 +29,11 @@ export function GameCanvas({ level }: { level: LevelDef }) {
   const [mounted, setMounted] = useState(0); // bump to remount engine
   const [muted, setMutedState] = useState<boolean>(() => (typeof window !== "undefined" ? isMuted() : false));
 
+  const isKanji = level.mode === "kanji";
+  const distractorPool = isKanji ? ALL_KANJI : ALL_KANA;
+
   const pool = useMemo(
-    () => pickKanaPool(level.kanaTypes, level.kanaGroups),
+    () => level.customPool ?? pickKanaPool(level.kanaTypes ?? [], level.kanaGroups ?? []),
     [level],
   );
 
@@ -40,13 +44,13 @@ export function GameCanvas({ level }: { level: LevelDef }) {
       onCoins: setCoins,
       onQuiz: (idx) => {
         const word = wordsRef.current[idx] ?? wordsRef.current[0];
-        setQuiz({ word, options: makeOptionsForWord(word, ALL_KANA) });
+        setQuiz({ word, options: makeOptionsForWord(word, distractorPool) });
       },
       onWin: () => setResult("won"),
       onLose: () => setResult("lost"),
     });
     engineRef.current = engine;
-    wordsRef.current = generateWords(pool, engine.gates.length);
+    wordsRef.current = generateWords(pool, engine.gates.length, level.wordLen);
 
     const kd = (e: KeyboardEvent) => {
       if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", " "].includes(e.key)) e.preventDefault();
@@ -73,7 +77,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
       window.removeEventListener("keydown", kd);
       window.removeEventListener("keyup", ku);
     };
-  }, [level, pool, mounted]);
+  }, [level, pool, mounted, distractorPool]);
 
   // On win/lose finalize stars and persist progress
   useEffect(() => {
@@ -83,7 +87,11 @@ export function GameCanvas({ level }: { level: LevelDef }) {
     setStars(s);
     if (result === "won") {
       const next = nextLevelId(level.id);
-      completeLevel(level.id, score, coins, s, next, isFinalLevel(level.id));
+      completeLevel(
+        level.id, score, coins, s, next,
+        isFinalLevel(level.id),
+        isFinalKatakanaLevel(level.id),
+      );
     }
   }, [result]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -129,7 +137,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
         style={{ width: W, maxWidth: "100%", aspectRatio: `${W}/${H}`, background: level.bg }}
       >
         <canvas ref={canvasRef} width={W} height={H} className="block w-full h-full" />
-        {quiz && <KanaGateModal word={quiz.word} options={quiz.options} onAnswer={answer} />}
+        {quiz && <KanaGateModal word={quiz.word} options={quiz.options} onAnswer={answer} mode={level.mode} />}
         {result && (
           <div className="absolute inset-0 z-40 flex items-center justify-center bg-foreground/50 backdrop-blur-sm p-4">
             <div className="honey-card rounded-3xl p-6 text-center max-w-sm w-full">
@@ -151,6 +159,11 @@ export function GameCanvas({ level }: { level: LevelDef }) {
               {result === "won" && isFinalLevel(level.id) && stars >= 3 && (
                 <p className="text-sm font-semibold text-primary mb-3">
                   💎 Kristal Hiragana didapat! Topik Katakana terbuka.
+                </p>
+              )}
+              {result === "won" && isFinalKatakanaLevel(level.id) && stars >= 3 && (
+                <p className="text-sm font-semibold text-primary mb-3">
+                  ☄️ Meteor Katakana didapat! Dunia Galaksi Meteor (Kanji) terbuka.
                 </p>
               )}
               <div className="flex flex-wrap gap-2 justify-center">

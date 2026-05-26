@@ -1,5 +1,9 @@
-import type { KanaGroup, KanaType } from "./kana-data";
+import type { Kana, KanaGroup, KanaType } from "./kana-data";
 import type { WorldTheme } from "./themes";
+import {
+  KANJI_N1, KANJI_N2, KANJI_ELEM,
+  KANJI_L4, KANJI_L5, KANJI_L6, KANJI_L7, KANJI_L8, KANJI_L9,
+} from "./kanji-data";
 
 export interface LevelDef {
   id: string;
@@ -8,9 +12,17 @@ export interface LevelDef {
   bg: string;
   ground: string;
   tiles: string[];
-  kanaTypes: KanaType[];
-  kanaGroups: KanaGroup[];
+  // Hiragana/Katakana levels filter ALL_KANA via these. Optional because
+  // kanji levels supply `customPool` directly.
+  kanaTypes?: KanaType[];
+  kanaGroups?: KanaGroup[];
   theme: WorldTheme;
+  // Kanji levels (and any future custom-pool world) provide entries directly.
+  customPool?: Kana[];
+  // When set to 1, each gate shows one character with its meaning options.
+  wordLen?: number;
+  // Modal label switch: "kana" (default) or "kanji" (asks for meaning).
+  mode?: "kana" | "kanji";
 }
 
 /*
@@ -175,6 +187,90 @@ export const LEVELS: LevelDef[] = [
   },
 ];
 
+// Kanji arc — Dunia Galaksi Meteor. Each level uses a per-level customPool
+// of kanji and word length 1 (one glyph per gate, answer in Indonesian).
+interface KanjiLevelSeed {
+  id: string;
+  name: string;
+  subtitle: string;
+  bg: string;
+  pool: Kana[];
+  length: number;
+  enemies: number;
+  pits?: number[];
+}
+
+const KANJI_SEEDS: KanjiLevelSeed[] = [
+  {
+    id: "kn1", name: "Sabuk Asteroid", subtitle: "Angka 一 〜 十",
+    bg: "linear-gradient(180deg, #02030f 0%, #1a0838 100%)",
+    pool: KANJI_N1, length: 78, enemies: 3,
+  },
+  {
+    id: "kn2", name: "Nebula Angka", subtitle: "百 千 万 億",
+    bg: "linear-gradient(180deg, #050218 0%, #2a1060 100%)",
+    pool: KANJI_N2, length: 64, enemies: 3,
+  },
+  {
+    id: "kn3", name: "Planet Elemen", subtitle: "月 日 水 火 木 土",
+    bg: "linear-gradient(180deg, #0a0428 0%, #3a1860 100%)",
+    pool: KANJI_ELEM, length: 78, enemies: 4,
+  },
+  {
+    id: "kn4", name: "Kuil Bintang", subtitle: "Keluarga, orang, negara…",
+    bg: "linear-gradient(180deg, #02030f 0%, #4a1a7a 100%)",
+    pool: KANJI_L4, length: 110, enemies: 6,
+    pits: pitsEvery(110, 14),
+  },
+  {
+    id: "kn5", name: "Pusaran Waktu", subtitle: "Jam, menit, sekarang, tahun…",
+    bg: "linear-gradient(180deg, #08051a 0%, #5a2a8a 100%)",
+    pool: KANJI_L5, length: 102, enemies: 6,
+    pits: pitsEvery(102, 14),
+  },
+  {
+    id: "kn6", name: "Bulan Pasar", subtitle: "Besar/kecil, mahal/murah…",
+    bg: "linear-gradient(180deg, #0a0428 0%, #7a3aa0 100%)",
+    pool: KANJI_L6, length: 118, enemies: 7,
+    pits: pitsEvery(118, 12),
+  },
+  {
+    id: "kn7", name: "Stasiun Komet", subtitle: "Arah & tempat",
+    bg: "linear-gradient(180deg, #050218 0%, #2a5aaf 100%)",
+    pool: KANJI_L7, length: 108, enemies: 7,
+    pits: pitsEvery(108, 12),
+  },
+  {
+    id: "kn8", name: "Kota Gravitasi", subtitle: "Aktivitas sehari-hari",
+    bg: "linear-gradient(180deg, #02030f 0%, #c44518 100%)",
+    pool: KANJI_L8, length: 124, enemies: 9,
+    pits: pitsEvery(124, 11),
+  },
+  {
+    id: "kn9", name: "Pusat Galaksi", subtitle: "Alam, tubuh & langit",
+    bg: "linear-gradient(180deg, #050218 0%, #ff7a3a 100%)",
+    pool: KANJI_L9, length: 140, enemies: 10,
+    pits: pitsEvery(140, 10),
+  },
+];
+
+export const KANJI_LEVELS: LevelDef[] = KANJI_SEEDS.map((s) => {
+  const gates = s.pool.length; // 1 gate per kanji → guaranteed full coverage
+  const coins = Math.max(8, Math.round(s.pool.length * 0.8));
+  return {
+    id: s.id,
+    theme: "meteor_galaxy",
+    name: s.name,
+    subtitle: s.subtitle,
+    bg: s.bg,
+    ground: "#2a1048",
+    tiles: genTiles({ length: s.length, gates, coins, enemies: s.enemies, pits: s.pits }),
+    customPool: s.pool,
+    wordLen: 1,
+    mode: "kanji",
+  };
+});
+
 // Katakana arc — semua level pakai tema Gua Kristal (konsisten); hanya langit yang berubah per level.
 export const KATAKANA_LEVELS: LevelDef[] = [
   {
@@ -259,7 +355,7 @@ export const KATAKANA_LEVELS: LevelDef[] = [
   },
 ];
 
-export const ALL_LEVELS: LevelDef[] = [...LEVELS, ...KATAKANA_LEVELS];
+export const ALL_LEVELS: LevelDef[] = [...LEVELS, ...KATAKANA_LEVELS, ...KANJI_LEVELS];
 
 export function getLevel(id: string): LevelDef | undefined {
   return ALL_LEVELS.find((l) => l.id === id);
@@ -276,7 +372,11 @@ export function isFinalLevel(id: string): boolean {
   return LEVELS[LEVELS.length - 1].id === id;
 }
 
-// Final Katakana boss — clearing this completes the game.
+// Final Katakana boss — clearing this awards the meteor that unlocks Kanji.
 export function isFinalKatakanaLevel(id: string): boolean {
   return KATAKANA_LEVELS[KATAKANA_LEVELS.length - 1].id === id;
+}
+
+export function isFinalKanjiLevel(id: string): boolean {
+  return KANJI_LEVELS[KANJI_LEVELS.length - 1].id === id;
 }
