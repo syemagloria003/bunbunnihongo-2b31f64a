@@ -177,7 +177,7 @@ function LevelSelect() {
           </div>
         )}
 
-        <h2 className="font-display text-2xl font-bold mb-3">🌻 Taman Hiragana</h2>
+        <h2 className="font-display text-2xl font-bold mb-3">🌻 Taman Bunga (Hiragana)</h2>
         <div className="grid sm:grid-cols-2 gap-4 mb-8">
           {LEVELS.map((l: LevelDef, i: number) => {
             const unlocked = p.unlocked.includes(l.id);
@@ -192,6 +192,7 @@ function LevelSelect() {
                 stars={p.bestStars[l.id] ?? 0}
                 best={p.bestScore[l.id]}
                 bg={l.bg}
+                theme={l.theme}
               />
             );
           })}
@@ -217,6 +218,7 @@ function LevelSelect() {
                 stars={p.bestStars[l.id] ?? 0}
                 best={p.bestScore[l.id]}
                 bg={l.bg}
+                theme={l.theme}
               />
             );
           })}
@@ -249,6 +251,7 @@ function LevelSelect() {
                 stars={p.bestStars[l.id] ?? 0}
                 best={p.bestScore[l.id]}
                 bg={l.bg}
+                theme={l.theme}
               />
             );
           })}
