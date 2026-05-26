@@ -137,7 +137,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
         style={{ width: W, maxWidth: "100%", aspectRatio: `${W}/${H}`, background: level.bg }}
       >
         <canvas ref={canvasRef} width={W} height={H} className="block w-full h-full" />
-        {quiz && <KanaGateModal word={quiz.word} options={quiz.options} onAnswer={answer} />}
+        {quiz && <KanaGateModal word={quiz.word} options={quiz.options} onAnswer={answer} mode={level.mode} />}
         {result && (
           <div className="absolute inset-0 z-40 flex items-center justify-center bg-foreground/50 backdrop-blur-sm p-4">
             <div className="honey-card rounded-3xl p-6 text-center max-w-sm w-full">
