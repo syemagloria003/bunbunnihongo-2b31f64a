@@ -1,59 +1,128 @@
-# Animasi Urutan Goresan Kanji
+## Tujuan
 
-Menampilkan animasi cara menulis kanji (urutan goresan yang benar) di dalam `KanaGateModal` saat pemain bertemu gerbang di level kanji. Auto-play, bisa di-replay, tanpa interaksi tracing.
+Game kana Bunbun Nihongo bisa dijalankan di hosting cPanel-mu, hanya bisa diakses murid yang sudah login lewat `login.php`-mu, dan punya **leaderboard real-time** yang menampilkan ranking skor antar murid biar mereka semangat saling salip.
 
-## Sumber data: KanjiVG
+---
 
-KanjiVG menyediakan file SVG per-kanji dengan tiap `<path>` adalah satu goresan, sudah berurutan. Lisensi CC BY-SA 3.0 (cukup dengan atribusi di halaman About).
+## Arsitektur akhir
 
-Hanya ~130 kanji yang dipakai game ini (level kn1–kn9), jadi kita **bundle subset KanjiVG** ke dalam project, bukan semua 11.000 file.
+```
+┌─────────────────────────────────────────────────────────┐
+│  cPanel bunbunnihongo.my.id                             │
+│                                                         │
+│  /login.php        ← (sudah ada, tidak diubah)          │
+│  /dashboard.php    ← (sudah ada, tambah link ke game)   │
+│  /config.php       ← (sudah ada)                        │
+│                                                         │
+│  /game/            ← FOLDER BARU                        │
+│    ├── index.php   ← guard: cek session, lalu render    │
+│    │                  game.html                         │
+│    ├── game.html   ← hasil build React (di-rename       │
+│    │                  dari dist/index.html)             │
+│    ├── assets/     ← JS, CSS, gambar dari build         │
+│    ├── api/                                             │
+│    │   ├── me.php       ← return JSON nama user login   │
+│    │   ├── save-score.php ← simpan skor ke MySQL        │
+│    │   └── leaderboard.php ← ambil top 20 skor          │
+│    └── .htaccess   ← SPA routing fallback               │
+└─────────────────────────────────────────────────────────┘
+```
 
-## Yang akan dibangun
+Game React jadi static SPA (HTML+JS+CSS murni), dibungkus PHP guard. Komunikasi data lewat 3 endpoint PHP.
 
-1. **Skrip build subset KanjiVG** (`scripts/fetch-kanjivg.mjs`)
-   - Baca semua karakter dari `src/game/kanji-data.ts`.
-   - Untuk tiap kanji, ambil file SVG dari repo KanjiVG (GitHub raw / release zip) berdasarkan codepoint hex (mis. `5c71.svg` untuk 山).
-   - Simpan SVG yang sudah dibersihkan ke `src/assets/kanjivg/<hex>.svg`.
-   - Dijalankan manual sekali (`bun run scripts/fetch-kanjivg.mjs`), hasilnya di-commit.
+---
 
-2. **Komponen `<KanjiStrokeOrder />`** (`src/components/KanjiStrokeOrder.tsx`)
-   - Props: `char: string`, `size?: number`, `speed?: number`.
-   - Load SVG via Vite glob import (`import.meta.glob('@/assets/kanjivg/*.svg', { as: 'raw', eager: true })`) → tidak ada fetch runtime.
-   - Parse SVG, ambil grup `<g id="kvg:StrokePaths_...">`, untuk tiap `<path>` set `stroke-dasharray = pathLength` + `stroke-dashoffset = pathLength`, lalu animasi `stroke-dashoffset → 0` berurutan via CSS animation + `animation-delay`.
-   - Goresan yang sudah selesai tetap tampak (stroke hitam solid); goresan berikutnya muncul dengan warna aksen lalu memudar ke hitam.
-   - Tombol kecil “▶ ulangi” untuk replay (re-mount via key).
-   - Nomor urut goresan opsional (dari grup `<text id="kvg:StrokeNumbers_...">` yang sudah ada di KanjiVG) — bisa di-toggle.
+## Bagian 1 — Perubahan di project React (Lovable)
 
-3. **Integrasi di `KanaGateModal.tsx`**
-   - Hanya saat `mode === "kanji"`.
-   - Tampilkan `<KanjiStrokeOrder char={word.kana} />` di atas opsi jawaban, di samping kanji besar.
-   - Auto-play sekali begitu modal terbuka, lalu diam sampai user klik replay.
-   - Tidak mengubah logika jawaban — murni visual.
+### 1.1 Hapus auth React
+- Hapus `src/routes/login.tsx` (kalau ada) dan semua kode auth React
+- Hapus `_authenticated/` layout dan pindahkan halaman game ke route publik (karena perlindungan sekarang dari PHP, bukan React)
+- Hapus integrasi Lovable Cloud / Supabase kalau dipakai untuk auth
 
-4. **Fallback**
-   - Jika SVG untuk karakter tidak ada di bundle (mis. kanji baru ditambah tapi belum di-fetch), komponen menampilkan kanji statis besar tanpa animasi dan tidak error.
+### 1.2 Ubah jadi SPA static
+- Ganti config Vite jadi mode SPA (bukan SSR)
+- Build output: 1 `index.html` + folder `assets/`
+- Atur `base` di Vite config jadi `/game/` supaya path asset benar di subfolder
 
-5. **Atribusi**
-   - Tambah satu baris kredit “Data goresan: KanjiVG (CC BY-SA 3.0)” di `src/routes/about.tsx`.
+### 1.3 Fitur baru: tampilan nama user + skor + leaderboard
+- Saat game load, fetch `api/me.php` → tampilkan "Halo, [Nama]!"
+- Saat game selesai, fetch `api/save-score.php` dengan skor
+- Halaman/komponen Leaderboard: fetch `api/leaderboard.php` setiap 10 detik (polling) → tampilkan top 20 skor real-time
+- Tombol "Leaderboard" di menu utama game
 
-## Detail teknis
+### 1.4 Routing
+- Hapus React Router auth guard
+- Tambah route `/leaderboard` untuk halaman ranking
 
-- **Ukuran bundle**: ~130 SVG × rata-rata 3–6 KB = ~0.5–1 MB mentah, ~150–300 KB setelah gzip. Acceptable.
-- **Tidak butuh library tambahan** (tanpa hanzi-writer). DOMParser bawaan browser cukup untuk parse SVG.
-- **Animasi pakai CSS murni** (`@keyframes draw`) bukan JS rAF, supaya hemat CPU saat modal terbuka.
-- **Tidak menyentuh** `engine.ts`, `levels.ts`, `progress.ts`, atau logika game lainnya.
+---
 
-## File yang akan diubah/dibuat
+## Bagian 2 — File PHP yang aku buatkan (tinggal copas)
 
-- created  `scripts/fetch-kanjivg.mjs`
-- created  `src/assets/kanjivg/*.svg` (subset, ~130 file)
-- created  `src/components/KanjiStrokeOrder.tsx`
-- edited   `src/components/KanaGateModal.tsx` (tampilkan komponen saat mode kanji)
-- edited   `src/routes/about.tsx` (atribusi KanjiVG)
+### 2.1 `game/index.php` (guard)
+Cek session, kalau belum login redirect ke `../login.php`. Kalau sudah login, baca `game.html` dan output-kan.
 
-## Di luar scope (bisa nanti)
+### 2.2 `game/api/me.php`
+Return JSON: `{"nama": "Syema", "email": "syema@bunbun.com"}` dari session. Game pakai ini untuk tampilkan nama.
 
-- Mode tracing dengan mouse/jari.
-- Kuis “tebak goresan berikutnya”.
-- Halaman practice goresan terpisah.
-- Animasi goresan untuk hiragana/katakana (KanjiVG juga punya data kana, mudah diperluas nanti).
+### 2.3 `game/api/save-score.php`
+Terima POST `{score: 85}`. Cek session. Insert ke tabel `scores` (email, nama, skor, tanggal). Aman dari SQL injection (prepared statement).
+
+### 2.4 `game/api/leaderboard.php`
+Return JSON top 20 skor tertinggi all-time: `[{nama, skor, tanggal}, ...]`. Bisa difilter mingguan/harian nanti kalau mau.
+
+### 2.5 `game/.htaccess`
+SPA fallback supaya refresh halaman tidak 404, dan blokir akses langsung ke `game.html`.
+
+---
+
+## Bagian 3 — SQL yang kamu jalankan di phpMyAdmin
+
+Satu tabel baru di database yang sama:
+
+```sql
+CREATE TABLE scores (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) NOT NULL,
+  nama_lengkap VARCHAR(100) NOT NULL,
+  skor INT NOT NULL,
+  tanggal DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_skor (skor DESC),
+  INDEX idx_email (email)
+);
+```
+
+---
+
+## Bagian 4 — Panduan upload (akan aku tulis di file `PANDUAN-UPLOAD.md`)
+
+Langkah-langkah untuk kamu:
+
+1. Download project dari Lovable (tombol GitHub atau Download ZIP)
+2. Di komputer: jalankan `npm install` lalu `npm run build`
+3. Buka folder `dist/` hasil build
+4. Rename `dist/index.html` → `game.html`
+5. Login cPanel → File Manager → buat folder baru `game/` di `public_html`
+6. Upload isi `dist/` ke folder `game/`
+7. Upload 5 file PHP yang aku buatkan ke folder `game/` dan `game/api/`
+8. Buka phpMyAdmin → jalankan SQL di Bagian 3
+9. Edit `dashboard.php`: tambah link `<a href="game/">Main Game Kana</a>`
+10. Test: `bunbunnihongo.my.id/game/` → harus redirect ke login kalau belum login
+
+---
+
+## Yang mungkin perlu kamu siapkan
+
+- **Path database**: file PHP-ku akan `include("../config.php")` — pastikan `config.php` ada di `public_html/`. Kalau di tempat lain, kasih tahu aku path-nya
+- **Nama kolom di tabel `users`**: aku asumsikan `email`, `nama_lengkap`, `password`, `status`, `expired_date` (sesuai kode yang kamu kirim). Kalau beda, kasih tahu
+- **Node.js & npm di komputer kamu** untuk build. Kalau belum punya, nanti aku kasih instruksi install
+
+---
+
+## Yang TIDAK termasuk di plan ini (bisa ditambah nanti)
+
+- Filter leaderboard per minggu/bulan
+- Admin panel lihat semua skor murid
+- Achievement / badge
+- Statistik per huruf kana
+
+Setelah kamu approve, aku langsung kerjakan semuanya dalam 1 batch: ubah project React + bikin file PHP + tulis panduan upload.
