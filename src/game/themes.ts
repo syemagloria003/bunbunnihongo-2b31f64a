@@ -7,7 +7,8 @@ export type WorldTheme =
   | "snow_field"
   | "silver_ruins"
   | "comet_nest"
-  | "cosmic_void";
+  | "cosmic_void"
+  | "meteor_galaxy";
 
 export interface ThemePalette {
   // sky gradient
@@ -232,6 +233,28 @@ export const THEMES: Record<WorldTheme, ThemePalette> = {
     confetti: ["#ffffff", "#b889ff", "#7ad0ff", "#ffd070", "#ff7ae0"],
     cloudColor: "rgba(184,137,255,0.35)",
     foregroundStyle: "stardust", midStyle: "planets", farStyle: "galaxy", lightStyle: "void",
+  },
+  meteor_galaxy: {
+    skyTop: "#02030f", skyBottom: "#1a0838", light: "#ffb070",
+    farBack: "#1a1048", farFront: "#2a1860",
+    midAccent: "#ff9a3a", midAccent2: "#7ad0ff",
+    foreground: "rgba(255, 220, 180, 0.65)",
+    // Ground: cosmic rock — warm orange crust over deep purple-black
+    groundTop: "#6a3a8a", groundBottom: "#1a0828", groundDeco: "rgba(255,200,120,0.55)",
+    // Glowing magma-crystal cap band
+    cap: "#ff9a3a", capDark: "#c4521a",
+    platformTop: "#ffce7a", platformBottom: "#4a1a6a", platformBolt: "#ffffff",
+    coinCore: "#fff0a0", coinEdge: "#ff7a3a", coinGlow: "rgba(255,200,90,0.95)",
+    gateFrame: "#1a0838", gateInner: "rgba(255,180,120,0.7)", gateBorder: "#ffd070",
+    goalA: "#ffce7a", goalB: "#3a1060", goalAccent: "#ffffff", goalFlag: "#7ad0ff",
+    // Enemies: high contrast on starfield — cyan walker, magenta flyer
+    walkerA: "#3ae0ff", walkerB: "#0a3a5a", walkerAccent: "#ffffff",
+    flyerBody: "#ff5ad0", flyerAccent: "#ffff80", flyerWing: "rgba(255,220,180,0.85)",
+    particleCoin: "#ffd070", particleCoinSpark: "#ffffff",
+    walkerBurst: "#3ae0ff", flyerBurst: "#ff5ad0",
+    confetti: ["#ffd070", "#ff9a3a", "#7ad0ff", "#ff5ad0", "#ffffff", "#b889ff"],
+    cloudColor: "rgba(184,137,255,0.35)",
+    foregroundStyle: "stardust", midStyle: "planets", farStyle: "galaxy", lightStyle: "comet",
   },
 };
 
