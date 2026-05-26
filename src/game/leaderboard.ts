@@ -47,35 +47,32 @@ export async function submitScore(
 }
 
 export async function fetchLeaderboard(limit = 20): Promise<LeaderboardEntry[]> {
-  // Ambil skor tertinggi per user (top N keseluruhan, lalu kelompokkan)
-  const { data, error } = await supabase
+  const { data: scoreRows, error } = await supabase
     .from("scores")
-    .select("user_id, skor, tanggal, profiles!inner(nama_lengkap)")
+    .select("user_id, skor, tanggal")
     .order("skor", { ascending: false })
-    .limit(limit * 5);
-  if (error || !data) return [];
+    .limit(limit * 10);
+  if (error || !scoreRows) return [];
 
-  // Dedup per user, ambil skor tertingginya saja
-  const seen = new Map<string, LeaderboardEntry>();
-  for (const row of data as Array<{
-    user_id: string;
-    skor: number;
-    tanggal: string;
-    profiles: { nama_lengkap: string } | { nama_lengkap: string }[];
-  }>) {
-    const prof = Array.isArray(row.profiles) ? row.profiles[0] : row.profiles;
-    const nama = prof?.nama_lengkap ?? "Murid";
-    const existing = seen.get(row.user_id);
-    if (!existing || row.skor > existing.skor) {
-      seen.set(row.user_id, {
-        user_id: row.user_id,
-        nama,
-        skor: row.skor,
-        tanggal: row.tanggal,
-      });
-    }
+  // Dedup per user, ambil skor tertinggi saja
+  const best = new Map<string, { user_id: string; skor: number; tanggal: string }>();
+  for (const row of scoreRows) {
+    const existing = best.get(row.user_id);
+    if (!existing || row.skor > existing.skor) best.set(row.user_id, row);
   }
-  return Array.from(seen.values())
+
+  const userIds = Array.from(best.keys());
+  if (userIds.length === 0) return [];
+
+  const { data: profiles } = await supabase
+    .from("profiles")
+    .select("id, nama_lengkap")
+    .in("id", userIds);
+  const nameMap = new Map((profiles ?? []).map((p) => [p.id, p.nama_lengkap]));
+
+  return Array.from(best.values())
+    .map((r) => ({ ...r, nama: nameMap.get(r.user_id) ?? "Murid" }))
     .sort((a, b) => b.skor - a.skor)
     .slice(0, limit);
 }
+
