@@ -1,5 +1,9 @@
-import type { KanaGroup, KanaType } from "./kana-data";
+import type { Kana, KanaGroup, KanaType } from "./kana-data";
 import type { WorldTheme } from "./themes";
+import {
+  KANJI_N1, KANJI_N2, KANJI_ELEM,
+  KANJI_L4, KANJI_L5, KANJI_L6, KANJI_L7, KANJI_L8, KANJI_L9,
+} from "./kanji-data";
 
 export interface LevelDef {
   id: string;
@@ -8,9 +12,17 @@ export interface LevelDef {
   bg: string;
   ground: string;
   tiles: string[];
-  kanaTypes: KanaType[];
-  kanaGroups: KanaGroup[];
+  // Hiragana/Katakana levels filter ALL_KANA via these. Optional because
+  // kanji levels supply `customPool` directly.
+  kanaTypes?: KanaType[];
+  kanaGroups?: KanaGroup[];
   theme: WorldTheme;
+  // Kanji levels (and any future custom-pool world) provide entries directly.
+  customPool?: Kana[];
+  // When set to 1, each gate shows one character with its meaning options.
+  wordLen?: number;
+  // Modal label switch: "kana" (default) or "kanji" (asks for meaning).
+  mode?: "kana" | "kanji";
 }
 
 /*
