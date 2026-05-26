@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { LEVELS, KATAKANA_LEVELS, KANJI_LEVELS, ALL_LEVELS, type LevelDef } from "@/game/levels";
 import { loadProgress, saveProgress, type Progress } from "@/game/progress";
 import { supabase } from "@/integrations/supabase/client";
+import { LevelPreview } from "@/components/LevelPreview";
 
 export const Route = createFileRoute("/play")({
   head: () => ({
