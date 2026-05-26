@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LEVELS, KATAKANA_LEVELS, ALL_LEVELS, type LevelDef } from "@/game/levels";
+import { LEVELS, KATAKANA_LEVELS, KANJI_LEVELS, ALL_LEVELS, type LevelDef } from "@/game/levels";
 import { loadProgress, saveProgress, type Progress } from "@/game/progress";
 
 export const Route = createFileRoute("/play")({

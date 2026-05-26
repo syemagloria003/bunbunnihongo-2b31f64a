@@ -161,6 +161,11 @@ export function GameCanvas({ level }: { level: LevelDef }) {
                   💎 Kristal Hiragana didapat! Topik Katakana terbuka.
                 </p>
               )}
+              {result === "won" && isFinalKatakanaLevel(level.id) && stars >= 3 && (
+                <p className="text-sm font-semibold text-primary mb-3">
+                  ☄️ Meteor Katakana didapat! Dunia Galaksi Meteor (Kanji) terbuka.
+                </p>
+              )}
               <div className="flex flex-wrap gap-2 justify-center">
                 <button
                   onClick={() => navigate({ to: "/play" })}
