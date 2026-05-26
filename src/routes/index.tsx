@@ -142,7 +142,7 @@ function Landing() {
             <Perk
               icon="🎮"
               title="Latihan tambahan interaktif"
-              desc="Setelah Zoom, lanjut latihan kana di platform khusus murid biar makin nempel."
+              desc="Setelah Zoom, lanjut latihan interaktif di platform khusus murid biar makin nempel."
             />
           </div>
         </div>
