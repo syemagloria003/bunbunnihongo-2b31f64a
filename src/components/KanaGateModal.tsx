@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { type KanaWord } from "@/game/words";
+import { KanjiStrokeOrder } from "./KanjiStrokeOrder";
 
 interface Props {
   word: KanaWord;
