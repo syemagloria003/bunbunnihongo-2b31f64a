@@ -1,65 +1,56 @@
-# Tema Dunia Katakana — Reskin Penuh
+## Tujuan
 
-## Masalah
-Setiap level Katakana sekarang cuma berbeda gradient `bg` + `ground`. Sisanya (background bukit hijau + bunga pink, awan, rumput, koin madu, sarang lebah, laba‑laba/lalat) di-render dengan fungsi yang sama persis seperti dunia Hiragana. `engine.ts` juga melakukan `parseInt("k1") → NaN → 1`, jadi `drawSky` malah pakai cabang Hiragana.
+Buat dunia Katakana konsisten seperti Taman Hiragana — satu identitas visual ("Gua Kristal") di seluruh 7 level, dengan **hanya langit (sky gradient + cahaya)** yang berubah per level untuk menandai progres. Tema lain (Lautan Bintang, Nebula, Salju, Reruntuhan, Komet, Void) **disimpan** untuk arc Kanji di masa depan, tidak dihapus.
 
-## Pendekatan
-Tambahkan satu konsep tunggal: **`theme`** per level. Setiap modul render bercabang berdasarkan tema, bukan berdasarkan `levelNum`. Semua dunia Hiragana memakai tema `"garden"` (perilaku saat ini, tidak berubah). 7 dunia Katakana mendapat tema masing‑masing.
-
-```text
-Tema Katakana:
-  k1 crystal_cave   — gua biru, stalaktit, kristal berkilau, kelelawar gelap
-  k2 starry_sea     — laut malam, bulan, bintang, gelombang, ubur-ubur silau
-  k3 nebula_sky     — pulau melayang, awan ungu, galaksi, lalat bercahaya
-  k4 snow_field     — bukit salju, pinus, salju turun, rubah putih
-  k5 silver_ruins   — pilar metal patah, kabut, awan kelabu, robot kecil
-  k6 comet_nest     — langit api, komet melintas, batu magma, imp api
-  k7 cosmic_void    — kosmos hitam, spiral galaksi, void wisp (boss arena)
-```
-
-Skema warna setiap tema sudah implisit dari gradient `bg` yang ada — palette tinggal diturunkan dari sana.
-
-## Yang Dibongkar
+## Perubahan
 
 ### 1. `src/game/levels.ts`
-- Tambah field `theme: WorldTheme` di `LevelDef`.
-- Semua entri `LEVELS` (Hiragana) → `theme: "garden"`.
-- `KATAKANA_LEVELS` → tema sesuai tabel di atas.
-- Export type `WorldTheme = "garden" | "crystal_cave" | "starry_sea" | "nebula_sky" | "snow_field" | "silver_ruins" | "comet_nest" | "cosmic_void"`.
+- Semua 7 level Katakana (`k1`–`k7`) → `theme: "crystal_cave"`.
+- Nama level tetap sama (Gua Kristal, Lautan Bintang, dst.) — narasi tetap, hanya skin yang seragam. *(Atau: rename semuanya jadi varian Gua Kristal — tunggu konfirmasi, default: nama tetap.)*
+- Field `bg` per level diisi gradient langit unik (7 variasi) — dipakai sebagai overlay sky, mirip cara `LEVELS` Hiragana punya `bg` berbeda-beda meski tema sama.
 
-### 2. `src/game/background.ts` — bercabang per tema
-Setiap fungsi (`drawSky`, `drawFar`, `drawMid`, `drawClouds`, `drawForeground`) menerima `theme: WorldTheme` (bukan `level: number`).
-- `drawSky`: gradient & sumber cahaya berbeda — matahari (garden), bulan (sea/void), kristal pendar (cave), aurora (nebula), matahari pucat (snow), kabut (ruins), letupan komet (comet).
-- `drawFar`: bukit hijau (garden) · siluet stalaktit terbalik (cave) · garis ombak + pulau jauh (sea) · pulau melayang (nebula) · bukit salju + pinus jauh (snow) · pilar runtuh (ruins) · gunung magma (comet) · spiral galaksi (void).
-- `drawMid`: bunga (garden) · kristal berkilau di lantai gua (cave) · ubur‑ubur melayang (sea) · gumpalan nebula (nebula) · pohon pinus salju (snow) · kolom + roda gigi raksasa (ruins) · ember & lava bubble (comet) · planet/cincin (void).
-- `drawClouds`: awan biasa (garden/snow) · kabut tipis (cave/ruins) · gelombang awan ungu (nebula) · asap komet horizontal (comet) · debu bintang (sea/void).
-- `drawForeground`: rumput (garden) · serpihan kristal di tepi (cave) · gelembung air (sea) · awan tipis depan (nebula) · serpihan salju jatuh (snow) · debu logam (ruins) · ember melayang (comet) · partikel bintang (void).
+### 2. `src/game/themes.ts`
+- Tema `crystal_cave` **dipoles** agar setara Taman Hiragana yang berwarna-warni:
+  - Tambah aksen warna (cyan + ungu + pink lembut) pada kristal mid-layer.
+  - Coin kristal lebih cerah & berkilau (glow lebih kuat).
+  - Stalactite/stalagmite far-layer dapat highlight glow tepi.
+  - Foreground crystal shards lebih rapat & sedikit warna-warni.
+  - Cap/grass band tetap kosong (gua tidak punya rumput) — tapi tambah "moss glow" tipis di atas ground supaya tidak terasa gersang.
+- Tema lain (`starry_sea`, `nebula_sky`, `snow_field`, `silver_ruins`, `comet_nest`, `cosmic_void`) **dibiarkan utuh** di file — siap dipakai untuk Kanji nanti. Tipe `WorldTheme` tidak berubah.
 
-### 3. `src/game/render.ts` — bercabang per tema
-Sebagian besar fungsi `draw*` dapat parameter `theme`. Hero `drawBee` (Buzu) **tidak berubah** — dia maskot lintas dunia.
-- `drawGround`: rumput+tanah (garden) · batu+kristal kecil (cave) · pasir basah+karang (sea) · awan padat (nebula) · salju+es (snow) · ubin metal (ruins) · batu magma+retakan pijar (comet) · void+stardust (void).
-- `drawPlatform`: honeycomb (garden) · serpihan kristal (cave) · papan kayu apung (sea) · awan padat (nebula) · balok es (snow) · pelat metal (ruins) · batu lava (comet) · cakram bintang (void).
-- `drawHoney` (koin): madu (garden) · kristal (cave) · bintang (sea) · gumpalan nebula (nebula) · kepingan salju (snow) · roda gigi (ruins) · ember api (comet) · galaksi mini (void). Warna burst particle ikut.
-- `drawGate` (gerbang kana): bingkai sesuai tema (kayu+madu / kristal / koral / cincin nebula / es / metal / batu pijar / cincin bintang).
-- `drawHive` (goal): sarang lebah (garden) · portal kristal (cave) · mercusuar (sea) · gerbang awan (nebula) · iglo (snow) · monolit (ruins) · portal komet (comet) · singgasana bintang (void) — bendera kecil tetap melambai.
-- `drawSpider` & `drawFly`: reskin warna + sedikit aksen bentuk per tema (kelelawar gelap dengan mata merah untuk cave, ubur‑ubur untuk sea, dst). Mekanik & hitbox identik.
+### 3. `src/game/background.ts` — fungsi `drawSky`
+- Tambah parameter opsional `bgOverride?: string` (gradient CSS) **atau** baca `level.bg` dan parse top/bottom warna untuk override `skyTop`/`skyBottom` saat menggambar.
+- Pendekatan paling rapi: ubah `drawSky(ctx, w, h, theme, t, skyOverride?: {top:string, bottom:string})`. Jika ada override, pakai itu; jika tidak, pakai palet tema.
+- `lightStyle` (crystal) tetap dari tema → cahaya kristal yang sama di semua level untuk identitas.
 
-### 4. `src/game/particles.ts`
-`burst()` dapat opsional `palette: string[]` agar warna percikan cocok per tema. `confetti()` di akhir level pakai palette tema.
+### 4. `src/game/engine.ts`
+- Saat memanggil `drawSky`, parse `this.level.bg` (format `linear-gradient(180deg, #aaa 0%, #bbb 100%)`) → ekstrak dua warna hex → kirim sebagai override.
+- Helper kecil `parseBgGradient(bg: string)` di engine atau themes.ts.
 
-### 5. `src/game/engine.ts`
-- Hapus `levelNum`; ganti dengan `this.theme = level.theme`.
-- Teruskan `this.theme` ke semua call `drawSky/drawFar/drawMid/drawClouds/drawForeground/drawGround/drawPlatform/drawHive/drawHoney/drawGate/drawSpider/drawFly`.
-- Saat coin diambil & saat menang, pilih palette particle dari tabel tema.
+### 5. Variasi langit per level Katakana (7 gradien)
+Progresi dari terang → gelap → magis, semua tetap "feels like crystal cave":
 
-### 6. Modal kana (`KanaGateModal.tsx`) — opsional ringan
-Tidak diubah. Visual gerbang sudah ditangani oleh `drawGate` di canvas; modal tetap kartu putih netral biar fokus baca huruf.
+| Level | Nama | bg (top → bottom) |
+|---|---|---|
+| k1 | Gua Kristal | `#0a1a3a → #4a7ab8` (biru gua dasar) |
+| k2 | Lorong Safir | `#0a1438 → #2a5a9a` (lebih dalam) |
+| k3 | Aula Ametis | `#1a0a3a → #6a3aa0` (semburat ungu) |
+| k4 | Sungai Es | `#0a2a4a → #7ac8e8` (sejuk cyan terang) |
+| k5 | Kubah Berlian | `#0a1a4a → #b8d0ff` (langit terang berkilau) |
+| k6 | Inti Geode | `#1a0828 → #8a3acf` (ungu pekat) |
+| k7 | Tahta Kristal | `#050a28 → #c89aff` (boss — magis) |
 
-## Di luar scope
-- Tidak menambah mekanik baru (es licin, kristal pecah, gravitasi berbeda).
-- Tidak menambah pola pergerakan musuh baru — cuma reskin visual.
-- Buzu si lebah tetap sama bentuknya di semua dunia.
-- Hiragana 7 dunia tidak diubah tampilannya (tema `garden` = perilaku saat ini).
+Nama bisa di-rename agar narasi konsisten "satu dunia gua". *Default: rename ke daftar di atas; bilang kalau mau pertahankan nama lama.*
 
-## Hasil yang diharapkan
-Begitu masuk Gua Kristal: langit gelap kebiruan, stalaktit menggantung, lantai berbatu+kristal kecil, koin jadi kristal pendar, sarang lebah jadi portal kristal, "laba‑laba" jadi kelelawar gelap. Setiap dunia berikutnya terasa naik tingkat suasana — bukan sekadar warna langit berbeda.
+### 6. `src/game/render.ts` & `src/game/particles.ts`
+- Tidak diubah. Sudah pakai `theme` → otomatis konsisten Gua Kristal.
+
+## Yang TIDAK diubah
+
+- Mekanik gameplay, level layout, kana groups, modal gate, Buzu, musuh.
+- Struktur tipe `WorldTheme` (semua tema lain tetap ada untuk Kanji).
+- Tema Hiragana `garden`.
+
+## Hasil
+
+Pemain naik level Katakana → suasana Gua Kristal konsisten (stalactite, kristal, partikel kristal), tapi **langitnya berubah** seperti progres warna langit di taman Hiragana. Ide tema dunia lain aman tersimpan di `themes.ts` untuk dipakai pada arc Kanji.

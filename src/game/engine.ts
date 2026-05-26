@@ -13,6 +13,12 @@ export const GRAVITY = 0.55;
 export const JUMP_V = -14;
 export const FLAP_V = -12;
 export const MOVE_SPEED = 4.8;
+
+function parseBgGradient(bg: string): { top: string; bottom: string } | undefined {
+  const m = bg.match(/#[0-9a-fA-F]{3,8}/g);
+  if (!m || m.length < 2) return undefined;
+  return { top: m[0], bottom: m[1] };
+}
 export const MAX_FALL = 13;
 
 export interface Entity {
@@ -358,9 +364,10 @@ export class GameEngine {
   draw(ctx: CanvasRenderingContext2D, w: number, h: number) {
     ctx.clearRect(0, 0, w, h);
     const theme = this.level.theme;
+    const skyOverride = parseBgGradient(this.level.bg);
 
     // background (screen-space, parallax driven by camera)
-    drawSky(ctx, w, h, theme, this.frame);
+    drawSky(ctx, w, h, theme, this.frame, skyOverride);
     drawFar(ctx, this.camera.x, w, h, theme);
     drawClouds(ctx, this.camera.x, w, this.frame, theme);
     drawMid(ctx, this.camera.x, w, h, theme, this.frame);
