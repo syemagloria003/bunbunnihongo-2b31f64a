@@ -1,6 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { ALL_KANA, HIRAGANA, KATAKANA, makeQuestion, type Kana, type KanaType } from "@/game/kana-data";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/practice")({
   head: () => ({
@@ -9,6 +10,10 @@ export const Route = createFileRoute("/practice")({
       { name: "description", content: "Mode latihan Hiragana & Katakana tanpa platforming." },
     ],
   }),
+  beforeLoad: async ({ location }) => {
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) throw redirect({ to: "/login", search: { redirect: location.href } as never });
+  },
   component: Practice,
 });
 

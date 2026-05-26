@@ -1,6 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { fetchLeaderboard, fetchMe, type LeaderboardEntry, type MeResponse } from "@/game/leaderboard";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/leaderboard")({
   head: () => ({
@@ -9,6 +10,10 @@ export const Route = createFileRoute("/leaderboard")({
       { name: "description", content: "Lihat ranking skor tertinggi murid Bunbun Nihongo." },
     ],
   }),
+  beforeLoad: async ({ location }) => {
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) throw redirect({ to: "/login", search: { redirect: location.href } as never });
+  },
   component: LeaderboardPage,
 });
 
