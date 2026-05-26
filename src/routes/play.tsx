@@ -31,7 +31,7 @@ function LevelSelect() {
         <div className="flex items-center justify-between mb-6">
           <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
           <h1 className="font-display text-3xl md:text-4xl font-bold">Peta Petualangan 🗺️</h1>
-          <div className="w-16" />
+          <AdminUnlock onUnlock={setP} />
         </div>
 
         {p.crystal && (
