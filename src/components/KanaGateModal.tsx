@@ -30,30 +30,30 @@ export function KanaGateModal({ word, options, onAnswer, mode = "kana" }: Props)
     : "Pilih bacaan romaji yang benar";
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center bg-foreground/40 backdrop-blur-sm p-4">
-      <div className="honey-card rounded-3xl p-6 w-full max-w-md">
+    <div className="absolute inset-0 z-50 flex items-center justify-center bg-foreground/40 backdrop-blur-sm p-2 overflow-y-auto">
+      <div className={`honey-card rounded-2xl p-3 sm:p-4 w-full ${isKanji ? "max-w-lg" : "max-w-md"} max-h-full overflow-y-auto`}>
         <div className="text-center">
-          <p className="text-sm uppercase tracking-widest text-muted-foreground font-semibold">
+          <p className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">
             {heading}
           </p>
-          <div className="my-4 flex justify-center items-center gap-4 flex-wrap">
-            <div className="bg-background rounded-2xl border-4 border-primary px-8 py-5 shadow-inner">
+          <div className="my-2 flex justify-center items-center gap-3 flex-wrap">
+            <div className="bg-background rounded-xl border-4 border-primary px-4 py-2 shadow-inner">
               <span
-                className="text-6xl font-bold tracking-wider"
+                className="text-4xl sm:text-5xl font-bold tracking-wider leading-none"
                 style={{ fontFamily: "serif" }}
               >
                 {word.chars}
               </span>
             </div>
             {isKanji && word.chars.length === 1 && (
-              <KanjiStrokeOrder char={word.chars} size={130} />
+              <KanjiStrokeOrder char={word.chars} size={96} />
             )}
           </div>
-          <p className="text-sm text-muted-foreground mb-3">
+          <p className="text-xs text-muted-foreground mb-2">
             {instruction}
           </p>
         </div>
-        <div className={isKanji ? "grid grid-cols-1 gap-2" : "grid grid-cols-2 gap-3"}>
+        <div className={isKanji ? "grid grid-cols-2 gap-2" : "grid grid-cols-2 gap-2"}>
           {options.map((opt) => {
             const isPicked = picked === opt;
             const correct = picked && opt === word.romaji;
@@ -64,8 +64,8 @@ export function KanaGateModal({ word, options, onAnswer, mode = "kana" }: Props)
                 onClick={() => pick(opt)}
                 disabled={!!picked}
                 className={[
-                  "rounded-2xl py-3 px-3 font-bold transition-all border-2",
-                  isKanji ? "text-base text-left" : "text-xl py-4",
+                  "rounded-xl py-2.5 px-2 font-bold transition-all border-2",
+                  isKanji ? "text-sm text-center leading-tight" : "text-lg",
                   "active:translate-y-0.5",
                   correct
                     ? "bg-secondary text-secondary-foreground border-secondary"
