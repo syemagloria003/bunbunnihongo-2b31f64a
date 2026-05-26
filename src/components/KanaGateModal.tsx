@@ -36,7 +36,7 @@ export function KanaGateModal({ word, options, onAnswer, mode = "kana" }: Props)
           <p className="text-sm uppercase tracking-widest text-muted-foreground font-semibold">
             {heading}
           </p>
-          <div className="my-4 flex justify-center">
+          <div className="my-4 flex justify-center items-center gap-4 flex-wrap">
             <div className="bg-background rounded-2xl border-4 border-primary px-8 py-5 shadow-inner">
               <span
                 className="text-6xl font-bold tracking-wider"
@@ -45,6 +45,9 @@ export function KanaGateModal({ word, options, onAnswer, mode = "kana" }: Props)
                 {word.chars}
               </span>
             </div>
+            {isKanji && word.chars.length === 1 && (
+              <KanjiStrokeOrder char={word.chars} size={130} />
+            )}
           </div>
           <p className="text-sm text-muted-foreground mb-3">
             {instruction}
