@@ -46,11 +46,10 @@ function Practice() {
   return (
     <div className="min-h-screen px-6 py-8">
       <div className="max-w-xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
-          <h1 className="font-display text-3xl font-bold">Latihan Kana</h1>
-          <div className="w-16" />
+        <div className="flex items-center mb-3">
+          <Link to="/" className="text-sm font-semibold hover:text-primary shrink-0">← Beranda</Link>
         </div>
+        <h1 className="font-display text-2xl sm:text-3xl font-bold text-center mb-6">Latihan Kana</h1>
 
         <div className="flex justify-center gap-2 mb-4">
           {(["hiragana", "katakana", "both"] as const).map((m) => (
