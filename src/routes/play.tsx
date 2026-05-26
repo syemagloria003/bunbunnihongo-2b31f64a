@@ -67,13 +67,45 @@ function LevelSelect() {
             Tamatkan <b>Ratu Tawon</b> dengan ⭐⭐⭐ untuk mendapatkan Kristal dan membuka dunia ini.
           </p>
         )}
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-4 mb-8">
           {KATAKANA_LEVELS.map((l: LevelDef, i: number) => {
             const unlocked = p.unlocked.includes(l.id);
             return (
               <LevelCard
                 key={l.id}
                 num={LEVELS.length + i + 1}
+                id={l.id}
+                name={l.name}
+                subtitle={l.subtitle}
+                unlocked={unlocked}
+                stars={p.bestStars[l.id] ?? 0}
+                best={p.bestScore[l.id]}
+                bg={l.bg}
+              />
+            );
+          })}
+        </div>
+
+        {p.meteor && (
+          <div className="honey-card rounded-2xl p-4 mb-4 text-center">
+            <p className="font-bold">☄️ Meteor Katakana milikmu!</p>
+            <p className="text-sm text-muted-foreground">Dunia Galaksi Meteor (Kanji) sudah terbuka di bawah.</p>
+          </div>
+        )}
+
+        <h2 className="font-display text-2xl font-bold mb-3">☄️ Dunia Galaksi Meteor (Kanji)</h2>
+        {!p.meteor && (
+          <p className="text-sm text-muted-foreground mb-3">
+            Tamatkan level Katakana terakhir dengan ⭐⭐⭐ untuk mendapatkan Meteor dan membuka dunia ini.
+          </p>
+        )}
+        <div className="grid sm:grid-cols-2 gap-4">
+          {KANJI_LEVELS.map((l: LevelDef, i: number) => {
+            const unlocked = p.unlocked.includes(l.id);
+            return (
+              <LevelCard
+                key={l.id}
+                num={LEVELS.length + KATAKANA_LEVELS.length + i + 1}
                 id={l.id}
                 name={l.name}
                 subtitle={l.subtitle}
