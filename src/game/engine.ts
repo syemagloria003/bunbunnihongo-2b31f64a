@@ -358,9 +358,10 @@ export class GameEngine {
   draw(ctx: CanvasRenderingContext2D, w: number, h: number) {
     ctx.clearRect(0, 0, w, h);
     const theme = this.level.theme;
+    const skyOverride = parseBgGradient(this.level.bg);
 
     // background (screen-space, parallax driven by camera)
-    drawSky(ctx, w, h, theme, this.frame);
+    drawSky(ctx, w, h, theme, this.frame, skyOverride);
     drawFar(ctx, this.camera.x, w, h, theme);
     drawClouds(ctx, this.camera.x, w, this.frame, theme);
     drawMid(ctx, this.camera.x, w, h, theme, this.frame);
