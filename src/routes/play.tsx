@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LEVELS, KATAKANA_LEVELS, type LevelDef } from "@/game/levels";
-import { loadProgress, type Progress } from "@/game/progress";
+import { LEVELS, KATAKANA_LEVELS, ALL_LEVELS, type LevelDef } from "@/game/levels";
+import { loadProgress, saveProgress, type Progress } from "@/game/progress";
 
 export const Route = createFileRoute("/play")({
   head: () => ({
@@ -31,7 +31,7 @@ function LevelSelect() {
         <div className="flex items-center justify-between mb-6">
           <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
           <h1 className="font-display text-3xl md:text-4xl font-bold">Peta Petualangan 🗺️</h1>
-          <div className="w-16" />
+          <AdminUnlock onUnlock={setP} />
         </div>
 
         {p.crystal && (
@@ -87,6 +87,32 @@ function LevelSelect() {
         </div>
       </div>
     </div>
+  );
+}
+
+function AdminUnlock({ onUnlock }: { onUnlock: (p: Progress) => void }) {
+  const handleClick = () => {
+    const code = window.prompt("Kode admin:");
+    if (code === null) return;
+    if (code !== "seisho11") {
+      window.alert("Kode salah.");
+      return;
+    }
+    const p = loadProgress();
+    p.unlocked = ALL_LEVELS.map((l) => l.id);
+    p.crystal = true;
+    saveProgress(p);
+    onUnlock(p);
+    window.alert("Semua level dibuka. 🔓");
+  };
+  return (
+    <button
+      onClick={handleClick}
+      className="text-xs font-semibold px-2 py-1 rounded-md border border-border text-muted-foreground hover:text-primary hover:border-primary"
+      title="Admin"
+    >
+      🔑 Admin
+    </button>
   );
 }
 
