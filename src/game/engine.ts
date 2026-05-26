@@ -13,6 +13,12 @@ export const GRAVITY = 0.55;
 export const JUMP_V = -14;
 export const FLAP_V = -12;
 export const MOVE_SPEED = 4.8;
+
+function parseBgGradient(bg: string): { top: string; bottom: string } | undefined {
+  const m = bg.match(/#[0-9a-fA-F]{3,8}/g);
+  if (!m || m.length < 2) return undefined;
+  return { top: m[0], bottom: m[1] };
+}
 export const MAX_FALL = 13;
 
 export interface Entity {
