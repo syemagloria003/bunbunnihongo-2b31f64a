@@ -11,6 +11,11 @@ import galRegN3 from "@/assets/gallery/kelas-reg-n3.png";
 import galN3Absen from "@/assets/gallery/kelas-n3-absen.jpg";
 import posterRegN4 from "@/assets/posters/kelas-reguler-n4.png";
 import posterJlptN3 from "@/assets/posters/kelas-jlpt-n3.png";
+import posterSensei from "@/assets/sensei-syema.png";
+import wa1 from "@/assets/testimoni/wa1.jpeg";
+import wa2 from "@/assets/testimoni/wa2.jpeg";
+import wa3 from "@/assets/testimoni/wa3.jpeg";
+import wa4 from "@/assets/testimoni/wa4.jpeg";
 
 const WA_LINK = "https://wa.me/6289532867100?text=Halo%20Bunbun%20Nihongo,%20saya%20mau%20tanya%20kelas%20yang%20sedang%20dibuka.";
 const IG_LINK = "https://instagram.com/bunbun_nihongo";
@@ -143,69 +148,77 @@ function Landing() {
         </div>
       </section>
 
-      {/* Team / Meet the Sensei */}
+      {/* Meet the Sensei — poster */}
       <section className="px-6 py-16 bg-muted/20">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
+          <div className="text-center mb-8">
             <span className="inline-block bg-accent/15 text-accent text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wider uppercase">
               Meet the Sensei
             </span>
             <h2 className="text-2xl md:text-3xl font-display font-bold mb-2">
-              Diajar langsung oleh sensei bersertifikat 🎓
+              Diajar langsung oleh founder Bunbun 🎓
             </h2>
             <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-              Semua sensei kami minimal lulusan <strong>JLPT N2</strong> & berpengalaman mengajar online.
+              Syema Sensei — lulusan terbaik UNESA, bersertifikat <strong>JLPT N2</strong>, mengajar dengan sabar & detail.
             </p>
           </div>
-
-          {/* Founder card */}
-          <div className="honey-card rounded-3xl p-6 md:p-8 mb-6">
-            <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="shrink-0 mx-auto md:mx-0">
-                <div className="w-28 h-28 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-4xl font-display font-extrabold text-primary-foreground shadow-lg ring-4 ring-background">
-                  S
-                </div>
-              </div>
-              <div className="flex-1">
-                <div className="flex flex-wrap gap-2 mb-2">
-                  <span className="bg-accent text-accent-foreground text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Founder</span>
-                  <span className="bg-primary text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">JLPT N2</span>
-                </div>
-                <h3 className="text-2xl font-display font-extrabold">Syema Sensei</h3>
-                <p className="text-sm text-muted-foreground mb-4">Syema Gloria · Founder & Lead Teacher</p>
-                <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <h4 className="font-bold text-primary mb-1">🎓 Pendidikan</h4>
-                    <ul className="space-y-1 text-foreground/80">
-                      <li>S1 Pendidikan Bahasa Jepang — Universitas Negeri Surabaya (UNESA)</li>
-                      <li><strong>Wisudawan Terbaik UNESA</strong> Periode 114, IPK <strong>3,94</strong></li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-primary mb-1">💼 Pengalaman</h4>
-                    <ul className="space-y-1 text-foreground/80">
-                      <li>±2 tahun mengajar Bahasa Jepang online (privat & grup) sejak 2024</li>
-                      <li>Juara Favorit Lomba Pidato Bahasa Jepang UNESA 2021</li>
-                      <li>Internship guru di SD Labschool UNESA 2 (Agt–Des 2024)</li>
-                      <li>Kampus Mengajar 7 — SMP PGRI 1 Kediri (Jan–Jun 2024)</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card">
+            <img
+              src={posterSensei}
+              alt="Profil Syema Sensei — Founder Bunbun Nihongo, JLPT N2, S1 Pendidikan Bahasa Jepang UNESA"
+              loading="lazy"
+              className="w-full h-auto block"
+            />
           </div>
+        </div>
+      </section>
 
-          {/* Other senseis */}
-          <div className="grid sm:grid-cols-3 gap-4">
-            <SenseiCard initial="S" name="Sashy Sensei" />
-            <SenseiCard initial="N" name="Nita Sensei" />
-            <SenseiCard initial="M" name="Mira Sensei" />
+      {/* Testimoni — WA screenshots */}
+      <section className="px-6 py-16 bg-gradient-to-b from-background via-secondary/10 to-background">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <span className="inline-block bg-primary/15 text-primary text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wider uppercase">
+              Kata murid kami
+            </span>
+            <h2 className="text-2xl md:text-3xl font-display font-bold mb-2">
+              Testimoni langsung dari murid 💌
+            </h2>
+            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+              Screenshot asli dari WhatsApp — bukan rekayasa.
+            </p>
           </div>
-          <p className="text-center text-xs text-muted-foreground mt-4">
-            Profil lengkap tim sensei menyusul ✨
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[wa1, wa2, wa3, wa4].map((src, i) => (
+              <a
+                key={i}
+                href={src}
+                target="_blank" rel="noopener noreferrer"
+                className="block rounded-2xl overflow-hidden border-2 border-border bg-card shadow-md hover:shadow-xl hover:-translate-y-1 transition"
+              >
+                <img
+                  src={src}
+                  alt={`Testimoni murid Bunbun Nihongo ${i + 1}`}
+                  loading="lazy"
+                  className="w-full h-auto block"
+                />
+              </a>
+            ))}
+          </div>
+          <p className="text-center text-sm text-muted-foreground mt-6">
+            Mau lihat lebih banyak testimoni? Cek di{" "}
+            <a
+              href={IG_LINK}
+              target="_blank" rel="noopener noreferrer"
+              className="text-primary font-semibold hover:underline"
+            >
+              highlight Instagram @bunbun_nihongo
+            </a>{" "}
+            ✨
           </p>
         </div>
       </section>
+
+
 
       {/* Programs / Kelas yang dibuka — posters */}
       <section id="kelas" className="px-6 py-14 bg-muted/30 scroll-mt-20">
@@ -337,17 +350,6 @@ function Perk({ icon, title, desc }: { icon: string; title: string; desc: string
   );
 }
 
-function SenseiCard({ initial, name }: { initial: string; name: string }) {
-  return (
-    <div className="rounded-2xl p-5 bg-card border-2 border-border/60 text-center shadow-sm">
-      <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-3xl font-display font-extrabold text-primary-foreground ring-4 ring-background shadow">
-        {initial}
-      </div>
-      <h3 className="font-display font-bold text-lg mt-3">{name}</h3>
-      <span className="inline-block mt-1 bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">JLPT N2</span>
-    </div>
-  );
-}
 
 function PosterCard({
   src, alt, title, subtitle, schedule,
