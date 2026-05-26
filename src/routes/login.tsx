@@ -44,7 +44,15 @@ function LoginPage() {
           <img src={logo} alt="Bunbun Nihongo" className="w-24 h-24 mx-auto rounded-2xl shadow-md mb-3" />
           <h1 className="font-display text-2xl font-bold">Bunbun Nihongo</h1>
           <p className="text-sm text-primary font-semibold mt-1">Kursus Online Bahasa Jepang</p>
-          <p className="text-xs text-muted-foreground mt-2">Login murid</p>
+          <div className="mt-4 mx-auto max-w-xs bg-primary/10 border border-primary/30 rounded-2xl px-4 py-3">
+            <p className="text-sm font-semibold text-foreground">
+              Sudah latihan tambahan setelah Zoom bareng sensei hari ini? 🌸
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Yuk login & lanjut main, biar kana-nya makin nempel! 🎮🍯
+            </p>
+          </div>
+          <p className="text-xs text-muted-foreground mt-3">Login murid</p>
         </div>
         <form onSubmit={submit} className="space-y-3">
           <div>
