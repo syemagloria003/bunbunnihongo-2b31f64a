@@ -12,7 +12,7 @@ import galN3Absen from "@/assets/gallery/kelas-n3-absen.jpg";
 import posterRegN4 from "@/assets/posters/kelas-reguler-n4.png";
 import posterJlptN3 from "@/assets/posters/kelas-jlpt-n3.png";
 import posterSensei from "@/assets/sensei-syema.png";
-import posterTim from "@/assets/tim-pengajar.png";
+
 import wa1 from "@/assets/testimoni/wa1.jpeg";
 import wa2 from "@/assets/testimoni/wa2.jpeg";
 import wa3 from "@/assets/testimoni/wa3.jpeg";
@@ -157,35 +157,19 @@ function Landing() {
               Meet the Sensei
             </span>
             <h2 className="text-2xl md:text-3xl font-display font-bold mb-2">
-              Diajar langsung oleh founder & tim sensei kami 🎓
+              Diajar langsung oleh founder kami 🎓
             </h2>
             <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
               Founder kami, <strong>Syema Sensei</strong>, lulusan terbaik UNESA & bersertifikat <strong>JLPT N2</strong>.
-              Tim pengajar direkrut khusus tiap batch — semua minimal <strong>JLPT N2</strong>, sabar, dan detail.
+              Kelas Bunbun juga didukung oleh pengajar JLPT bersertifikat <strong>(N2 / N1 Only!)</strong> yang telah melalui proses seleksi dan pelatihan metode Bunbun.
             </p>
           </div>
 
           {/* Founder poster */}
-          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card mb-8">
+          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card">
             <img
               src={posterSensei}
               alt="Profil Syema Sensei — Founder Bunbun Nihongo, JLPT N2, S1 Pendidikan Bahasa Jepang UNESA"
-              loading="lazy"
-              className="w-full h-auto block"
-            />
-          </div>
-
-          {/* Tim pengajar poster */}
-          <div className="text-center mb-4">
-            <h3 className="font-display font-bold text-xl">Tim pengajar kami 🐝</h3>
-            <p className="text-xs text-muted-foreground mt-1">
-              Sensei tambahan yang bergabung di batch-batch berjalan.
-            </p>
-          </div>
-          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card">
-            <img
-              src={posterTim}
-              alt="Tim pengajar Bunbun Nihongo — semua bersertifikat minimal JLPT N2"
               loading="lazy"
               className="w-full h-auto block"
             />
