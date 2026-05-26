@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as PlayRouteImport } from './routes/play'
+import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PlayLevelIdRouteImport } from './routes/play.$levelId'
@@ -23,6 +24,11 @@ const PracticeRoute = PracticeRouteImport.update({
 const PlayRoute = PlayRouteImport.update({
   id: '/play',
   path: '/play',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeaderboardRoute = LeaderboardRouteImport.update({
+  id: '/leaderboard',
+  path: '/leaderboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -44,6 +50,7 @@ const PlayLevelIdRoute = PlayLevelIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/play': typeof PlayRouteWithChildren
   '/practice': typeof PracticeRoute
   '/play/$levelId': typeof PlayLevelIdRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/play': typeof PlayRouteWithChildren
   '/practice': typeof PracticeRoute
   '/play/$levelId': typeof PlayLevelIdRoute
@@ -59,21 +67,36 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/play': typeof PlayRouteWithChildren
   '/practice': typeof PracticeRoute
   '/play/$levelId': typeof PlayLevelIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/play' | '/practice' | '/play/$levelId'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/leaderboard'
+    | '/play'
+    | '/practice'
+    | '/play/$levelId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/play' | '/practice' | '/play/$levelId'
-  id: '__root__' | '/' | '/about' | '/play' | '/practice' | '/play/$levelId'
+  to: '/' | '/about' | '/leaderboard' | '/play' | '/practice' | '/play/$levelId'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/leaderboard'
+    | '/play'
+    | '/practice'
+    | '/play/$levelId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  LeaderboardRoute: typeof LeaderboardRoute
   PlayRoute: typeof PlayRouteWithChildren
   PracticeRoute: typeof PracticeRoute
 }
@@ -92,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/play'
       fullPath: '/play'
       preLoaderRoute: typeof PlayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leaderboard': {
+      id: '/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof LeaderboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -131,6 +161,7 @@ const PlayRouteWithChildren = PlayRoute._addFileChildren(PlayRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  LeaderboardRoute: LeaderboardRoute,
   PlayRoute: PlayRouteWithChildren,
   PracticeRoute: PracticeRoute,
 }

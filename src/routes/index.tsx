@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { UserGreeting } from "@/components/UserGreeting";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,6 +19,7 @@ function Index() {
       <Header />
       <main className="flex-1 flex flex-col items-center justify-center px-6 py-10">
         <section className="max-w-3xl text-center">
+          <UserGreeting />
           <div className="float-bee inline-block text-7xl md:text-8xl mb-4">🐝</div>
           <h1 className="text-5xl md:text-7xl font-bold mb-4">
             Bee<span className="text-primary">Gana</span>
@@ -35,6 +37,12 @@ function Index() {
               className="px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold text-lg shadow-lg hover:brightness-105 transition wiggle"
             >
               🎮 Mulai Main
+            </Link>
+            <Link
+              to="/leaderboard"
+              className="px-6 py-3 rounded-2xl border-2 border-primary bg-background font-bold text-lg hover:bg-primary/10 transition"
+            >
+              🏆 Peringkat
             </Link>
             <Link
               to="/practice"
@@ -80,6 +88,7 @@ function Header() {
       </Link>
       <nav className="flex gap-3 text-sm font-semibold">
         <Link to="/play" className="hover:text-primary">Main</Link>
+        <Link to="/leaderboard" className="hover:text-primary">Peringkat</Link>
         <Link to="/practice" className="hover:text-primary">Latihan</Link>
         <Link to="/about" className="hover:text-primary">Tentang</Link>
       </nav>
