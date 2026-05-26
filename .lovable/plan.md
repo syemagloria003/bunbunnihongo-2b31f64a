@@ -1,56 +1,59 @@
-## Tujuan
+# Animasi Urutan Goresan Kanji
 
-Buat dunia Katakana konsisten seperti Taman Hiragana — satu identitas visual ("Gua Kristal") di seluruh 7 level, dengan **hanya langit (sky gradient + cahaya)** yang berubah per level untuk menandai progres. Tema lain (Lautan Bintang, Nebula, Salju, Reruntuhan, Komet, Void) **disimpan** untuk arc Kanji di masa depan, tidak dihapus.
+Menampilkan animasi cara menulis kanji (urutan goresan yang benar) di dalam `KanaGateModal` saat pemain bertemu gerbang di level kanji. Auto-play, bisa di-replay, tanpa interaksi tracing.
 
-## Perubahan
+## Sumber data: KanjiVG
 
-### 1. `src/game/levels.ts`
-- Semua 7 level Katakana (`k1`–`k7`) → `theme: "crystal_cave"`.
-- Nama level tetap sama (Gua Kristal, Lautan Bintang, dst.) — narasi tetap, hanya skin yang seragam. *(Atau: rename semuanya jadi varian Gua Kristal — tunggu konfirmasi, default: nama tetap.)*
-- Field `bg` per level diisi gradient langit unik (7 variasi) — dipakai sebagai overlay sky, mirip cara `LEVELS` Hiragana punya `bg` berbeda-beda meski tema sama.
+KanjiVG menyediakan file SVG per-kanji dengan tiap `<path>` adalah satu goresan, sudah berurutan. Lisensi CC BY-SA 3.0 (cukup dengan atribusi di halaman About).
 
-### 2. `src/game/themes.ts`
-- Tema `crystal_cave` **dipoles** agar setara Taman Hiragana yang berwarna-warni:
-  - Tambah aksen warna (cyan + ungu + pink lembut) pada kristal mid-layer.
-  - Coin kristal lebih cerah & berkilau (glow lebih kuat).
-  - Stalactite/stalagmite far-layer dapat highlight glow tepi.
-  - Foreground crystal shards lebih rapat & sedikit warna-warni.
-  - Cap/grass band tetap kosong (gua tidak punya rumput) — tapi tambah "moss glow" tipis di atas ground supaya tidak terasa gersang.
-- Tema lain (`starry_sea`, `nebula_sky`, `snow_field`, `silver_ruins`, `comet_nest`, `cosmic_void`) **dibiarkan utuh** di file — siap dipakai untuk Kanji nanti. Tipe `WorldTheme` tidak berubah.
+Hanya ~130 kanji yang dipakai game ini (level kn1–kn9), jadi kita **bundle subset KanjiVG** ke dalam project, bukan semua 11.000 file.
 
-### 3. `src/game/background.ts` — fungsi `drawSky`
-- Tambah parameter opsional `bgOverride?: string` (gradient CSS) **atau** baca `level.bg` dan parse top/bottom warna untuk override `skyTop`/`skyBottom` saat menggambar.
-- Pendekatan paling rapi: ubah `drawSky(ctx, w, h, theme, t, skyOverride?: {top:string, bottom:string})`. Jika ada override, pakai itu; jika tidak, pakai palet tema.
-- `lightStyle` (crystal) tetap dari tema → cahaya kristal yang sama di semua level untuk identitas.
+## Yang akan dibangun
 
-### 4. `src/game/engine.ts`
-- Saat memanggil `drawSky`, parse `this.level.bg` (format `linear-gradient(180deg, #aaa 0%, #bbb 100%)`) → ekstrak dua warna hex → kirim sebagai override.
-- Helper kecil `parseBgGradient(bg: string)` di engine atau themes.ts.
+1. **Skrip build subset KanjiVG** (`scripts/fetch-kanjivg.mjs`)
+   - Baca semua karakter dari `src/game/kanji-data.ts`.
+   - Untuk tiap kanji, ambil file SVG dari repo KanjiVG (GitHub raw / release zip) berdasarkan codepoint hex (mis. `5c71.svg` untuk 山).
+   - Simpan SVG yang sudah dibersihkan ke `src/assets/kanjivg/<hex>.svg`.
+   - Dijalankan manual sekali (`bun run scripts/fetch-kanjivg.mjs`), hasilnya di-commit.
 
-### 5. Variasi langit per level Katakana (7 gradien)
-Progresi dari terang → gelap → magis, semua tetap "feels like crystal cave":
+2. **Komponen `<KanjiStrokeOrder />`** (`src/components/KanjiStrokeOrder.tsx`)
+   - Props: `char: string`, `size?: number`, `speed?: number`.
+   - Load SVG via Vite glob import (`import.meta.glob('@/assets/kanjivg/*.svg', { as: 'raw', eager: true })`) → tidak ada fetch runtime.
+   - Parse SVG, ambil grup `<g id="kvg:StrokePaths_...">`, untuk tiap `<path>` set `stroke-dasharray = pathLength` + `stroke-dashoffset = pathLength`, lalu animasi `stroke-dashoffset → 0` berurutan via CSS animation + `animation-delay`.
+   - Goresan yang sudah selesai tetap tampak (stroke hitam solid); goresan berikutnya muncul dengan warna aksen lalu memudar ke hitam.
+   - Tombol kecil “▶ ulangi” untuk replay (re-mount via key).
+   - Nomor urut goresan opsional (dari grup `<text id="kvg:StrokeNumbers_...">` yang sudah ada di KanjiVG) — bisa di-toggle.
 
-| Level | Nama | bg (top → bottom) |
-|---|---|---|
-| k1 | Gua Kristal | `#0a1a3a → #4a7ab8` (biru gua dasar) |
-| k2 | Lorong Safir | `#0a1438 → #2a5a9a` (lebih dalam) |
-| k3 | Aula Ametis | `#1a0a3a → #6a3aa0` (semburat ungu) |
-| k4 | Sungai Es | `#0a2a4a → #7ac8e8` (sejuk cyan terang) |
-| k5 | Kubah Berlian | `#0a1a4a → #b8d0ff` (langit terang berkilau) |
-| k6 | Inti Geode | `#1a0828 → #8a3acf` (ungu pekat) |
-| k7 | Tahta Kristal | `#050a28 → #c89aff` (boss — magis) |
+3. **Integrasi di `KanaGateModal.tsx`**
+   - Hanya saat `mode === "kanji"`.
+   - Tampilkan `<KanjiStrokeOrder char={word.kana} />` di atas opsi jawaban, di samping kanji besar.
+   - Auto-play sekali begitu modal terbuka, lalu diam sampai user klik replay.
+   - Tidak mengubah logika jawaban — murni visual.
 
-Nama bisa di-rename agar narasi konsisten "satu dunia gua". *Default: rename ke daftar di atas; bilang kalau mau pertahankan nama lama.*
+4. **Fallback**
+   - Jika SVG untuk karakter tidak ada di bundle (mis. kanji baru ditambah tapi belum di-fetch), komponen menampilkan kanji statis besar tanpa animasi dan tidak error.
 
-### 6. `src/game/render.ts` & `src/game/particles.ts`
-- Tidak diubah. Sudah pakai `theme` → otomatis konsisten Gua Kristal.
+5. **Atribusi**
+   - Tambah satu baris kredit “Data goresan: KanjiVG (CC BY-SA 3.0)” di `src/routes/about.tsx`.
 
-## Yang TIDAK diubah
+## Detail teknis
 
-- Mekanik gameplay, level layout, kana groups, modal gate, Buzu, musuh.
-- Struktur tipe `WorldTheme` (semua tema lain tetap ada untuk Kanji).
-- Tema Hiragana `garden`.
+- **Ukuran bundle**: ~130 SVG × rata-rata 3–6 KB = ~0.5–1 MB mentah, ~150–300 KB setelah gzip. Acceptable.
+- **Tidak butuh library tambahan** (tanpa hanzi-writer). DOMParser bawaan browser cukup untuk parse SVG.
+- **Animasi pakai CSS murni** (`@keyframes draw`) bukan JS rAF, supaya hemat CPU saat modal terbuka.
+- **Tidak menyentuh** `engine.ts`, `levels.ts`, `progress.ts`, atau logika game lainnya.
 
-## Hasil
+## File yang akan diubah/dibuat
 
-Pemain naik level Katakana → suasana Gua Kristal konsisten (stalactite, kristal, partikel kristal), tapi **langitnya berubah** seperti progres warna langit di taman Hiragana. Ide tema dunia lain aman tersimpan di `themes.ts` untuk dipakai pada arc Kanji.
+- created  `scripts/fetch-kanjivg.mjs`
+- created  `src/assets/kanjivg/*.svg` (subset, ~130 file)
+- created  `src/components/KanjiStrokeOrder.tsx`
+- edited   `src/components/KanaGateModal.tsx` (tampilkan komponen saat mode kanji)
+- edited   `src/routes/about.tsx` (atribusi KanjiVG)
+
+## Di luar scope (bisa nanti)
+
+- Mode tracing dengan mouse/jari.
+- Kuis “tebak goresan berikutnya”.
+- Halaman practice goresan terpisah.
+- Animasi goresan untuk hiragana/katakana (KanjiVG juga punya data kana, mudah diperluas nanti).
