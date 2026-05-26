@@ -236,7 +236,11 @@ function HUD({
 }
 
 function TouchPad({ onPress }: { onPress: (key: string, down: boolean) => void }) {
-  const btn = "select-none touch-none rounded-2xl honey-card font-bold text-xl px-5 py-3 active:translate-y-0.5";
+  const [showHelp, setShowHelp] = useState(false);
+  const dpad =
+    "select-none touch-none rounded-full honey-card font-bold text-3xl w-16 h-16 flex items-center justify-center active:translate-y-0.5 active:bg-primary/20 border-2 border-primary/40 shadow-lg";
+  const jumpBtn =
+    "select-none touch-none rounded-full honey-card font-bold text-base w-20 h-20 flex flex-col items-center justify-center active:translate-y-0.5 active:bg-secondary/30 border-2 border-secondary shadow-lg";
   const handlers = (k: string) => ({
     onPointerDown: (e: React.PointerEvent) => { e.preventDefault(); onPress(k, true); },
     onPointerUp: (e: React.PointerEvent) => { e.preventDefault(); onPress(k, false); },
@@ -244,13 +248,64 @@ function TouchPad({ onPress }: { onPress: (key: string, down: boolean) => void }
     onPointerCancel: () => onPress(k, false),
   });
   return (
-    <div className="flex w-full max-w-[800px] items-center justify-between md:hidden">
-      <div className="flex gap-2">
-        <button className={btn} {...handlers("ArrowLeft")}>◀</button>
-        <button className={btn} {...handlers("ArrowRight")}>▶</button>
+    <>
+      <div className="flex w-full max-w-[800px] items-end justify-between md:hidden px-2 pt-1">
+        <div className="flex gap-3">
+          <button className={dpad} aria-label="Kiri" {...handlers("ArrowLeft")}>◀</button>
+          <button className={dpad} aria-label="Kanan" {...handlers("ArrowRight")}>▶</button>
+        </div>
+        <div className="flex flex-col items-center gap-1">
+          <button
+            type="button"
+            onClick={() => setShowHelp(true)}
+            aria-label="Cara main"
+            className="w-9 h-9 rounded-full honey-card border-2 border-border text-sm font-bold active:translate-y-0.5"
+          >
+            ?
+          </button>
+          <button className={jumpBtn} aria-label="Lompat" {...handlers("jump")}>
+            <span className="text-2xl leading-none">⤴</span>
+            <span className="text-[10px] mt-0.5">LOMPAT</span>
+          </button>
+        </div>
       </div>
-      <button className={btn} {...handlers("jump")}>⤴ Lompat</button>
-    </div>
+      {showHelp && (
+        <div
+          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-foreground/50 backdrop-blur-sm p-3 md:hidden"
+          onClick={() => setShowHelp(false)}
+        >
+          <div
+            className="honey-card rounded-2xl p-5 max-w-sm w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="font-display font-bold text-xl mb-3 text-center">🎮 Cara Main</h3>
+            <ul className="text-sm space-y-2 mb-4">
+              <li>
+                <span className="font-bold">◀ ▶</span> — Ketuk &amp; tahan untuk berjalan kiri / kanan.
+              </li>
+              <li>
+                <span className="font-bold">⤴ LOMPAT</span> — Ketuk untuk melompat. Ketuk <em>dua kali</em> saat di udara untuk <em>double flap</em> sayap.
+              </li>
+              <li>
+                Lompati / injak musuh dari atas 🕷️. Jangan kena dari samping!
+              </li>
+              <li>
+                Kumpulkan tetes madu 🍯 untuk skor.
+              </li>
+              <li>
+                Pintu <strong>?</strong> = jawab kana/kanji yang benar untuk lewat. Salah = ❤️ berkurang.
+              </li>
+            </ul>
+            <button
+              onClick={() => setShowHelp(false)}
+              className="w-full py-2.5 rounded-xl bg-primary text-primary-foreground font-bold"
+            >
+              Mengerti!
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
