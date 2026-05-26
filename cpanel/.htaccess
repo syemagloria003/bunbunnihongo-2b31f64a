@@ -1,0 +1,26 @@
+# =========================================================================
+# game/.htaccess — Routing untuk SPA + blokir akses langsung ke game.html
+# =========================================================================
+
+# Blokir akses langsung ke game.html (harus lewat index.php yang cek login)
+<Files "game.html">
+  Require all denied
+</Files>
+
+# SPA fallback: kalau URL bukan file/folder nyata, serve index.php
+# Ini bikin route React seperti /game/leaderboard tetap kerja saat di-refresh.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /game/
+
+  # Jangan rewrite file/folder yang memang ada
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Jangan rewrite request ke /api/
+  RewriteRule ^api/ - [L]
+
+  # Selain itu → index.php (yang akan cek login lalu serve game.html)
+  RewriteRule ^ index.php [L]
+</IfModule>
