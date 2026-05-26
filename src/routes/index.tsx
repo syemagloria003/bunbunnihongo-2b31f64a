@@ -409,20 +409,23 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
         Bunbun Nihongo
       </Link>
       <nav className="flex gap-3 text-sm font-semibold items-center">
-        <a href="#kelas" className="hidden sm:inline hover:text-primary">Kelas</a>
-        <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="hidden sm:inline hover:text-primary">Instagram</a>
+        <a href="#kelas" className="hidden sm:inline hover:text-primary">Kelas Dibuka</a>
+        <a href="#testimoni" className="hidden sm:inline hover:text-primary">Testimoni</a>
+        <a href="#sensei" className="hidden sm:inline hover:text-primary">Sensei</a>
         {loggedIn ? (
-          <>
-            <Link to="/play" className="hover:text-primary">Latihan</Link>
-            <Link to="/leaderboard" className="hover:text-primary">Peringkat</Link>
-          </>
-        ) : (
-          <Link
-            to="/login"
-            className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground hover:brightness-110"
-          >
-            Login Murid
+          <Link to="/play" className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground hover:brightness-110">
+            Main Game
           </Link>
+        ) : (
+          <>
+            <span className="hidden md:inline text-xs text-muted-foreground">Sudah jadi murid Bunbun?</span>
+            <Link
+              to="/login"
+              className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground hover:brightness-110"
+            >
+              Login
+            </Link>
+          </>
         )}
       </nav>
     </header>
