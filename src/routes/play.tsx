@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useMatches, redirect } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { LEVELS, KATAKANA_LEVELS, KANJI_LEVELS, ALL_LEVELS, type LevelDef } from "@/game/levels";
 import { loadProgress, saveProgress, type Progress } from "@/game/progress";
 import { supabase } from "@/integrations/supabase/client";
@@ -25,18 +25,149 @@ function PlayLayout() {
   return <LevelSelect />;
 }
 
+interface TodayRow { user_id: string; nama: string; skor: number; level_id: string; level_name: string; }
+
 function LevelSelect() {
   const [p, setP] = useState<Progress | null>(null);
+  const [today, setToday] = useState<TodayRow[]>([]);
+  const [peers, setPeers] = useState<TodayRow[]>([]);
+  const [meId, setMeId] = useState<string | null>(null);
+
   useEffect(() => { setP(loadProgress()); }, []);
+
+  const latestLevel = useMemo<LevelDef | null>(() => {
+    if (!p) return null;
+    const unlocked = ALL_LEVELS.filter((l) => p.unlocked.includes(l.id));
+    return unlocked[unlocked.length - 1] ?? null;
+  }, [p]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (cancelled) return;
+      setMeId(user?.id ?? null);
+
+      const start = new Date(); start.setHours(0, 0, 0, 0);
+      const { data: scores } = await supabase
+        .from("scores")
+        .select("user_id, skor, level_id, level_name")
+        .gte("tanggal", start.toISOString())
+        .order("skor", { ascending: false })
+        .limit(300);
+
+      const userIds = Array.from(new Set((scores ?? []).map((s) => s.user_id)));
+      const { data: profs } = userIds.length
+        ? await supabase.from("profiles").select("id, nama_lengkap").in("id", userIds)
+        : { data: [] as { id: string; nama_lengkap: string }[] };
+      const nameMap = new Map((profs ?? []).map((x) => [x.id, x.nama_lengkap]));
+
+      const bestByUser = new Map<string, TodayRow>();
+      for (const s of scores ?? []) {
+        const prev = bestByUser.get(s.user_id);
+        if (!prev || s.skor > prev.skor) {
+          bestByUser.set(s.user_id, {
+            user_id: s.user_id, nama: nameMap.get(s.user_id) ?? "Murid",
+            skor: s.skor, level_id: s.level_id, level_name: s.level_name,
+          });
+        }
+      }
+      if (cancelled) return;
+      setToday(Array.from(bestByUser.values()).sort((a, b) => b.skor - a.skor).slice(0, 10));
+
+      if (latestLevel) {
+        const peerMap = new Map<string, TodayRow>();
+        for (const s of scores ?? []) {
+          if (s.level_id !== latestLevel.id) continue;
+          const prev = peerMap.get(s.user_id);
+          if (!prev || s.skor > prev.skor) {
+            peerMap.set(s.user_id, {
+              user_id: s.user_id, nama: nameMap.get(s.user_id) ?? "Murid",
+              skor: s.skor, level_id: s.level_id, level_name: s.level_name,
+            });
+          }
+        }
+        setPeers(Array.from(peerMap.values()).sort((a, b) => b.skor - a.skor));
+      } else {
+        setPeers([]);
+      }
+    };
+    load();
+    const id = setInterval(load, 15_000);
+    return () => { cancelled = true; clearInterval(id); };
+  }, [latestLevel]);
+
   if (!p) return null;
 
   return (
-    <div className="min-h-screen px-6 py-8">
+    <div className="min-h-screen px-4 sm:px-6 py-6 sm:py-8">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
-          <h1 className="font-display text-3xl md:text-4xl font-bold">Peta Petualangan 🗺️</h1>
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <Link to="/" className="text-sm font-semibold hover:text-primary shrink-0">← Beranda</Link>
           <AdminUnlock onUnlock={setP} />
+        </div>
+        <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6">
+          Peta Petualangan 🗺️
+        </h1>
+
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
+          <div className="honey-card rounded-2xl p-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="font-display font-bold text-lg">🏆 Skor hari ini</h3>
+              <Link to="/leaderboard" className="text-xs font-semibold text-primary hover:underline">Lihat semua →</Link>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3">
+              Ayo kalahkan teman-temanmu — cepet-cepetan naik level! 🔥
+            </p>
+            {today.length === 0 ? (
+              <p className="text-sm text-muted-foreground py-2">Belum ada yang main hari ini. Jadilah yang pertama! 🐝</p>
+            ) : (
+              <ol className="space-y-1.5">
+                {today.map((r, i) => {
+                  const isMe = r.user_id === meId;
+                  return (
+                    <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm", isMe ? "bg-primary/15 ring-2 ring-primary" : "bg-background/60"].join(" ")}>
+                      <span className="font-bold w-6 text-center">{i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`}</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold truncate">{r.nama}{isMe && " (kamu)"}</p>
+                        <p className="text-[10px] text-muted-foreground truncate">{r.level_name}</p>
+                      </div>
+                      <span className="font-bold text-primary">{r.skor}</span>
+                    </li>
+                  );
+                })}
+              </ol>
+            )}
+          </div>
+
+          <div className="honey-card rounded-2xl p-4">
+            <h3 className="font-display font-bold text-lg mb-1">⚔️ Saingan di level kamu</h3>
+            {latestLevel ? (
+              <>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Level terbaru: <b className="text-foreground">{latestLevel.name}</b> — bandingkan skormu dengan teman selevel.
+                </p>
+                {peers.length === 0 ? (
+                  <p className="text-sm text-muted-foreground py-2">Belum ada teman lain main di level ini hari ini. Pamer skormu duluan! ✨</p>
+                ) : (
+                  <ol className="space-y-1.5">
+                    {peers.slice(0, 8).map((r, i) => {
+                      const isMe = r.user_id === meId;
+                      return (
+                        <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm", isMe ? "bg-primary/15 ring-2 ring-primary" : "bg-background/60"].join(" ")}>
+                          <span className="font-bold w-6 text-center">#{i + 1}</span>
+                          <span className="flex-1 truncate font-semibold">{r.nama}{isMe && " (kamu)"}</span>
+                          <span className="font-bold text-primary">{r.skor}</span>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                )}
+              </>
+            ) : (
+              <p className="text-sm text-muted-foreground">Mulai main level pertama untuk membuka perbandingan saingan! 🚀</p>
+            )}
+          </div>
         </div>
 
         {p.crystal && (
