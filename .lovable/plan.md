@@ -1,71 +1,65 @@
+# Tema Dunia Katakana — Reskin Penuh
 
-# BeeGana — Petualangan Lebah Belajar Kana
+## Masalah
+Setiap level Katakana sekarang cuma berbeda gradient `bg` + `ground`. Sisanya (background bukit hijau + bunga pink, awan, rumput, koin madu, sarang lebah, laba‑laba/lalat) di-render dengan fungsi yang sama persis seperti dunia Hiragana. `engine.ts` juga melakukan `parseInt("k1") → NaN → 1`, jadi `drawSky` malah pakai cabang Hiragana.
 
-Game platformer 2D ala Mario di mana pemain mengendalikan lebah lucu bernama **Buzu** yang terbang dan melompat di taman bunga. Untuk membuka pintu antar area, Buzu harus menjawab pertanyaan Hiragana/Katakana.
+## Pendekatan
+Tambahkan satu konsep tunggal: **`theme`** per level. Setiap modul render bercabang berdasarkan tema, bukan berdasarkan `levelNum`. Semua dunia Hiragana memakai tema `"garden"` (perilaku saat ini, tidak berubah). 7 dunia Katakana mendapat tema masing‑masing.
 
-## Konsep Inti
-
-- **Karakter**: Lebah bulat lucu, sayap bergetar (animasi), bisa jalan, lompat, dan "double-flap" (lompat ganda pakai sayap).
-- **Tema visual**: Taman bunga + sarang lebah. Palet madu (kuning-emas), hijau daun, langit pastel. Tile berbentuk sarang heksagonal & kelopak bunga.
-- **Musuh**: Laba-laba, lalat nakal, tawon. Bisa di-stomp dari atas seperti Goomba.
-- **Item**: Tetes madu (koin), bunga bonus (1-up), sari bunga (power-up sementara — terbang lebih lama).
-- **Gimmick edukasi**: Beberapa platform/pintu terkunci dengan **Kana Gate** — muncul karakter ã²ã‚‰ãŒãª/ã‚«ã‚¿ã‚«ãƒŠ, pemain pilih romaji yang benar dari 4 opsi.
-
-## Level
-
-1. **Level 1 — Padang Bunga (Hiragana Vokal)**: a i u e o + ka ki ku ke ko.
-2. **Level 2 — Hutan Madu (Hiragana lanjutan)**: sa-shi-su, ta-chi-tsu, na-ni-nu, dll.
-3. **Level 3 — Sarang Lebah (Hiragana penuh + dakuten)**: ga, za, da, ba, pa.
-4. **Level 4 — Gua Kristal (Katakana dasar)**: ã‚¢ ã‚¤ ã‚¦ ã‚¨ ã‚ª + baris ka/sa.
-5. **Level 5 — Langit Senja (Katakana penuh)**: campur semua.
-6. **Boss Level — Ratu Tawon**: jawab 5 kana berturut-turut tanpa salah untuk mengalahkan.
-
-Setiap level: kumpulkan madu, hindari musuh, lewati 2â€“3 Kana Gate, sampai ke sarang tujuan di akhir.
-
-## Mekanik Game
-
-- **Kontrol**: â† â†’ jalan, Space lompat (tekan 2x untuk flap), â†‘ untuk interaksi/Kana Gate.
-- **Nyawa**: 3 hati. Salah jawab kana = kehilangan 1 hati. Kena musuh = 1 hati.
-- **Skor**: madu Ã— 10, jawaban benar Ã— 50, bonus level selesai.
-- **Progress tersimpan** di localStorage (level terbuka, skor tertinggi, kana yang sudah dikuasai).
-- **Mode latihan**: dari menu utama bisa latihan kana tanpa platforming.
-
-## Halaman & Routing (TanStack Start)
-
-```
-src/routes/
-  index.tsx          â†’ Landing + tombol Main, About, Tentang Kana
-  play.tsx           â†’ Pilih level (peta dunia ala Mario)
-  play.$levelId.tsx  â†’ Canvas game untuk level tsb
-  practice.tsx       â†’ Mode latihan kana (kuis murni)
-  about.tsx          â†’ Cara main + cara baca kana
+```text
+Tema Katakana:
+  k1 crystal_cave   — gua biru, stalaktit, kristal berkilau, kelelawar gelap
+  k2 starry_sea     — laut malam, bulan, bintang, gelombang, ubur-ubur silau
+  k3 nebula_sky     — pulau melayang, awan ungu, galaksi, lalat bercahaya
+  k4 snow_field     — bukit salju, pinus, salju turun, rubah putih
+  k5 silver_ruins   — pilar metal patah, kabut, awan kelabu, robot kecil
+  k6 comet_nest     — langit api, komet melintas, batu magma, imp api
+  k7 cosmic_void    — kosmos hitam, spiral galaksi, void wisp (boss arena)
 ```
 
-## Detail Teknis
+Skema warna setiap tema sudah implisit dari gradient `bg` yang ada — palette tinggal diturunkan dari sana.
 
-- **Render game**: HTML5 Canvas via React (`<canvas ref>`), game loop dengan `requestAnimationFrame`. Tidak pakai library berat â€” fisika sederhana (gravity, velocity, AABB collision) ditulis manual.
-- **State engine**: kelas TypeScript `GameEngine` (player, enemies, tiles, gates) di `src/game/`. React hanya untuk HUD (hati, skor, modal Kana Gate).
-- **Kana Gate**: ketika collision dengan gate, engine pause â†’ React modal muncul â†’ jawaban dikirim balik ke engine.
-- **Data kana**: file `src/game/kana-data.ts` â€” array `{char, romaji, type: 'hiragana'|'katakana', group}`.
-- **Level data**: array tile per level di `src/game/levels/level-1.ts` dst (grid sederhana â€” `.` udara, `#` tanah, `?` gate, `M` madu, `E` musuh, `G` goal).
-- **Aset**: sprite lebah, musuh, bunga, tile sarang dibuat via `imagegen` (PNG transparan, gaya kartun lucu). Background per level juga di-generate.
-- **Audio**: efek lompat/koin/benar/salah pakai file kecil atau Web Audio API tone sederhana (opsional, bisa di-skip versi awal).
-- **Design system**: token warna madu/taman ditambahkan di `src/styles.css` (oklch), font display playful (mis. *Fredoka* atau *Baloo 2*) + body sans bersih.
+## Yang Dibongkar
 
-## Ruang Lingkup Implementasi (1 iterasi pertama)
+### 1. `src/game/levels.ts`
+- Tambah field `theme: WorldTheme` di `LevelDef`.
+- Semua entri `LEVELS` (Hiragana) → `theme: "garden"`.
+- `KATAKANA_LEVELS` → tema sesuai tabel di atas.
+- Export type `WorldTheme = "garden" | "crystal_cave" | "starry_sea" | "nebula_sky" | "snow_field" | "silver_ruins" | "comet_nest" | "cosmic_void"`.
 
-1. Setup routing + landing + halaman pilih level.
-2. Mesin game inti (player, gravity, lompat, tile collision, kamera scroll).
-3. Musuh dasar + tetes madu + sistem nyawa/skor + HUD.
-4. Kana Gate + modal kuis + data kana lengkap.
-5. **Level 1 & 2** playable end-to-end, level lain stub "Coming soon".
-6. Mode latihan kana sederhana.
-7. localStorage untuk progress.
+### 2. `src/game/background.ts` — bercabang per tema
+Setiap fungsi (`drawSky`, `drawFar`, `drawMid`, `drawClouds`, `drawForeground`) menerima `theme: WorldTheme` (bukan `level: number`).
+- `drawSky`: gradient & sumber cahaya berbeda — matahari (garden), bulan (sea/void), kristal pendar (cave), aurora (nebula), matahari pucat (snow), kabut (ruins), letupan komet (comet).
+- `drawFar`: bukit hijau (garden) · siluet stalaktit terbalik (cave) · garis ombak + pulau jauh (sea) · pulau melayang (nebula) · bukit salju + pinus jauh (snow) · pilar runtuh (ruins) · gunung magma (comet) · spiral galaksi (void).
+- `drawMid`: bunga (garden) · kristal berkilau di lantai gua (cave) · ubur‑ubur melayang (sea) · gumpalan nebula (nebula) · pohon pinus salju (snow) · kolom + roda gigi raksasa (ruins) · ember & lava bubble (comet) · planet/cincin (void).
+- `drawClouds`: awan biasa (garden/snow) · kabut tipis (cave/ruins) · gelombang awan ungu (nebula) · asap komet horizontal (comet) · debu bintang (sea/void).
+- `drawForeground`: rumput (garden) · serpihan kristal di tepi (cave) · gelembung air (sea) · awan tipis depan (nebula) · serpihan salju jatuh (snow) · debu logam (ruins) · ember melayang (comet) · partikel bintang (void).
 
-Level 3â€“5 + boss bisa ditambahkan di iterasi berikutnya setelah loop utamanya terasa enak.
+### 3. `src/game/render.ts` — bercabang per tema
+Sebagian besar fungsi `draw*` dapat parameter `theme`. Hero `drawBee` (Buzu) **tidak berubah** — dia maskot lintas dunia.
+- `drawGround`: rumput+tanah (garden) · batu+kristal kecil (cave) · pasir basah+karang (sea) · awan padat (nebula) · salju+es (snow) · ubin metal (ruins) · batu magma+retakan pijar (comet) · void+stardust (void).
+- `drawPlatform`: honeycomb (garden) · serpihan kristal (cave) · papan kayu apung (sea) · awan padat (nebula) · balok es (snow) · pelat metal (ruins) · batu lava (comet) · cakram bintang (void).
+- `drawHoney` (koin): madu (garden) · kristal (cave) · bintang (sea) · gumpalan nebula (nebula) · kepingan salju (snow) · roda gigi (ruins) · ember api (comet) · galaksi mini (void). Warna burst particle ikut.
+- `drawGate` (gerbang kana): bingkai sesuai tema (kayu+madu / kristal / koral / cincin nebula / es / metal / batu pijar / cincin bintang).
+- `drawHive` (goal): sarang lebah (garden) · portal kristal (cave) · mercusuar (sea) · gerbang awan (nebula) · iglo (snow) · monolit (ruins) · portal komet (comet) · singgasana bintang (void) — bendera kecil tetap melambai.
+- `drawSpider` & `drawFly`: reskin warna + sedikit aksen bentuk per tema (kelelawar gelap dengan mata merah untuk cave, ubur‑ubur untuk sea, dst). Mekanik & hitbox identik.
 
-## Pertanyaan untuk Kamu
+### 4. `src/game/particles.ts`
+`burst()` dapat opsional `palette: string[]` agar warna percikan cocok per tema. `confetti()` di akhir level pakai palette tema.
 
-1. Setuju mulai dengan Level 1 & 2 dulu (sisanya menyusul), atau mau semua 5 level sekaligus walau lebih lama?
-2. Mau ada **mode pilihan**: kuis tipe "lihat kana â†’ pilih romaji" saja, atau juga sebaliknya "lihat romaji â†’ pilih kana"?
-3. Suara/musik latar: skip dulu, atau aktifkan dengan tone sintetis sederhana?
+### 5. `src/game/engine.ts`
+- Hapus `levelNum`; ganti dengan `this.theme = level.theme`.
+- Teruskan `this.theme` ke semua call `drawSky/drawFar/drawMid/drawClouds/drawForeground/drawGround/drawPlatform/drawHive/drawHoney/drawGate/drawSpider/drawFly`.
+- Saat coin diambil & saat menang, pilih palette particle dari tabel tema.
+
+### 6. Modal kana (`KanaGateModal.tsx`) — opsional ringan
+Tidak diubah. Visual gerbang sudah ditangani oleh `drawGate` di canvas; modal tetap kartu putih netral biar fokus baca huruf.
+
+## Di luar scope
+- Tidak menambah mekanik baru (es licin, kristal pecah, gravitasi berbeda).
+- Tidak menambah pola pergerakan musuh baru — cuma reskin visual.
+- Buzu si lebah tetap sama bentuknya di semua dunia.
+- Hiragana 7 dunia tidak diubah tampilannya (tema `garden` = perilaku saat ini).
+
+## Hasil yang diharapkan
+Begitu masuk Gua Kristal: langit gelap kebiruan, stalaktit menggantung, lantai berbatu+kristal kecil, koin jadi kristal pendar, sarang lebah jadi portal kristal, "laba‑laba" jadi kelelawar gelap. Setiap dunia berikutnya terasa naik tingkat suasana — bukan sekadar warna langit berbeda.
