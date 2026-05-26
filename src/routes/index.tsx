@@ -93,7 +93,7 @@ function Landing() {
               </a>
             </div>
             <p className="text-xs text-muted-foreground mt-4">
-              Sudah jadi murid? <Link to="/login" className="text-primary font-semibold underline">Login di sini</Link> untuk latihan tambahan & main game.
+              Sudah jadi murid Bunbun? <Link to="/login" className="text-primary font-semibold underline">Login di sini</Link> untuk akses game sebagai latihan tambahan setelah kelas.
             </p>
           </div>
           <div className="relative">
