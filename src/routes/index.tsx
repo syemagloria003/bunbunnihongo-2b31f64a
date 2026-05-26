@@ -11,6 +11,11 @@ import galRegN3 from "@/assets/gallery/kelas-reg-n3.png";
 import galN3Absen from "@/assets/gallery/kelas-n3-absen.jpg";
 import posterRegN4 from "@/assets/posters/kelas-reguler-n4.png";
 import posterJlptN3 from "@/assets/posters/kelas-jlpt-n3.png";
+import posterSensei from "@/assets/sensei-syema.png";
+import wa1 from "@/assets/testimoni/wa1.jpeg";
+import wa2 from "@/assets/testimoni/wa2.jpeg";
+import wa3 from "@/assets/testimoni/wa3.jpeg";
+import wa4 from "@/assets/testimoni/wa4.jpeg";
 
 const WA_LINK = "https://wa.me/6289532867100?text=Halo%20Bunbun%20Nihongo,%20saya%20mau%20tanya%20kelas%20yang%20sedang%20dibuka.";
 const IG_LINK = "https://instagram.com/bunbun_nihongo";
