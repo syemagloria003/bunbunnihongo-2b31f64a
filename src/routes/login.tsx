@@ -1,11 +1,12 @@
 import { createFileRoute, redirect, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import logo from "@/assets/logo-bunbun.jpg";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Login Murid — BeeGana" },
+      { title: "Login Murid — Bunbun Nihongo" },
       { name: "description", content: "Masuk untuk mulai bermain dan menyimpan skor." },
     ],
   }),
@@ -40,9 +41,10 @@ function LoginPage() {
     <div className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-b from-background to-primary/5">
       <div className="honey-card rounded-3xl p-8 w-full max-w-md">
         <div className="text-center mb-6">
-          <div className="text-5xl mb-2">🐝</div>
-          <h1 className="font-display text-3xl font-bold">Bee<span className="text-primary">Gana</span></h1>
-          <p className="text-sm text-muted-foreground mt-1">Login murid Bunbun Nihongo</p>
+          <img src={logo} alt="Bunbun Nihongo" className="w-24 h-24 mx-auto rounded-2xl shadow-md mb-3" />
+          <h1 className="font-display text-2xl font-bold">Bunbun Nihongo</h1>
+          <p className="text-sm text-primary font-semibold mt-1">Kursus Online Bahasa Jepang</p>
+          <p className="text-xs text-muted-foreground mt-2">Login murid</p>
         </div>
         <form onSubmit={submit} className="space-y-3">
           <div>

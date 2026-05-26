@@ -1,49 +1,30 @@
-# Plan: Login Khusus Murid + Admin Panel
+# Rebrand: BeeGana → Bunbun Nihongo
 
-Pakai **Lovable Cloud** (built-in, no cPanel/PHP). Lebih simpel: kamu cuma perlu klik Publish, semua sudah jalan.
+## Tujuan
+Ganti semua tulisan "BeeGana" jadi **Bunbun Nihongo** dengan sub judul **"Kursus Online Bahasa Jepang"**, dan pasang logo lebah orange yang kamu upload sebagai logo resmi.
 
-## Cara kerja
+## Yang akan diubah
 
-- **Bukan signup terbuka.** Murid TIDAK bisa daftar sendiri.
-- **Hanya kamu (admin)** yang bisa bikin akun murid dari halaman Admin.
-- Murid login pakai email + password yang kamu kasih.
-- Skor otomatis tersimpan ke database Lovable Cloud, leaderboard real-time.
+### 1. Pasang logo
+- Copy `logo_compressed-2.jpeg` ke `src/assets/logo-bunbun.jpg` (dipakai di komponen React, di-import sebagai modul).
+- Copy juga ke `public/logo-bunbun.jpg` + jadikan `favicon` di `__root.tsx` (biar tab browser pakai logo lebah, bukan icon default).
 
-## Email admin
+### 2. Halaman & teks (ganti "BeeGana" → "Bunbun Nihongo")
+- **`src/routes/index.tsx`** (landing): ganti emoji 🐝 di hero jadi `<img>` logo besar, judul "Bunbun Nihongo", sub judul "Kursus Online Bahasa Jepang", update meta title/description/og. Footer/header kecil juga ganti logo + nama.
+- **`src/routes/login.tsx`**: ganti header "Bee Gana" jadi logo + "Bunbun Nihongo" + sub judul kecil "Kursus Online Bahasa Jepang". Update meta title.
+- **`src/routes/about.tsx`**: ganti judul & meta "BeeGana" → "Bunbun Nihongo".
+- **`src/routes/__root.tsx`**: update meta global (title, og:title, twitter:title, description) jadi "Bunbun Nihongo — Kursus Online Bahasa Jepang", tambah `<link rel="icon">` ke logo.
 
-Kamu kasih tahu aku 1 email yang mau jadi admin (misal `syema@bunbun.com`). Email itu yang punya akses ke halaman `/admin`.
+### 3. Konsistensi
+Sapuan terakhir: `rg -i "beegana|bee gana"` untuk memastikan tidak ada sisa.
 
-## Yang akan aku buat
+## Yang TIDAK diubah
+- Logika game, database, auth, level — semua tetap.
+- Nama internal mascot "Buzu" di game tetap (atau mau ganti juga? bilang saja).
+- Tema warna saat ini tetap. Kalau mau palette diselaraskan dengan orange logo, bisa di putaran berikutnya.
 
-### 1. Aktifkan Lovable Cloud
-Database + Auth + Storage langsung jalan, tanpa setup.
+## Catatan
+- Logo aslinya sudah memuat tulisan "BUNBUN NIHONGO" — jadi di hero saya tampilkan **logo besar** lalu sub judul "Kursus Online Bahasa Jepang" di bawahnya (tidak menulis ulang "Bunbun Nihongo" di samping logo supaya tidak dobel).
+- Di tempat kecil (header navigasi, footer, login card) saya pakai logo kecil + teks "Bunbun Nihongo" karena tulisan di dalam logo tidak terbaca di ukuran kecil.
 
-### 2. Database
-- `profiles` — nama lengkap murid, email
-- `user_roles` — siapa admin, siapa murid (pakai pola aman, bukan di profile)
-- `scores` — skor + tanggal main + level
-
-### 3. Halaman
-- `/login` — form login email + password
-- `/` — game (wajib login)
-- `/leaderboard` — ranking real-time top 20
-- `/admin` — **khusus admin**: form tambah murid (nama, email, password), list semua murid, hapus murid, reset password murid
-
-### 4. Auth Guard
-- Belum login → auto redirect ke `/login`
-- Bukan admin buka `/admin` → ditolak
-- Signup publik dimatikan (cuma admin yang bisa create user via admin panel)
-
-### 5. Hapus barang PHP/cPanel
-Folder `cpanel/`, `PANDUAN-UPLOAD.md`, file `src/game/leaderboard.ts` versi PHP — semua dibuang karena nggak dipakai lagi.
-
-## Setelah selesai
-
-Tinggal klik tombol **Publish** di Lovable, game langsung live di URL `bunbunnihongo-kana-game.lovable.app`. Nggak perlu upload ke cPanel, nggak perlu phpMyAdmin.
-
-## Yang aku butuh dari kamu
-
-1. **Email admin** kamu (yang akan jadi satu-satunya akun yang bisa tambah murid)
-2. Konfirmasi: oke hapus semua file PHP/cPanel yang sudah dibuat sebelumnya?
-
-Begitu kamu approve plan ini dan kasih email admin, aku langsung kerjakan.
+Klik **Implement plan** kalau sudah oke.

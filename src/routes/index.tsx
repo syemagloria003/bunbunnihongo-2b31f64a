@@ -1,13 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { UserGreeting } from "@/components/UserGreeting";
+import logo from "@/assets/logo-bunbun.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "BeeGana — Petualangan Lebah Belajar Hiragana & Katakana" },
-      { name: "description", content: "Game platformer lucu di mana lebah Buzu belajar Hiragana dan Katakana lewat petualangan di taman bunga." },
-      { property: "og:title", content: "BeeGana — Belajar Kana sambil Main" },
-      { property: "og:description", content: "Lompat, kumpulkan madu, jawab kana, taklukkan tiap level." },
+      { title: "Bunbun Nihongo — Kursus Online Bahasa Jepang" },
+      { name: "description", content: "Kursus Online Bahasa Jepang. Belajar Hiragana & Katakana sambil main game petualangan lebah Bunbun." },
+      { property: "og:title", content: "Bunbun Nihongo — Kursus Online Bahasa Jepang" },
+      { property: "og:description", content: "Belajar Bahasa Jepang sambil main. Hiragana, Katakana, dan petualangan seru." },
     ],
   }),
   component: Index,
@@ -20,16 +21,18 @@ function Index() {
       <main className="flex-1 flex flex-col items-center justify-center px-6 py-10">
         <section className="max-w-3xl text-center">
           <UserGreeting />
-          <div className="float-bee inline-block text-7xl md:text-8xl mb-4">🐝</div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-4">
-            Bee<span className="text-primary">Gana</span>
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground mb-2">
-            Petualangan lebah lucu di taman bunga & sarang madu.
+          <img
+            src={logo}
+            alt="Bunbun Nihongo"
+            className="float-bee mx-auto w-48 md:w-64 h-auto rounded-3xl shadow-xl mb-6"
+          />
+          <h1 className="sr-only">Bunbun Nihongo</h1>
+          <p className="text-xl md:text-2xl font-display font-bold text-primary mb-3">
+            Kursus Online Bahasa Jepang
           </p>
           <p className="text-base md:text-lg text-foreground/80 mb-8">
-            Lompat, kumpulkan tetes madu, dan buka <strong>Kana Gate</strong> dengan menjawab
-            Hiragana & Katakana yang benar. <em>Belajar sambil main!</em>
+            Belajar Hiragana & Katakana sambil bermain. Lompat, kumpulkan tetes madu, dan buka{" "}
+            <strong>Kana Gate</strong> dengan menjawab kana yang benar. <em>Belajar sambil main!</em>
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <Link
@@ -83,8 +86,9 @@ function Feature({ icon, title, desc }: { icon: string; title: string; desc: str
 function Header() {
   return (
     <header className="px-6 py-4 flex items-center justify-between">
-      <Link to="/" className="font-display font-bold text-2xl flex items-center gap-2">
-        <span className="text-3xl">🐝</span> BeeGana
+      <Link to="/" className="font-display font-bold text-xl md:text-2xl flex items-center gap-2">
+        <img src={logo} alt="" className="w-9 h-9 rounded-lg" />
+        Bunbun Nihongo
       </Link>
       <nav className="flex gap-3 text-sm font-semibold">
         <Link to="/play" className="hover:text-primary">Main</Link>
