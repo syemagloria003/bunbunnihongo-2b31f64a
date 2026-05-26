@@ -1,19 +1,15 @@
-const KEY = "beegana_progress_v2";
+const KEY = "beegana_progress_v1";
 
 export interface Progress {
   unlocked: string[];
-  bestStars: Record<string, number>;
   bestScore: Record<string, number>;
   bestCoins: Record<string, number>;
-  crystal: boolean; // earned after clearing final hiragana level — unlocks katakana arc
 }
 
 const DEFAULT: Progress = {
   unlocked: ["1"],
-  bestStars: {},
   bestScore: {},
   bestCoins: {},
-  crystal: false,
 };
 
 export function loadProgress(): Progress {
@@ -21,10 +17,7 @@ export function loadProgress(): Progress {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return DEFAULT;
-    const p: Progress = { ...DEFAULT, ...JSON.parse(raw) };
-    // Migration: if crystal earned, ensure k1 is unlocked
-    if (p.crystal && !p.unlocked.includes("k1")) p.unlocked = [...p.unlocked, "k1"];
-    return p;
+    return { ...DEFAULT, ...JSON.parse(raw) };
   } catch { return DEFAULT; }
 }
 
@@ -33,35 +26,11 @@ export function saveProgress(p: Progress) {
   localStorage.setItem(KEY, JSON.stringify(p));
 }
 
-export function computeStars(correct: number, total: number): number {
-  if (total <= 0) return 1;
-  const ratio = correct / total;
-  if (ratio >= 0.99) return 5;
-  if (ratio >= 0.8) return 4;
-  if (ratio >= 0.6) return 3;
-  if (ratio >= 0.4) return 2;
-  return 1;
-}
-
-export function completeLevel(
-  id: string,
-  score: number,
-  coins: number,
-  stars: number,
-  nextId?: string,
-  isFinalHiragana?: boolean,
-) {
+export function completeLevel(id: string, score: number, coins: number, nextId?: string) {
   const p = loadProgress();
   p.bestScore[id] = Math.max(p.bestScore[id] ?? 0, score);
   p.bestCoins[id] = Math.max(p.bestCoins[id] ?? 0, coins);
-  p.bestStars[id] = Math.max(p.bestStars[id] ?? 0, stars);
-  // unlock next level only when bestStars >= 3
-  if (nextId && stars >= 3 && !p.unlocked.includes(nextId)) p.unlocked.push(nextId);
-  // Earning the crystal also auto-unlocks Katakana level 1
-  if (isFinalHiragana && stars >= 3) {
-    p.crystal = true;
-    if (!p.unlocked.includes("k1")) p.unlocked.push("k1");
-  }
+  if (nextId && !p.unlocked.includes(nextId)) p.unlocked.push(nextId);
   saveProgress(p);
   return p;
 }
