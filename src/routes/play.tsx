@@ -1,7 +1,8 @@
-import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useMatches, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { LEVELS, KATAKANA_LEVELS, KANJI_LEVELS, ALL_LEVELS, type LevelDef } from "@/game/levels";
 import { loadProgress, saveProgress, type Progress } from "@/game/progress";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/play")({
   head: () => ({
@@ -10,6 +11,10 @@ export const Route = createFileRoute("/play")({
       { name: "description", content: "Pilih level petualangan Buzu si lebah." },
     ],
   }),
+  beforeLoad: async ({ location }) => {
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) throw redirect({ to: "/login", search: { redirect: location.href } as never });
+  },
   component: PlayLayout,
 });
 
