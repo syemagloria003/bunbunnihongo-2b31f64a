@@ -110,11 +110,11 @@ function AdminPage() {
   return (
     <div className="min-h-screen px-6 py-8">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
-          <h1 className="font-display text-3xl md:text-4xl font-bold">🛠️ Panel Admin</h1>
-          <button onClick={logout} className="text-sm font-semibold hover:text-primary">Logout</button>
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <Link to="/" className="text-sm font-semibold hover:text-primary shrink-0">← Beranda</Link>
+          <button onClick={logout} className="text-sm font-semibold hover:text-primary shrink-0">Logout</button>
         </div>
+        <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6">🛠️ Panel Admin</h1>
 
         {msg && (
           <div className={`mb-4 px-4 py-2 rounded-xl text-sm font-semibold ${
