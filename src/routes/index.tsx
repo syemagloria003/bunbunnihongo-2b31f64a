@@ -157,13 +157,16 @@ function Landing() {
               Meet the Sensei
             </span>
             <h2 className="text-2xl md:text-3xl font-display font-bold mb-2">
-              Diajar langsung oleh founder Bunbun 🎓
+              Diajar langsung oleh founder & tim sensei kami 🎓
             </h2>
             <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-              Syema Sensei — lulusan terbaik UNESA, bersertifikat <strong>JLPT N2</strong>, mengajar dengan sabar & detail.
+              Founder kami, <strong>Syema Sensei</strong>, lulusan terbaik UNESA & bersertifikat <strong>JLPT N2</strong>.
+              Tim pengajar direkrut khusus tiap batch — semua minimal <strong>JLPT N2</strong>, sabar, dan detail.
             </p>
           </div>
-          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card">
+
+          {/* Founder poster */}
+          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card mb-8">
             <img
               src={posterSensei}
               alt="Profil Syema Sensei — Founder Bunbun Nihongo, JLPT N2, S1 Pendidikan Bahasa Jepang UNESA"
@@ -171,8 +174,25 @@ function Landing() {
               className="w-full h-auto block"
             />
           </div>
+
+          {/* Tim pengajar poster */}
+          <div className="text-center mb-4">
+            <h3 className="font-display font-bold text-xl">Tim pengajar kami 🐝</h3>
+            <p className="text-xs text-muted-foreground mt-1">
+              Sensei tambahan yang bergabung di batch-batch berjalan.
+            </p>
+          </div>
+          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card">
+            <img
+              src={posterTim}
+              alt="Tim pengajar Bunbun Nihongo — semua bersertifikat minimal JLPT N2"
+              loading="lazy"
+              className="w-full h-auto block"
+            />
+          </div>
         </div>
       </section>
+
 
       {/* Testimoni — WA screenshots */}
       <section className="px-6 py-16 bg-gradient-to-b from-background via-secondary/10 to-background">
