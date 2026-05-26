@@ -430,7 +430,7 @@ function Footer() {
         {" · "}
         📷 Instagram: <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">@bunbun_nihongo</a>
       </p>
-      <p>© {new Date().getFullYear()} Bunbun Nihongo — Kursus Online Bahasa Jepang. Dibuat dengan 🍯.</p>
+      <p>© {new Date().getFullYear()} Bunbun Nihongo — Kursus Online Bahasa Jepang.</p>
     </footer>
   );
 }
