@@ -132,7 +132,7 @@ export function KanjiStrokeOrder({
             {parsed.paths.map((d, i) => (
               <path
                 key={i}
-                ref={(el) => (pathRefs.current[i] = el)}
+                ref={(el) => { pathRefs.current[i] = el; }}
                 d={d}
               />
             ))}
