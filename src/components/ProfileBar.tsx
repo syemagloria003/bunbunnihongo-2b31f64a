@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { fetchMe, updateProfile, type MeResponse } from "@/game/leaderboard";
 import { AVATARS, getAvatarSrc } from "@/game/avatars";
 
