@@ -1,12 +1,7 @@
-## Perubahan di `src/routes/index.tsx`
+Add a prominent security warning section between the FAQ and footer on the landing page (src/routes/index.tsx).
 
-### 1. `#kelas` mendarat persis di posisi yang sama dengan `#testimoni`
-Saat ini `id="kelas"` ada di `<section>` (yang punya padding `py-8`), sedangkan `id="testimoni"` ada di `<h2>` di dalamnya. Akibatnya saat klik "Kelas Dibuka" heading muncul sedikit lebih ke atas dibanding klik "Testimoni".
+Content:
+1. Pembayaran di luar rekening BCA (a.n SYEMA GLORIA, No. Rekening: 0332170528) maka di luar tanggung jawab kita.
+2. Admin — informasi dan konfirmasi pendaftaran hanya melalui WhatsApp Admin Resmi: +62 895-3286-71000. Di luar itu tidak bertanggung jawab (bisa jadi ada penyalahgunaan nama Bunbun).
 
-Fix: pindahkan `id="kelas"` ke `<h2>` "Kelas yang dibuka 📣" dan beri `scroll-mt-20` — identik dengan setup `#testimoni`. Hapus `id="kelas"` + `scroll-mt-20` dari `<section>`.
-
-### 2. `#sensei` turun sedikit
-Naikkan `scroll-mt-20` → `scroll-mt-28` (5rem → 7rem) pada `<section id="sensei">` supaya saat di-anchor, foto Syema Sensei dan card berada lebih ke bawah, sesuai screenshot referensi.
-
-### Catatan
-Hanya 2 baris diubah. Tidak ada perubahan layout, hanya posisi scroll-target. Setelah implementasi, akan saya verifikasi dengan klik nav "Kelas Dibuka" dan "Meet The Teacher" di preview.
+Design: Styled as a red/amber alert card with shield/warning icon, left-aligned text, placed in its own section before the footer. Keep it within max-w-4xl mx-auto container to match the FAQ section width.
