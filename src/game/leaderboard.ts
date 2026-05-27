@@ -51,7 +51,7 @@ export async function updateProfile(input: {
 }): Promise<boolean> {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return false;
-  const payload: Record<string, unknown> = {};
+  const payload: { nama_panggilan?: string | null; avatar_id?: string | null } = {};
   if (input.nama_panggilan !== undefined) {
     const v = (input.nama_panggilan ?? "").trim();
     payload.nama_panggilan = v.length ? v : null;
