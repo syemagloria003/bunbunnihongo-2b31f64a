@@ -467,7 +467,7 @@ const FAQ_ITEMS: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Apakah pembayaran bisa dicicil atau menggunakan DP?",
-    a: <>Ya. Pembayaran dapat <strong>dicicil maksimal 2 kali</strong> (namun tidak bisa menggunakan promo potongan harga). Jika ingin mengamankan kuota, bisa membayar <strong>DP sebesar Rp200.000</strong> dengan pelunasan maksimal H-7 sebelum kelas dimulai.</>,
+    a: <><strong>100% gabisa dicicil.</strong> Cuma kalau mau pesan seat dulu bisa <strong>Rp200.000</strong> aja DP, nanti dipotongkan dari harga promo saat daftar (untuk amankan harga promo dan seat). Maksimal H-10 sebelum kelas dimulai sisanya harus dilunasi.</>,
   },
   {
     q: "Pembayaran bisa melalui apa saja?",
