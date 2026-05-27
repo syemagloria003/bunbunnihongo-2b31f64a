@@ -241,6 +241,47 @@ body.game-theme {
   backdrop-filter: blur(6px);
 }
 
+/* Per-world tint for level cards in game theme */
+.game-theme .honey-card.world-garden {
+  background:
+    linear-gradient(155deg,
+      oklch(0.40 0.18 55) 0%,
+      oklch(0.30 0.16 35) 55%,
+      oklch(0.22 0.10 25) 100%);
+  border-color: oklch(0.85 0.18 75);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 22%, transparent),
+    0 0 0 1px oklch(0.78 0.18 50 / 0.5),
+    0 0 26px -4px oklch(0.78 0.20 60 / 0.65),
+    0 18px 40px -16px oklch(0.50 0.20 40 / 0.7);
+}
+.game-theme .honey-card.world-crystal {
+  background:
+    linear-gradient(155deg,
+      oklch(0.42 0.16 220) 0%,
+      oklch(0.30 0.14 250) 55%,
+      oklch(0.22 0.10 270) 100%);
+  border-color: oklch(0.85 0.18 200);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 22%, transparent),
+    0 0 0 1px oklch(0.80 0.16 210 / 0.55),
+    0 0 26px -4px oklch(0.80 0.20 215 / 0.7),
+    0 18px 40px -16px oklch(0.45 0.18 240 / 0.7);
+}
+.game-theme .honey-card.world-meteor {
+  background:
+    linear-gradient(155deg,
+      oklch(0.40 0.20 330) 0%,
+      oklch(0.28 0.18 310) 55%,
+      oklch(0.20 0.14 295) 100%);
+  border-color: oklch(0.78 0.28 340);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 22%, transparent),
+    0 0 0 1px oklch(0.72 0.25 340 / 0.55),
+    0 0 26px -4px oklch(0.72 0.28 340 / 0.75),
+    0 18px 40px -16px oklch(0.42 0.22 320 / 0.75);
+}
+
 .game-theme .hex-bg {
   background-color: var(--card);
   background-image:
