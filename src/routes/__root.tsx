@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -11,6 +12,12 @@ import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 import appCss from "../styles.css?url";
+
+const GAME_ROUTE_PREFIXES = ["/play", "/belajar", "/leaderboard", "/admin"];
+function isGameRoute(pathname: string): boolean {
+  return GAME_ROUTE_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + "/"));
+}
+
 
 
 function NotFoundComponent() {
