@@ -312,7 +312,7 @@ function Landing() {
       {/* Sensei + CTA — side by side */}
       <section id="sensei" className="px-6 py-12 bg-muted/20 scroll-mt-20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-start">
-          {/* Kiri: founder + tim tumpuk */}
+          {/* Kiri: founder + catatan tim */}
           <div className="flex flex-col gap-5">
             <div>
               <span className="inline-block bg-accent/15 text-accent text-[10px] font-bold px-2.5 py-1 rounded-full mb-2 tracking-wider uppercase">
@@ -325,31 +325,26 @@ function Landing() {
                 <strong>Syema Sensei</strong>, lulusan terbaik UNESA & bersertifikat <strong>JLPT N2</strong> — sabar, detail, paham banget cara ngajar dari nol sampai mahir.
               </p>
             </div>
-            <div className="rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg bg-card">
+            <div className="rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg bg-card flex items-center justify-center max-h-[460px]">
               <img
                 src={posterSensei}
                 alt="Profil Syema Sensei — Founder Bunbun Nihongo"
                 loading="lazy"
-                className="w-full h-auto block"
+                className="w-full h-auto max-h-[460px] object-contain block"
               />
             </div>
-            <div>
-              <h3 className="text-base md:text-lg font-display font-bold mb-1">
-                Tim pengajar Bunbun 🐝
+            <div className="rounded-2xl border-2 border-dashed border-primary/30 bg-card/60 p-4">
+              <h3 className="text-base md:text-lg font-display font-bold mb-1 flex items-center gap-2">
+                <span>🐝</span> Didukung tim pengajar Bunbun
               </h3>
               <p className="text-muted-foreground text-xs md:text-sm">
-                Didukung pengajar JLPT bersertifikat <strong>(N2 / N1 Only!)</strong> yang lolos seleksi & pelatihan metode Bunbun.
+                Selain Syema Sensei, Bunbun juga punya <strong>tim pengajar bersertifikat JLPT N2 / N1</strong> yang
+                sudah melalui <strong>seleksi & pelatihan metode Bunbun</strong>. Jadi kelasmu tetap
+                terjamin kualitasnya siapa pun sensei yang mengajar 💛
               </p>
             </div>
-            <div className="rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg bg-card">
-              <img
-                src={posterTim}
-                alt="Tim pengajar Bunbun Nihongo — bersertifikat JLPT N2 / N1"
-                loading="lazy"
-                className="w-full h-auto block"
-              />
-            </div>
           </div>
+
 
           {/* Kanan: CTA + kontak — sticky di desktop */}
           <div className="md:sticky md:top-24">
