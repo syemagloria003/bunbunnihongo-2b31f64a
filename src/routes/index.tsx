@@ -387,14 +387,121 @@ function Landing() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section id="faq" className="px-6 py-8 md:py-12 scroll-mt-20 bg-gradient-to-b from-background to-primary/5">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-6">
+            <span className="inline-block bg-secondary/30 text-foreground/80 text-[10px] font-bold px-2.5 py-1 rounded-full mb-2 tracking-wider uppercase">
+              FAQ
+            </span>
+            <h2 className="text-2xl md:text-3xl font-display font-bold mb-1">
+              Pertanyaan yang sering ditanya 🍯
+            </h2>
+            <p className="text-muted-foreground text-sm">
+              Belum nemu jawabannya? Chat admin lewat WhatsApp ya 💬
+            </p>
+          </div>
 
+          <div className="space-y-2.5">
+            {FAQ_ITEMS.map((item, i) => (
+              <FaqItem key={i} q={item.q} a={item.a} />
+            ))}
+          </div>
 
+          <div className="mt-6 text-center">
+            <a
+              href={WA_LINK}
+              target="_blank" rel="noopener noreferrer"
+              className="inline-block px-5 py-2.5 rounded-2xl bg-primary text-primary-foreground font-bold text-sm shadow-lg hover:brightness-105 transition"
+            >
+              💬 Masih ada pertanyaan? Chat admin
+            </a>
+          </div>
+        </div>
+      </section>
 
-
-
+      <footer className="px-6 py-5 border-t border-border/50 bg-card/40 text-center text-xs text-muted-foreground">
+        © 2026 Bunbun Nihongo — Kursus Online Bahasa Jepang.
+      </footer>
     </div>
   );
 }
+
+const FAQ_ITEMS: { q: string; a: React.ReactNode }[] = [
+  {
+    q: "Apakah kelas cocok untuk pemula?",
+    a: <>Ya. Program kelas reguler <strong>"Dari Nol – JLPT N4"</strong> dirancang untuk pemula sekalipun. Materi dasar seperti hiragana, katakana, dan grammar dasar akan diajarkan dari awal sehingga peserta yang benar-benar belum pernah belajar bahasa Jepang tetap dapat mengikuti kelas dengan tenang.</>,
+  },
+  {
+    q: "Kelas dilakukan secara online atau offline?",
+    a: <>Semua kelas dilakukan secara <strong>online melalui Zoom</strong>, sehingga dapat diikuti dari mana saja selama memiliki koneksi internet yang stabil.</>,
+  },
+  {
+    q: "Berapa murid dalam satu kelas?",
+    a: <>Setiap kelas terdiri dari <strong>minimal 4 murid dan maksimal 10 murid</strong>. Jumlah ini dijaga agar suasana belajar tetap kondusif dan setiap murid tetap mendapatkan perhatian dari pengajar.</>,
+  },
+  {
+    q: "Apakah ada rekaman kelas?",
+    a: <>Ya. <strong>Rekaman kelas tersedia</strong> untuk peserta sehingga materi dapat dipelajari kembali apabila ada bagian yang terlewat atau ingin diulang.</>,
+  },
+  {
+    q: "Apakah saya bisa hanya mengikuti kelas N5 saja atau N4 saja?",
+    a: <>Program reguler Bunbun Nihongo disusun sebagai kurikulum bertahap dari <strong>dasar → N5 → N4</strong>. Oleh karena itu kelas tidak dibuka secara terpisah per level, melainkan diikuti sebagai satu program pembelajaran yang berkesinambungan. Sistem ini dibuat agar fondasi dasar benar-benar kuat sehingga pemahaman materi lebih stabil hingga mencapai target JLPT N4.</>,
+  },
+  {
+    q: "Apakah ada syarat untuk mengikuti kelas?",
+    a: (
+      <div className="space-y-2">
+        <p><strong>Kelas Reguler Dari Nol hingga JLPT N4:</strong> Tidak ada syarat kemampuan bahasa Jepang sebelumnya. Syarat usia peserta adalah <strong>minimal 15 tahun ke atas</strong> (tidak ada batas maksimal). Jika sudah bisa membaca hiragana dan katakana, ada kesempatan mendapat potongan harga tambahan.</p>
+        <p><strong>Kelas JLPT N3:</strong> Peserta diharapkan sudah memiliki kemampuan setara JLPT N4, yang dibuktikan melalui salah satu syarat: memiliki sertifikat <strong>JLPT N4/JFT Basic A2</strong>, lolos <strong>placement test</strong> Bunbun Nihongo, atau merupakan <strong>alumni kelas level sebelumnya</strong> di Bunbun Nihongo.</p>
+      </div>
+    ),
+  },
+  {
+    q: "Apakah biaya yang tertera merupakan biaya per bulan?",
+    a: <><strong>Tidak.</strong> Biaya yang tertera merupakan biaya untuk mengikuti kelas <strong>hingga level tersebut selesai</strong>, bukan biaya per bulan.</>,
+  },
+  {
+    q: "Apakah pembayaran bisa dicicil atau menggunakan DP?",
+    a: <>Ya. Pembayaran dapat <strong>dicicil maksimal 2 kali</strong> (namun tidak bisa menggunakan promo potongan harga). Jika ingin mengamankan kuota, bisa membayar <strong>DP sebesar Rp200.000</strong> dengan pelunasan maksimal H-7 sebelum kelas dimulai.</>,
+  },
+  {
+    q: "Pembayaran bisa melalui apa saja?",
+    a: <>Pembayaran saat ini hanya melalui <strong>transfer Bank BCA</strong> (a.n SYEMA GLORIA, No. Rekening: <strong>0332170528</strong>). Informasi dan konfirmasi pendaftaran hanya melalui <strong>WhatsApp Admin Resmi: +62 895-3286-71000</strong>.</>,
+  },
+  {
+    q: "Bagaimana cara mendaftar?",
+    a: <>Klik tombol <strong>Daftar</strong> pada halaman tersebut, lalu Anda akan diarahkan langsung ke <strong>WhatsApp admin</strong> untuk proses pendaftaran.</>,
+  },
+  {
+    q: "Kalau saya mengajak teman, apakah ada benefit?",
+    a: <>Ya, Anda bisa mendapatkan <strong>komisi Rp100.000</strong> untuk setiap murid yang berhasil diajak bergabung, dengan syarat Anda <strong>sudah pernah menjadi murid Bunbun Nihongo</strong>. Untuk kerja sama skala besar/B2B, bisa didiskusikan langsung dengan admin.</>,
+  },
+];
+
+function FaqItem({ q, a }: { q: string; a: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <details
+      open={open}
+      onToggle={(e) => setOpen((e.target as HTMLDetailsElement).open)}
+      className="group rounded-2xl border-2 border-primary/15 bg-card hover:border-primary/30 transition-colors overflow-hidden shadow-sm"
+    >
+      <summary className="cursor-pointer list-none px-4 py-3.5 flex items-center gap-3 select-none">
+        <span className="shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/15 text-primary text-sm font-bold transition-transform group-open:rotate-45">
+          +
+        </span>
+        <span className="flex-1 font-display font-bold text-sm md:text-base text-foreground leading-snug">
+          {q}
+        </span>
+      </summary>
+      <div className="px-4 pb-4 pl-14 text-sm text-foreground/80 leading-relaxed">
+        {a}
+      </div>
+    </details>
+  );
+}
+
 
 
 
