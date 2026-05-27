@@ -409,12 +409,22 @@ function Landing() {
 
 
 function PosterCard({
-  src, alt, title, subtitle, schedule, details,
-}: { src: string; alt: string; title: string; subtitle: string; schedule: string; details: string[] }) {
+  src, alt, title, subtitle, schedule, price, priceNote, details,
+}: { src: string; alt: string; title: string; subtitle: string; schedule: string; price: string; priceNote?: string; details: string[] }) {
   return (
     <div className="rounded-2xl overflow-hidden border border-primary/25 bg-card shadow-md flex flex-col sm:flex-row">
-      <a href={src} target="_blank" rel="noopener noreferrer" className="block bg-muted sm:w-40 sm:shrink-0">
-        <img src={src} alt={alt} loading="lazy" className="w-full h-40 sm:h-full object-cover" />
+      <a
+        href={src}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block bg-muted sm:w-56 sm:shrink-0 flex items-center justify-center"
+      >
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          className="w-full h-auto sm:h-full max-h-72 object-contain"
+        />
       </a>
       <div className="p-4 flex-1 min-w-0">
         <div className="inline-block bg-primary/15 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mb-1.5">
@@ -423,6 +433,11 @@ function PosterCard({
         <h3 className="font-display font-bold text-base md:text-lg leading-tight">{title}</h3>
         <p className="text-primary font-semibold text-xs">{subtitle}</p>
         <p className="text-xs text-muted-foreground mt-0.5">{schedule}</p>
+
+        <div className="mt-2 flex items-baseline gap-2 flex-wrap">
+          <span className="text-lg md:text-xl font-display font-extrabold text-green-700">{price}</span>
+          {priceNote && <span className="text-[11px] text-muted-foreground">{priceNote}</span>}
+        </div>
 
         <details className="mt-2 group">
           <summary className="cursor-pointer text-xs font-semibold text-primary hover:underline list-none flex items-center gap-1 select-none">
