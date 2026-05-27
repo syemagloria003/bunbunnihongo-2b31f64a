@@ -175,49 +175,6 @@ function Landing() {
         </div>
       </section>
 
-      {/* Highlights */}
-      <section className="px-6 py-14">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-center mb-8">
-            Kenapa pilih Bunbun? 🐰
-          </h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-            <Feature icon="🎓" title="Sensei terjamin" desc="Minimal lulusan JLPT N2. Sudah pasti paham seluk-beluk Bahasa Jepang." />
-            <Feature icon="📖" title="Kurikulum standar internasional" desc="Materi terstruktur, sesuai standar JLPT — bukan asal-asalan." />
-            <Feature icon="👥" title="Maksimal 10 murid" desc="Kelas kecil & efektif. Sensei kenal tiap murid, kamu bebas tanya." />
-            <Feature icon="💸" title="Meet banyak, terjangkau" desc="Senin–Jumat full ketemu sensei, harga ramah kantong." />
-          </div>
-        </div>
-      </section>
-
-      {/* Perks — trust builders */}
-      <section className="px-6 py-14 bg-gradient-to-b from-secondary/20 to-background">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-center mb-2">
-            Lebih dari sekadar kelas Zoom ✨
-          </h2>
-          <p className="text-center text-muted-foreground mb-8 text-sm max-w-2xl mx-auto">
-            Kami pastikan kamu nggak belajar sendirian. Ada support penuh dari sensei & sistem belajar yang fleksibel.
-          </p>
-          <div className="grid md:grid-cols-3 gap-5">
-            <Perk
-              icon="💬"
-              title="Bebas tanya di luar jam kelas"
-              desc="Stuck di tengah malam? Tinggal japri di WhatsApp grup — sensei & teman sekelas siap bantu."
-            />
-            <Perk
-              icon="🎥"
-              title="Rekaman Zoom tiap pertemuan"
-              desc="Ketinggalan kelas atau mau review materi? Tenang, semua sesi direkam dan dibagikan."
-            />
-            <Perk
-              icon="🎮"
-              title="Latihan tambahan interaktif"
-              desc="Setelah Zoom, lanjut latihan interaktif di platform khusus murid biar makin nempel."
-            />
-          </div>
-        </div>
-      </section>
 
       {/* Meet the Sensei — poster */}
       <section id="sensei" className="px-6 py-16 bg-muted/20 scroll-mt-20">
