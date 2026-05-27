@@ -305,6 +305,33 @@ export function GameCanvas({ level }: { level: LevelDef }) {
               </p>
             </div>
           )}
+
+          {/* Help modal — inside container so it shows in fullscreen too */}
+          {showHelp && (
+            <div
+              className="absolute inset-0 z-[60] flex items-center justify-center bg-foreground/60 backdrop-blur-sm p-3"
+              onClick={() => setShowHelp(false)}
+            >
+              <div
+                className="honey-card rounded-2xl p-3 max-w-[280px] w-full text-[11px]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h3 className="font-display font-bold text-sm mb-2 text-center">🎮 Cara Main</h3>
+                <ul className="space-y-1 mb-2 leading-snug">
+                  <li><span className="font-bold">Stik bulat (kiri bawah)</span> — tarik ke kiri/kanan untuk berjalan.</li>
+                  <li><span className="font-bold">Tombol merah (kanan bawah)</span> — tekan untuk lompat. Tekan 2× di udara = <em>double flap</em>.</li>
+                  <li>Lompati / injak 🕷️ dari atas. Jangan kena samping!</li>
+                  <li>🍯 = skor. Pintu <strong>?</strong> = jawab benar untuk lewat.</li>
+                </ul>
+                <button
+                  onClick={() => setShowHelp(false)}
+                  className="w-full py-1.5 rounded-lg bg-primary text-primary-foreground font-bold text-xs"
+                >
+                  Mengerti!
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -313,39 +340,8 @@ export function GameCanvas({ level }: { level: LevelDef }) {
       )}
       {isMobile && !needsRotate && !isFullscreen && (
         <p className="text-xs text-muted-foreground px-3 text-center">
-          Geser jari ← → untuk berjalan · Ketuk untuk lompat (ketuk 2x untuk flap)
+          Pakai stik bulat untuk jalan · Tombol merah untuk lompat
         </p>
-      )}
-
-      {showHelp && (
-        <div
-          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-foreground/50 backdrop-blur-sm p-3"
-          onClick={() => setShowHelp(false)}
-        >
-          <div
-            className="honey-card rounded-2xl p-5 max-w-sm w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="font-display font-bold text-xl mb-3 text-center">🎮 Cara Main</h3>
-            <ul className="text-sm space-y-2 mb-4">
-              <li>
-                <span className="font-bold">Geser ← →</span> — Tahan & tarik jari ke kiri/kanan di mana saja di layar untuk berjalan.
-              </li>
-              <li>
-                <span className="font-bold">Ketuk</span> — Sentuh layar singkat untuk melompat. Ketuk <em>dua kali</em> saat di udara untuk <em>double flap</em>.
-              </li>
-              <li>Lompati / injak musuh dari atas 🕷️. Jangan kena dari samping!</li>
-              <li>Kumpulkan tetes madu 🍯 untuk skor.</li>
-              <li>Pintu <strong>?</strong> = jawab kana/kanji yang benar untuk lewat. Salah = ❤️ berkurang.</li>
-            </ul>
-            <button
-              onClick={() => setShowHelp(false)}
-              className="w-full py-2.5 rounded-xl bg-primary text-primary-foreground font-bold"
-            >
-              Mengerti!
-            </button>
-          </div>
-        </div>
       )}
     </div>
   );
