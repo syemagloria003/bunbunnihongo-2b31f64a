@@ -157,7 +157,7 @@ function Landing() {
                 target="_blank" rel="noopener noreferrer"
                 className="px-5 py-2.5 rounded-2xl bg-primary text-primary-foreground font-bold text-base shadow-lg hover:brightness-105 transition"
               >
-                💬 Chat Admin
+                💬 Tanya & Daftar via WhatsApp
               </a>
             </div>
             <p className="text-xs text-muted-foreground mt-3">
