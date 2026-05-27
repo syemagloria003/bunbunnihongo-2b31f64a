@@ -127,6 +127,14 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const game = isGameRoute(pathname);
+    document.body.classList.toggle("game-theme", game);
+    return () => { document.body.classList.remove("game-theme"); };
+  }, [pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -135,6 +143,7 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
 
 function AuthListener() {
   const router = useRouter();
