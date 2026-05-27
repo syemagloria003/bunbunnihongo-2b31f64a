@@ -286,15 +286,15 @@ body.game-theme {
 .game-panel.panel-player {
   background:
     linear-gradient(160deg,
-      oklch(0.32 0.18 290 / 0.85) 0%,
-      oklch(0.26 0.14 270 / 0.85) 60%,
-      oklch(0.20 0.10 250 / 0.85) 100%);
-  border-color: oklch(0.85 0.20 95);
+      oklch(0.70 0.20 165) 0%,
+      oklch(0.62 0.22 195) 50%,
+      oklch(0.55 0.22 225) 100%);
+  border-color: oklch(0.92 0.18 90);
   box-shadow:
-    inset 0 1px 0 color-mix(in oklab, white 18%, transparent),
-    0 0 0 1px oklch(0.85 0.20 95 / 0.45),
-    0 0 28px -6px oklch(0.85 0.20 95 / 0.55),
-    0 16px 40px -12px oklch(0.55 0.25 320 / 0.55);
+    inset 0 1px 0 color-mix(in oklab, white 30%, transparent),
+    0 0 0 1px oklch(0.92 0.18 90 / 0.6),
+    0 0 32px -4px oklch(0.78 0.22 180 / 0.7),
+    0 18px 44px -12px oklch(0.55 0.22 215 / 0.65);
 }
 .game-panel.panel-leaderboard {
   background:
