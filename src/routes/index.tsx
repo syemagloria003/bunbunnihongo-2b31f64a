@@ -393,31 +393,6 @@ function Landing() {
 
 
 
-      {/* CTA */}
-      <section className="px-6 py-14">
-        <div className="max-w-3xl mx-auto text-center honey-card rounded-3xl p-8">
-          <h2 className="text-2xl md:text-3xl font-display font-bold mb-3">
-            Siap mulai perjalanan Bahasa Jepangmu? 🚀
-          </h2>
-          <p className="text-foreground/80 mb-6">
-            Chat admin untuk daftar kelas dan konsultasi gratis.
-          </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <a
-              href={WA_LINK}
-              target="_blank" rel="noopener noreferrer"
-              className="px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold text-lg shadow-lg hover:brightness-105"
-            >
-              💬 Daftar via WhatsApp
-            </a>
-          </div>
-          <p className="text-sm text-muted-foreground mt-6">
-            Sudah jadi murid Bunbun?{" "}
-            <Link to="/login" className="text-primary font-semibold underline">Login</Link>{" "}
-            untuk akses game sebagai latihan tambahan setelah kelas.
-          </p>
-        </div>
-      </section>
 
       <Footer />
     </div>
