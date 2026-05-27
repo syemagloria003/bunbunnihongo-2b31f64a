@@ -608,5 +608,15 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
         )}
       </nav>
     </header>
+    <div className="bg-red-600 text-white border-b border-red-800/50 overflow-hidden">
+      <div className="flex gap-12 whitespace-nowrap animate-marquee py-1.5 text-[11px] md:text-xs font-medium">
+        <span className="shrink-0">{warningText}</span>
+        <span className="shrink-0">{warningText}</span>
+        <span className="shrink-0" aria-hidden>{warningText}</span>
+        <span className="shrink-0" aria-hidden>{warningText}</span>
+      </div>
+    </div>
+    </div>
   );
 }
+
