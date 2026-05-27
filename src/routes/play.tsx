@@ -391,7 +391,7 @@ function PlayerStatusCard({
   }
 
   return (
-    <div className="game-panel rounded-3xl p-4 sm:p-5 mb-6 relative overflow-hidden">
+    <div className="game-panel panel-player rounded-3xl p-4 sm:p-5 mb-6 relative overflow-hidden">
       <span className={["absolute -top-24 -right-20 w-72 h-72 rounded-full blur-3xl pointer-events-none opacity-50 animate-aurora bg-gradient-to-br", world.barFrom, world.barTo].join(" ")} />
       <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
       <div className="flex items-start gap-4 flex-wrap sm:flex-nowrap relative">
