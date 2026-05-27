@@ -113,7 +113,11 @@ function BelajarHiragana() {
     <div className="min-h-screen px-4 sm:px-6 py-6">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center justify-between gap-2">
-          <Link to="/play" className="text-sm font-semibold hover:text-primary">← Kembali ke Peta</Link>
+          <Link to="/play" className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-primary text-primary-foreground font-bold text-xs sm:text-sm shadow hover:brightness-110">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/20">▶️ MAIN</span>
+            <span className="hidden sm:inline">saya sudah selesai belajar, ayo cetak rekor skor game baru!</span>
+            <span className="sm:hidden">selesai belajar, cetak rekor!</span>
+          </Link>
           <span className="text-2xl">📖</span>
         </div>
 
@@ -265,17 +269,6 @@ function BelajarHiragana() {
               </p>
             </div>
 
-            <div className="rounded-xl bg-sky-100/70 dark:bg-sky-950/30 p-3 space-y-2">
-              <p className="font-bold">🤔 Kira-kira materi setelah pengenalan urutan nulis ini, kamu mau langsung kasih kuis tebak bentuk huruf satuan, atau merangkai huruf jadi kata sederhana (misal: A-I = Cinta)?</p>
-              <div className="flex gap-2">
-                <Link to="/play" className="inline-flex items-center px-4 py-2 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:brightness-110">
-                  🎮 Langsung main
-                </Link>
-                <span className="inline-flex items-center px-4 py-2 rounded-xl border-2 border-border text-sm text-muted-foreground opacity-60">
-                  📝 Kuis kata (segera hadir)
-                </span>
-              </div>
-            </div>
           </div>
 
           <GojuonGrid onPick={open} active={active} />
@@ -344,18 +337,123 @@ function BelajarHiragana() {
 
         {/* Youon */}
         <section className="space-y-3">
-          <h2 className="font-display text-2xl font-bold">🎶 Yōon — Bunyi Gabungan</h2>
-          <div className="honey-card rounded-2xl p-4 text-sm space-y-2">
+          <h2 className="font-display text-2xl font-bold">🌪️ Jurus Terakhir: "Blender Suara" (Youon)</h2>
+          <div className="honey-card rounded-2xl p-4 text-sm space-y-3">
             <p>
-              <b>Yōon</b> (拗音) dibentuk dari kana baris -i (き, し, ち, に, ひ,
-              み, り + dakuon) yang digabung dengan <b>ゃ / ゅ / ょ kecil</b>.
-              Contoh: き + ゃ = きゃ (kya).
+              Udah paham jurus <b>ngotot</b> dan <b>ngerem</b>? Mantap! Sekarang kita masuk ke jurus terakhir. Kenalin nih, 3 huruf "anak bawang" yang suka nyempil dan ukurannya ditulis separuh lebih kecil: <b>ya (ゃ)</b>, <b>yu (ゅ)</b>, dan <b>yo (ょ)</b>.
             </p>
-            <p className="text-amber-700 dark:text-amber-300">
-              📐 <b>Cara nulisnya:</b> huruf ゃ/ゅ/ょ ditulis kecil di posisi
-              <b> kanan-bawah</b> dari kotak Mandarin, kira-kira{" "}
-              <b>seperempat ukuran kotak</b>. Tidak diletakkan di tengah!
+            <p>
+              Tiga bocah kecil ini suka banget nempel di sebelah huruf-huruf <b>geng "I"</b> (kayak KI, SHI, CHI, NI, dll).
             </p>
+            <p>
+              Kalau mereka udah nempel, suaranya <b>nggak boleh</b> dibaca satu-satu. Mereka berdua harus masuk "blender" dan dilebur jadi <b>SATU SUARA</b> aja.
+            </p>
+
+            <div className="rounded-xl bg-violet-100/70 dark:bg-violet-950/30 p-3 space-y-1">
+              <p className="font-bold">🥤 Bayangin Kamu Bikin Jus:</p>
+              <p>
+                Huruf <b>KI (き)</b> itu semangka. Huruf <b>ya kecil (ゃ)</b> itu melon.
+              </p>
+              <p>
+                Kalau kamu disuruh minum jusnya, kamu nggak ngunyah semangka dulu baru melon kan? Kamu langsung minum hasil campurannya.
+              </p>
+              <p>
+                Jadi, <b>KI (き)</b> ketemu <b>ya kecil (ゃ)</b> ➡️ BUKAN dibaca <i>Ki-ya</i> (dua ketuk). Langsung blender aja suaranya jadi ➡️ <b>KYA!</b> (satu ketuk/satu tarikan napas).
+              </p>
+              <p className="font-semibold">Contoh lain:</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li><b>KI (き) + yu kecil (ゅ)</b> = diblender jadi <b>KYU</b> (bukan <i>Ki-yu</i>)</li>
+                <li><b>HI (ひ) + yo kecil (ょ)</b> = diblender jadi <b>HYO</b> (bukan <i>Hi-yo</i>)</li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl bg-amber-100/70 dark:bg-amber-950/30 p-3 space-y-1">
+              <p className="font-bold">⚠️ Awas Terkecoh Si Lidah Bule!</p>
+              <p>
+                Ada dua huruf yang kalau diblender, bentuk latinnya sedikit beda biar lidah kita lebih gampang nyebutnya:
+              </p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li><b>SHI (し)</b> ketemu ya/yu/yo ➡️ Jadinya bukan <i>Shya</i>, tapi langsung <b>SHA, SHU, SHO</b>.</li>
+                <li><b>CHI (ち)</b> ketemu ya/yu/yo ➡️ Jadinya bukan <i>Chya</i>, tapi langsung <b>CHA, CHU, CHO</b>.</li>
+              </ul>
+              <p>Gampang banget kan? Pokoknya lihat huruf kecil = masukin blender!</p>
+            </div>
+
+            <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+              <p className="font-bold text-sm">🎮 Kuis Blender Suara!</p>
+              <p className="text-sm">Sekarang coba kita tes mesin blender di otakmu.</p>
+              <p className="text-sm">
+                <b>Teh Hijau Jepang!</b> Pasti kamu sering dengar minuman "Matcha". Nah, kalau mau nulis kata <b>Cha</b> pakai huruf Jepang, racikan huruf mana yang bakal kamu masukin ke blender?
+              </p>
+              <ul className="text-sm list-none space-y-0.5 pl-2">
+                <li><b>A.</b> TA (た) + ya kecil (ゃ)</li>
+                <li><b>B.</b> CHI (ち) + ya kecil (ゃ)</li>
+              </ul>
+              <Quiz
+                question={<>Pilih jawabanmu:</>}
+                placeholder="Ketik 'A' atau 'B' di sini..."
+                accept={["b"]}
+                successMsg="Tjakep! Bener banget. CHI (ち) ketemu ya kecil (ゃ) bakal diblender jadi CHA. Berarti sekarang kamu udah bisa pesan ocha di Jepang!"
+                errorMsg="Hampir! Inget: yang punya bunyi 'CH' di awal cuma CHI. Coba lagi ya."
+              />
+            </div>
+
+            <div className="rounded-xl bg-emerald-100/70 dark:bg-emerald-950/30 p-3 space-y-2">
+              <p className="font-bold">📏 Posisi Duduk Si "Anak Bawang" (Khusus Buku Kotak!)</p>
+              <p>
+                Karena <b>ya (ゃ)</b>, <b>yu (ゅ)</b>, dan <b>yo (ょ)</b> ini itungannya "anak bawang", ukuran tubuh mereka saat ditulis itu cuma <b>seperempat (1/4)</b> dari huruf biasa. Mereka nggak boleh makan tempat!
+              </p>
+              <p>
+                Kalau kamu lagi latihan nulis pakai buku kotak (kayak buku tulis Mandarin), bayangin satu kotak itu adalah <b>satu kasur</b>.
+              </p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li><b>Huruf raksasa</b> (huruf biasa) bakal tidur santai menuhin satu kasur penuh.</li>
+                <li>Si anak bawang ini karena badannya kecil, dia cuma boleh tiduran di <b>pojok kiri bawah</b> kasur (kalau kamu nulisnya mendatar dari kiri ke kanan).</li>
+              </ul>
+
+              {/* Mini illustration */}
+              <div className="flex items-center gap-4 justify-center pt-1">
+                <div className="text-center space-y-1">
+                  <div className="relative w-20 h-20 border-2 border-emerald-500 rounded grid grid-cols-2 grid-rows-2">
+                    <div className="border-r border-b border-dashed border-emerald-300" />
+                    <div className="border-b border-dashed border-emerald-300" />
+                    <div className="border-r border-dashed border-emerald-300 flex items-end justify-start p-0.5">
+                      <span style={{ fontFamily: "serif" }} className="text-base leading-none">ょ</span>
+                    </div>
+                    <div />
+                  </div>
+                  <p className="text-xs text-emerald-700 dark:text-emerald-300">✅ Benar: kiri bawah</p>
+                </div>
+                <div className="text-center space-y-1">
+                  <div className="relative w-20 h-20 border-2 border-rose-500 rounded flex items-center justify-center">
+                    <span style={{ fontFamily: "serif" }} className="text-4xl leading-none">ょ</span>
+                  </div>
+                  <p className="text-xs text-rose-700 dark:text-rose-300">❌ Salah: gede menuhin kotak</p>
+                </div>
+              </div>
+
+              <div className="rounded-lg bg-white/60 dark:bg-black/20 p-2 text-xs">
+                <b>💡 Info Penting:</b> Kalau kamu ngetik di keyboard HP atau komputer, sistemnya udah pintar kok. Begitu kamu ngetik "KYA", otomatis komputer bakal ngecilin huruf <b>ya (ゃ)</b> dan posisinya langsung nyesuaiin di bagian bawah. Canggih, kan?
+              </div>
+            </div>
+
+            <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+              <p className="font-bold text-sm">🎮 Kuis Visual!</p>
+              <p className="text-sm">
+                <b>Mana Posisi yang Benar?</b> Kalau kamu disuruh nulis kata <b>"TOKYO"</b> (とうきょう) di buku kotak secara mendatar, di mana letak huruf <b>yo (ょ)</b> kecilnya bersembunyi?
+              </p>
+              <ul className="text-sm list-none space-y-0.5 pl-2">
+                <li><b>A.</b> Duduk manis di pojok <b>Kiri Bawah</b> kotaknya sendiri.</li>
+                <li><b>B.</b> Nyempil di pojok <b>Kanan Atas</b>.</li>
+              </ul>
+              <Quiz
+                question={<>Pilih jawabanmu:</>}
+                placeholder="Ketik 'A' atau 'B' di sini..."
+                accept={["a"]}
+                successMsg="Tepat Sasaran! Di pojokan kiri bawah ya. Kalau di kanan atas, itu posisinya dipakai khusus kalau orang Jepang lagi nulis vertikal (dari atas ke bawah) kayak di komik manga!"
+                errorMsg="Belum tepat. Inget: kalau nulis mendatar (kiri→kanan), anak bawang duduknya di pojok kiri bawah."
+              />
+            </div>
           </div>
           <KanaGrid items={YOUON} cols={3} onPick={open} active={active} />
         </section>
@@ -401,8 +499,9 @@ function BelajarHiragana() {
         </section>
 
         <div className="text-center py-4">
-          <Link to="/play" className="inline-block px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold shadow hover:brightness-110">
-            🎮 Sudah siap, ayo main!
+          <Link to="/play" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold shadow hover:brightness-110">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/20">▶️ MAIN</span>
+            <span>saya sudah selesai belajar, ayo cetak rekor skor game baru!</span>
           </Link>
         </div>
       </div>
