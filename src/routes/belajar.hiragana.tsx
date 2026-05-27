@@ -158,7 +158,7 @@ function BelajarHiragana() {
             <p><b>Contoh:</b> <span style={{ fontFamily: "serif" }} className="text-lg">ア</span> (A), <span style={{ fontFamily: "serif" }} className="text-lg">メ</span> (Me), <span style={{ fontFamily: "serif" }} className="text-lg">ノ</span> (No). Kelihatan lebih bersudut dan tajam kan dibanding Hiragana?</p>
           </div>
 
-          <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+          <div className="rounded-xl border-2 border-dashed border-primary/40 bg-primary/15 p-3 space-y-2">
             <p className="font-bold text-sm">🎮 Waktunya Praktik!</p>
             <p className="text-sm">
               Karena kamu udah tahu bedanya, sekarang kita tes sedikit yuk.
@@ -234,7 +234,7 @@ function BelajarHiragana() {
               </ul>
             </div>
 
-            <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-primary/40 bg-primary/15 p-3 space-y-2">
               <p className="font-bold">Aturan Mainnya Gampang Banget!</p>
               <p className="leading-relaxed">
                 Nggak perlu pusing, prinsip dasar nulis huruf Jepang itu cuma dua arah ini:
@@ -311,7 +311,7 @@ function BelajarHiragana() {
               </ul>
             </div>
 
-            <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-primary/40 bg-primary/15 p-3 space-y-2">
               <p className="font-bold text-sm">🎮 Coba Ketik Sendiri!</p>
               <p className="text-sm">Yuk pakai logika "ngotot" kamu tadi buat jawab kuis ini!</p>
               <Quiz
@@ -388,7 +388,7 @@ function BelajarHiragana() {
               <p>Gampang banget kan? Pokoknya lihat huruf kecil = masukin blender!</p>
             </div>
 
-            <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-primary/40 bg-primary/15 p-3 space-y-2">
               <p className="font-bold text-sm">🎮 Kuis Blender Suara!</p>
               <p className="text-sm">Sekarang coba kita tes mesin blender di otakmu.</p>
               <p className="text-sm">
@@ -446,7 +446,7 @@ function BelajarHiragana() {
               </div>
             </div>
 
-            <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-primary/40 bg-primary/15 p-3 space-y-2">
               <p className="font-bold text-sm">🎮 Kuis Visual!</p>
               <p className="text-sm">
                 <b>Mana Posisi yang Benar?</b> Kalau kamu disuruh nulis kata <b>"TOKYO"</b> (とうきょう) di buku kotak secara mendatar, di mana letak huruf <b>yo (ょ)</b> kecilnya bersembunyi?
