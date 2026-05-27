@@ -152,6 +152,7 @@ function LevelSelect() {
                   return (
                     <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm", isMe ? "bg-primary/15 ring-2 ring-primary" : "bg-background/60"].join(" ")}>
                       <span className="font-bold w-6 text-center">{i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`}</span>
+                      <img src={getAvatarSrc(r.avatar_id)} alt="" className="w-7 h-7 rounded-full bg-background object-cover shrink-0 ring-1 ring-border" loading="lazy" />
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold truncate">{r.nama}{isMe && " (kamu)"}</p>
                         <p className="text-[10px] text-muted-foreground truncate">{r.level_name}</p>
@@ -180,6 +181,7 @@ function LevelSelect() {
                       return (
                         <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm", isMe ? "bg-primary/15 ring-2 ring-primary" : "bg-background/60"].join(" ")}>
                           <span className="font-bold w-6 text-center">#{i + 1}</span>
+                          <img src={getAvatarSrc(r.avatar_id)} alt="" className="w-7 h-7 rounded-full bg-background object-cover shrink-0 ring-1 ring-border" loading="lazy" />
                           <span className="flex-1 truncate font-semibold">{r.nama}{isMe && " (kamu)"}</span>
                           <span className="font-bold text-primary">{r.skor}</span>
                         </li>
