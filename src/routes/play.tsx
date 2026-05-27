@@ -4,10 +4,13 @@ import { LEVELS, KATAKANA_LEVELS, KANJI_LEVELS, ALL_LEVELS, type LevelDef } from
 import { loadProgress, saveProgress, type Progress } from "@/game/progress";
 import { supabase } from "@/integrations/supabase/client";
 import { LevelPreview } from "@/components/LevelPreview";
+import { ProfileBar } from "@/components/ProfileBar";
+import { getAvatarSrc } from "@/game/avatars";
 
 export const Route = createFileRoute("/play")({
   head: () => ({
     meta: [
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "Pilih Level — BeeGana" },
       { name: "description", content: "Pilih level petualangan Buzu si lebah." },
     ],
