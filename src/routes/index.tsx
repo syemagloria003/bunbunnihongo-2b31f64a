@@ -211,6 +211,8 @@ function Landing() {
                 title="Kelas Reguler"
                 subtitle="Dari 0 — JLPT N4"
                 schedule="Senin–Jumat · 16.00–17.30 WIB"
+                price="Rp 1.250.000"
+                priceNote="untuk 124x pertemuan (≈ Rp 10rb/sesi)"
                 details={[
                   "124x pertemuan via Zoom (Senin–Jumat)",
                   "Materi dari nol hingga setara JLPT N4",
@@ -227,6 +229,8 @@ function Landing() {
                 title="Kelas JLPT N3"
                 subtitle="Lanjutan untuk lulusan N4"
                 schedule="Senin–Jumat · 19.00–20.30 WIB"
+                price="Rp 1.500.000"
+                priceNote="untuk 100x pertemuan (≈ Rp 15rb/sesi)"
                 details={[
                   "100x pertemuan via Zoom (Senin–Jumat)",
                   "Persiapan menyeluruh untuk JLPT N3",
@@ -237,6 +241,7 @@ function Landing() {
                   "Bonus buku Kanji berkarakter Bunbun",
                 ]}
               />
+
             </div>
             <p className="text-xs text-muted-foreground mt-4">
               * Kelas privat belum tersedia saat ini.
