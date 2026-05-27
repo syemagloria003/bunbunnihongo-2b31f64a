@@ -1,7 +1,60 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { HIRAGANA, YOUON, SOKUON } from "@/game/kana-data";
 import { KanjiStrokeOrder } from "@/components/KanjiStrokeOrder";
+
+/** Mini interactive quiz: user types an answer, we check against accepted list. */
+function Quiz({
+  question,
+  placeholder,
+  accept,
+  successMsg,
+  errorMsg,
+}: {
+  question: ReactNode;
+  placeholder: string;
+  accept: string[];
+  successMsg: string;
+  errorMsg: string;
+}) {
+  const [val, setVal] = useState("");
+  const [state, setState] = useState<"idle" | "ok" | "no">("idle");
+  const norm = (s: string) => s.trim().toLowerCase().replace(/[.\s!?'"`]/g, "");
+  function check(e: React.FormEvent) {
+    e.preventDefault();
+    if (!val.trim()) return;
+    setState(accept.map(norm).includes(norm(val)) ? "ok" : "no");
+  }
+  return (
+    <div className="space-y-2">
+      <div className="text-sm">{question}</div>
+      <form onSubmit={check} className="flex gap-2">
+        <input
+          value={val}
+          onChange={(e) => { setVal(e.target.value); setState("idle"); }}
+          placeholder={placeholder}
+          className="flex-1 h-10 px-3 rounded-lg border-2 border-border bg-background text-sm focus:outline-none focus:border-primary"
+        />
+        <button
+          type="submit"
+          className="h-10 px-4 rounded-lg bg-primary text-primary-foreground font-bold text-sm hover:brightness-110"
+        >
+          Cek
+        </button>
+      </form>
+      {state === "ok" && (
+        <p className="text-sm font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-100/70 dark:bg-emerald-950/40 rounded-lg p-2">
+          ✅ {successMsg}
+        </p>
+      )}
+      {state === "no" && (
+        <p className="text-sm font-semibold text-rose-700 dark:text-rose-300 bg-rose-100/70 dark:bg-rose-950/40 rounded-lg p-2">
+          ❌ {errorMsg}
+        </p>
+      )}
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/belajar/hiragana")({
   head: () => ({
