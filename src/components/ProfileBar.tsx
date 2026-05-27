@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchMe, updateProfile, type MeResponse } from "@/game/leaderboard";
 import { AVATARS, getAvatarSrc } from "@/game/avatars";
 
-export function ProfileBar() {
+export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" } = {}) {
   const [me, setMe] = useState<MeResponse | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -12,19 +12,29 @@ export function ProfileBar() {
 
   if (!me) return null;
 
+  const isLg = size === "lg";
+
   return (
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 bg-primary/15 hover:bg-primary/25 transition rounded-full pl-1 pr-3 py-1"
+        className={
+          isLg
+            ? "rounded-full ring-4 ring-primary/60 hover:ring-primary transition bg-background"
+            : "flex items-center gap-2 bg-primary/15 hover:bg-primary/25 transition rounded-full pl-1 pr-3 py-1"
+        }
         title="Edit profil"
       >
         <img
           src={getAvatarSrc(me.avatarId)}
           alt="Avatar"
-          className="w-8 h-8 rounded-full bg-background object-cover ring-2 ring-primary"
+          className={
+            isLg
+              ? "w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-background object-cover"
+              : "w-8 h-8 rounded-full bg-background object-cover ring-2 ring-primary"
+          }
         />
-        <span className="text-sm font-semibold text-primary">{me.nama}</span>
+        {!isLg && <span className="text-sm font-semibold text-primary">{me.nama}</span>}
       </button>
 
       {open && (
@@ -40,6 +50,7 @@ export function ProfileBar() {
     </>
   );
 }
+
 
 function ProfileModal({
   me,
