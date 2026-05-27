@@ -222,12 +222,13 @@ function LevelSelect() {
 
         <div className="flex items-center gap-2 mb-3 flex-wrap">
           <h2 className="font-display text-2xl font-bold">🌻 Taman Bunga (Hiragana)</h2>
-          <span className="text-xl text-primary animate-pulse" aria-hidden>➡️</span>
+          <span className="text-xl text-red-500 animate-pulse" aria-hidden>➡️</span>
           <Link
             to="/belajar/hiragana"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-400 text-amber-950 font-bold text-sm shadow-md hover:brightness-110 hover:-translate-y-0.5 transition border-2 border-amber-600"
+            className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-400 text-amber-950 font-bold text-sm shadow-md hover:brightness-110 hover:-translate-y-0.5 transition border-2 border-amber-600 overflow-visible"
           >
-            📖 Belajar dulu
+            <span className="absolute -z-10 inset-0 rounded-full animate-fire-glow bg-red-500/50 blur-md" />
+            <span className="text-red-600">📖</span> Belajar dulu
           </Link>
         </div>
         <div className="grid sm:grid-cols-2 gap-4 mb-8">
