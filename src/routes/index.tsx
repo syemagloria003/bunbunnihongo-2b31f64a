@@ -313,7 +313,8 @@ function Landing() {
 
       {/* Sensei + CTA — side by side */}
       <section id="sensei" className="px-6 py-12 bg-muted/20 scroll-mt-20">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-start">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-stretch">
+
           {/* Kiri: founder + catatan tim */}
           <div className="flex flex-col gap-5">
             <div>
