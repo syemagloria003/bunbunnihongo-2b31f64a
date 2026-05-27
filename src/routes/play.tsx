@@ -143,14 +143,18 @@ function LevelSelect() {
   return (
     <div className="min-h-screen px-4 sm:px-6 py-6 sm:py-8">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
-          <Link to="/" className="text-sm font-semibold hover:text-primary shrink-0">← Beranda</Link>
-          <UserMenu onUnlock={setP} />
+        <div className="mb-3">
+          <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
         </div>
         <NotificationTicker />
-        <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6">
-          Peta Petualangan 🗺️
-        </h1>
+        <div className="flex items-center justify-between gap-4 flex-wrap mb-6">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold">
+            Peta Petualangan 🗺️
+          </h1>
+          <div className="scale-110 origin-right">
+            <UserMenu onUnlock={setP} />
+          </div>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           <div className="rounded-2xl p-4 border-2 border-sky-400/50 bg-gradient-to-br from-sky-50 to-indigo-100 dark:from-sky-950/40 dark:to-indigo-950/40 shadow-md">
@@ -219,17 +223,19 @@ function LevelSelect() {
         </div>
 
 
+        <WorldDivider />
 
         <div className="flex items-center gap-2 mb-3 flex-wrap">
           <h2 className="font-display text-2xl font-bold">🌻 Taman Bunga (Hiragana)</h2>
           <Link
             to="/belajar/hiragana"
-            className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-400 text-amber-950 font-bold text-sm shadow-md hover:brightness-110 hover:-translate-y-0.5 transition border-2 border-amber-600 overflow-visible"
+            className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-500 text-white font-bold text-sm shadow-md hover:brightness-110 hover:-translate-y-0.5 transition border-2 border-red-700 overflow-visible"
           >
-            <span className="absolute -z-10 inset-0 rounded-full animate-fire-glow bg-red-500/50 blur-md" />
+            <span className="absolute -z-10 inset-0 rounded-full animate-fire-glow bg-red-500/60 blur-md" />
             📖 Belajar dulu
           </Link>
         </div>
+
         <div className="grid sm:grid-cols-2 gap-4 mb-8">
           {LEVELS.map((l: LevelDef, i: number) => {
             const unlocked = p.unlocked.includes(l.id);
@@ -249,6 +255,8 @@ function LevelSelect() {
             );
           })}
         </div>
+
+        <WorldDivider />
 
         <h2 className="font-display text-2xl font-bold mb-3">💎 Dunia Kristal (Katakana)</h2>
         {!p.crystal && (
@@ -283,6 +291,8 @@ function LevelSelect() {
           </div>
         )}
 
+        <WorldDivider />
+
         <h2 className="font-display text-2xl font-bold mb-3">☄️ Dunia Galaksi Meteor (Kanji)</h2>
         {!p.meteor && (
           <p className="text-sm text-muted-foreground mb-3">
@@ -309,6 +319,16 @@ function LevelSelect() {
           })}
         </div>
       </div>
+    </div>
+  );
+}
+
+function WorldDivider() {
+  return (
+    <div className="my-8 flex items-center gap-3" aria-hidden>
+      <span className="h-1 flex-1 rounded-full bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+      <span className="text-lg select-none">✦ 🐝 ✦</span>
+      <span className="h-1 flex-1 rounded-full bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
     </div>
   );
 }
