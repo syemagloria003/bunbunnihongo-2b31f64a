@@ -6,6 +6,7 @@ import logo from "@/assets/logo-bunbun.jpg";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "Login Murid — Bunbun Nihongo" },
       { name: "description", content: "Masuk untuk mulai bermain dan menyimpan skor." },
     ],

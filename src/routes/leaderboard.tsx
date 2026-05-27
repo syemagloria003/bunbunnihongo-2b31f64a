@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/leaderboard")({
   head: () => ({
     meta: [
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "Papan Peringkat — BeeGana" },
       { name: "description", content: "Lihat ranking skor tertinggi murid Bunbun Nihongo." },
     ],

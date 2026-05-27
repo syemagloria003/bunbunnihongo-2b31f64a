@@ -5,6 +5,7 @@ import { getLevel } from "@/game/levels";
 export const Route = createFileRoute("/play/$levelId")({
   head: ({ params }) => ({
     meta: [
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: `Level ${params.levelId} — BeeGana` },
       { name: "description", content: "Main petualangan BeeGana." },
     ],
