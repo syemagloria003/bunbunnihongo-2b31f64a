@@ -390,7 +390,6 @@ function Landing() {
 
 
 
-      <Footer />
     </div>
   );
 }
