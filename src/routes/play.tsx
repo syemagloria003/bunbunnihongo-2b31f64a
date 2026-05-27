@@ -143,14 +143,18 @@ function LevelSelect() {
   return (
     <div className="min-h-screen px-4 sm:px-6 py-6 sm:py-8">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
-          <Link to="/" className="text-sm font-semibold hover:text-primary shrink-0">← Beranda</Link>
-          <UserMenu onUnlock={setP} />
+        <div className="mb-3">
+          <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
         </div>
         <NotificationTicker />
-        <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6">
-          Peta Petualangan 🗺️
-        </h1>
+        <div className="flex items-center justify-between gap-4 flex-wrap mb-6">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold">
+            Peta Petualangan 🗺️
+          </h1>
+          <div className="scale-110 origin-right">
+            <UserMenu onUnlock={setP} />
+          </div>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           <div className="rounded-2xl p-4 border-2 border-sky-400/50 bg-gradient-to-br from-sky-50 to-indigo-100 dark:from-sky-950/40 dark:to-indigo-950/40 shadow-md">
