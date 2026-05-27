@@ -173,11 +173,6 @@ function Landing() {
 
           {/* Vertical marquee — suasana kelas */}
           <div className="hidden md:block">
-            <div className="text-center mb-2">
-              <span className="inline-block bg-primary/15 text-primary text-[10px] font-bold px-3 py-1 rounded-full tracking-wider uppercase">
-                📸 Suasana Kelas
-              </span>
-            </div>
             <div className="relative h-[520px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card shadow-xl [mask-image:linear-gradient(to_bottom,transparent,black_6%,black_94%,transparent)]">
               <div className="flex flex-col gap-3 p-3 animate-marquee-y">
                 {[...gallery, ...gallery].map((g, i) => (
