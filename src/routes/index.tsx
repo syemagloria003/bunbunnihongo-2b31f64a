@@ -395,7 +395,7 @@ function Landing() {
               FAQ
             </span>
             <h2 className="text-2xl md:text-3xl font-display font-bold mb-1">
-              Pertanyaan yang sering ditanya 🍯
+              Pertanyaan yang sering ditanya
             </h2>
             <p className="text-muted-foreground text-sm">
               Belum nemu jawabannya? Chat admin lewat WhatsApp ya 💬
@@ -408,14 +408,18 @@ function Landing() {
             ))}
           </div>
 
-          <div className="mt-6 text-center">
-            <a
-              href={WA_LINK}
-              target="_blank" rel="noopener noreferrer"
-              className="inline-block px-5 py-2.5 rounded-2xl bg-primary text-primary-foreground font-bold text-sm shadow-lg hover:brightness-105 transition"
-            >
-              💬 Masih ada pertanyaan? Chat admin
-            </a>
+          <div className="mt-6 text-left">
+            <p className="text-sm text-muted-foreground">
+              💬 Masih ada pertanyaan?{' '}
+              <a
+                href={WA_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary underline text-xs hover:text-primary/80"
+              >
+                Chat admin
+              </a>
+            </p>
           </div>
         </div>
       </section>
