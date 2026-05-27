@@ -376,6 +376,9 @@ function Landing() {
                 <Link to="/login" className="text-[oklch(0.85_0.17_90)] font-semibold underline">Login</Link>{" "}
                 untuk akses game latihan.
               </p>
+              <p className="text-xs text-[oklch(0.98_0.02_70)]/60 mt-3 pt-3 border-t border-white/15">
+                © 2026 Bunbun Nihongo — Kursus Online Bahasa Jepang.
+              </p>
             </div>
           </div>
 
