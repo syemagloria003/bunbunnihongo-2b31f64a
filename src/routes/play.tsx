@@ -479,10 +479,15 @@ function LevelCard({
   unlocked: boolean; best?: number; bg: string; theme: import("@/game/themes").WorldTheme;
   comingSoon?: boolean; stars: number;
 }) {
+  const worldClass =
+    theme === "crystal_cave" ? "world-crystal"
+    : theme === "meteor_galaxy" ? "world-meteor"
+    : "world-garden";
   const inner = (
     <div
       className={[
         "honey-card rounded-2xl p-5 transition-all relative overflow-hidden",
+        worldClass,
         unlocked ? "hover:-translate-y-1 cursor-pointer" : "opacity-60",
       ].join(" ")}
     >
