@@ -204,8 +204,18 @@ export function GameCanvas({ level }: { level: LevelDef }) {
         }
       >
         <div
-          className={isFullscreen ? "relative h-full" : "relative w-full h-full"}
-          style={isFullscreen ? { aspectRatio: `${W}/${H}`, maxWidth: "100%", maxHeight: "100%" } : undefined}
+          className={isFullscreen ? "relative" : "relative w-full h-full"}
+          style={
+            isFullscreen
+              ? {
+                  aspectRatio: `${W}/${H}`,
+                  maxWidth: "100%",
+                  // On mobile, leave bottom half of the screen empty for the joystick + jump button
+                  maxHeight: isMobile ? "58vh" : "100%",
+                  height: isMobile ? "58vh" : "100%",
+                }
+              : undefined
+          }
         >
           <canvas ref={canvasRef} width={W} height={H} className="block w-full h-full" />
           {/* Mobile on-screen joystick + jump button */}
