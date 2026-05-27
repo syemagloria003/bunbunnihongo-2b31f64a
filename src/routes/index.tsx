@@ -12,7 +12,7 @@ import galN3Absen from "@/assets/gallery/kelas-n3-absen.jpg";
 import posterRegN4 from "@/assets/posters/kelas-reguler-n4.png";
 import posterJlptN3 from "@/assets/posters/kelas-jlpt-n3.png";
 import posterSensei from "@/assets/sensei-syema.png";
-import posterTim from "@/assets/tim-pengajar.png";
+
 
 import face13 from "@/assets/testimoni-faces/13.jpg";
 import face14 from "@/assets/testimoni-faces/14.jpg";
@@ -211,6 +211,8 @@ function Landing() {
                 title="Kelas Reguler"
                 subtitle="Dari 0 — JLPT N4"
                 schedule="Senin–Jumat · 16.00–17.30 WIB"
+                price="Rp 1.250.000"
+                priceNote="untuk 124x pertemuan (≈ Rp 10rb/sesi)"
                 details={[
                   "124x pertemuan via Zoom (Senin–Jumat)",
                   "Materi dari nol hingga setara JLPT N4",
@@ -227,6 +229,8 @@ function Landing() {
                 title="Kelas JLPT N3"
                 subtitle="Lanjutan untuk lulusan N4"
                 schedule="Senin–Jumat · 19.00–20.30 WIB"
+                price="Rp 1.500.000"
+                priceNote="untuk 100x pertemuan (≈ Rp 15rb/sesi)"
                 details={[
                   "100x pertemuan via Zoom (Senin–Jumat)",
                   "Persiapan menyeluruh untuk JLPT N3",
@@ -237,6 +241,7 @@ function Landing() {
                   "Bonus buku Kanji berkarakter Bunbun",
                 ]}
               />
+
             </div>
             <p className="text-xs text-muted-foreground mt-4">
               * Kelas privat belum tersedia saat ini.
@@ -307,7 +312,7 @@ function Landing() {
       {/* Sensei + CTA — side by side */}
       <section id="sensei" className="px-6 py-12 bg-muted/20 scroll-mt-20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-start">
-          {/* Kiri: founder + tim tumpuk */}
+          {/* Kiri: founder + catatan tim */}
           <div className="flex flex-col gap-5">
             <div>
               <span className="inline-block bg-accent/15 text-accent text-[10px] font-bold px-2.5 py-1 rounded-full mb-2 tracking-wider uppercase">
@@ -320,31 +325,26 @@ function Landing() {
                 <strong>Syema Sensei</strong>, lulusan terbaik UNESA & bersertifikat <strong>JLPT N2</strong> — sabar, detail, paham banget cara ngajar dari nol sampai mahir.
               </p>
             </div>
-            <div className="rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg bg-card">
+            <div className="rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg bg-card flex items-center justify-center max-h-[460px]">
               <img
                 src={posterSensei}
                 alt="Profil Syema Sensei — Founder Bunbun Nihongo"
                 loading="lazy"
-                className="w-full h-auto block"
+                className="w-full h-auto max-h-[460px] object-contain block"
               />
             </div>
-            <div>
-              <h3 className="text-base md:text-lg font-display font-bold mb-1">
-                Tim pengajar Bunbun 🐝
+            <div className="rounded-2xl border-2 border-dashed border-primary/30 bg-card/60 p-4">
+              <h3 className="text-base md:text-lg font-display font-bold mb-1 flex items-center gap-2">
+                <span>🐝</span> Didukung tim pengajar Bunbun
               </h3>
               <p className="text-muted-foreground text-xs md:text-sm">
-                Didukung pengajar JLPT bersertifikat <strong>(N2 / N1 Only!)</strong> yang lolos seleksi & pelatihan metode Bunbun.
+                Selain Syema Sensei, Bunbun juga punya <strong>tim pengajar bersertifikat JLPT N2 / N1</strong> yang
+                sudah melalui <strong>seleksi & pelatihan metode Bunbun</strong>. Jadi kelasmu tetap
+                terjamin kualitasnya siapa pun sensei yang mengajar 💛
               </p>
             </div>
-            <div className="rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg bg-card">
-              <img
-                src={posterTim}
-                alt="Tim pengajar Bunbun Nihongo — bersertifikat JLPT N2 / N1"
-                loading="lazy"
-                className="w-full h-auto block"
-              />
-            </div>
           </div>
+
 
           {/* Kanan: CTA + kontak — sticky di desktop */}
           <div className="md:sticky md:top-24">
@@ -404,12 +404,22 @@ function Landing() {
 
 
 function PosterCard({
-  src, alt, title, subtitle, schedule, details,
-}: { src: string; alt: string; title: string; subtitle: string; schedule: string; details: string[] }) {
+  src, alt, title, subtitle, schedule, price, priceNote, details,
+}: { src: string; alt: string; title: string; subtitle: string; schedule: string; price: string; priceNote?: string; details: string[] }) {
   return (
     <div className="rounded-2xl overflow-hidden border border-primary/25 bg-card shadow-md flex flex-col sm:flex-row">
-      <a href={src} target="_blank" rel="noopener noreferrer" className="block bg-muted sm:w-40 sm:shrink-0">
-        <img src={src} alt={alt} loading="lazy" className="w-full h-40 sm:h-full object-cover" />
+      <a
+        href={src}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block bg-muted sm:w-56 sm:shrink-0 flex items-center justify-center"
+      >
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          className="w-full h-auto sm:h-full max-h-72 object-contain"
+        />
       </a>
       <div className="p-4 flex-1 min-w-0">
         <div className="inline-block bg-primary/15 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mb-1.5">
@@ -418,6 +428,11 @@ function PosterCard({
         <h3 className="font-display font-bold text-base md:text-lg leading-tight">{title}</h3>
         <p className="text-primary font-semibold text-xs">{subtitle}</p>
         <p className="text-xs text-muted-foreground mt-0.5">{schedule}</p>
+
+        <div className="mt-2 flex items-baseline gap-2 flex-wrap">
+          <span className="text-lg md:text-xl font-display font-extrabold text-green-700">{price}</span>
+          {priceNote && <span className="text-[11px] text-muted-foreground">{priceNote}</span>}
+        </div>
 
         <details className="mt-2 group">
           <summary className="cursor-pointer text-xs font-semibold text-primary hover:underline list-none flex items-center gap-1 select-none">
@@ -480,7 +495,7 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
 function Footer() {
   return (
     <footer className="px-6 py-8 text-center text-xs text-muted-foreground border-t border-border/50">
-      <p>© {new Date().getFullYear()} Bunbun Nihongo — Kursus Online Bahasa Jepang.</p>
+      <p>© 2026 Bunbun Nihongo — Kursus Online Bahasa Jepang.</p>
     </footer>
   );
 }
