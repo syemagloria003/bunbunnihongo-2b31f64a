@@ -424,35 +424,8 @@ function Landing() {
         </div>
       </section>
 
-      {/* Warning keamanan pembayaran & admin */}
-      <section className="px-6 pb-8 md:pb-10">
-        <div className="max-w-4xl mx-auto rounded-2xl border-2 border-red-500/40 bg-red-50 dark:bg-red-950/20 p-4 md:p-5 shadow-sm">
-          <div className="flex items-start gap-3">
-            <span className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-full bg-red-500 text-white text-lg font-bold" aria-hidden>
-              ⚠️
-            </span>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-display font-bold text-sm md:text-base text-red-700 dark:text-red-300 mb-2">
-                Perhatian — Hindari Penipuan Mengatasnamakan Bunbun
-              </h3>
-              <ul className="space-y-2 text-xs md:text-sm text-foreground/85 leading-relaxed">
-                <li className="flex items-start gap-2">
-                  <span className="text-red-600 font-bold mt-0.5">•</span>
-                  <span>
-                    Pembayaran <strong>hanya</strong> melalui rekening <strong>BCA a.n SYEMA GLORIA</strong> (No. Rekening: <strong>0332170528</strong>). Pembayaran di luar rekening tersebut <strong>di luar tanggung jawab kami</strong>.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-600 font-bold mt-0.5">•</span>
-                  <span>
-                    Informasi dan konfirmasi pendaftaran <strong>hanya</strong> melalui WhatsApp Admin Resmi: <strong>+62 895-3286-71000</strong>. Di luar nomor tersebut <strong>tidak menjadi tanggung jawab kami</strong> (waspada penyalahgunaan nama Bunbun Nihongo).
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+
+
 
       <footer className="px-6 py-5 border-t border-border/50 bg-card/40 text-center text-xs text-muted-foreground">
         © 2026 Bunbun Nihongo — Kursus Online Bahasa Jepang.
