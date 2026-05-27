@@ -323,6 +323,16 @@ function LevelSelect() {
   );
 }
 
+function WorldDivider() {
+  return (
+    <div className="my-8 flex items-center gap-3" aria-hidden>
+      <span className="h-1 flex-1 rounded-full bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+      <span className="text-lg select-none">✦ 🐝 ✦</span>
+      <span className="h-1 flex-1 rounded-full bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+    </div>
+  );
+}
+
 function UserMenu({ onUnlock }: { onUnlock: (p: Progress) => void }) {
   const [me, setMe] = useState<MeResponse | null>(null);
   const navigate = useNavigate();
