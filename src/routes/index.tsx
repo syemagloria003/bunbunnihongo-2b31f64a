@@ -581,6 +581,7 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
         <a href="#kelas" className="hidden sm:inline hover:text-primary">Kelas Dibuka</a>
         <a href="#testimoni" className="hidden sm:inline hover:text-primary">Testimoni</a>
         <a href="#sensei" className="hidden sm:inline hover:text-primary">Sensei</a>
+        <a href="#faq" className="hidden sm:inline hover:text-primary">FAQ</a>
         {loggedIn ? (
           <Link to="/play" className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground hover:brightness-110">
             LOGIN
