@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, useMatches, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useMatches, redirect, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { LEVELS, KATAKANA_LEVELS, KANJI_LEVELS, ALL_LEVELS, type LevelDef } from "@/game/levels";
 import { loadProgress, saveProgress, type Progress } from "@/game/progress";
