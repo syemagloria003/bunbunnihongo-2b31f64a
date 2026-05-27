@@ -7,6 +7,7 @@ import { LevelPreview } from "@/components/LevelPreview";
 import { ProfileBar } from "@/components/ProfileBar";
 import { NotificationTicker } from "@/components/NotificationTicker";
 import { getAvatarSrc } from "@/game/avatars";
+import { fetchMe, type MeResponse } from "@/game/leaderboard";
 
 function rankBadgeClass(i: number): string {
   if (i === 0) return "bg-gradient-to-br from-yellow-300 to-yellow-500 text-yellow-950 ring-2 ring-yellow-200 shadow";
