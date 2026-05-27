@@ -145,10 +145,7 @@ function LevelSelect() {
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
           <Link to="/" className="text-sm font-semibold hover:text-primary shrink-0">← Beranda</Link>
-          <div className="flex items-center gap-2 flex-wrap justify-end">
-            <ProfileBar />
-            <AdminUnlock onUnlock={setP} />
-          </div>
+          <UserMenu onUnlock={setP} />
         </div>
         <NotificationTicker />
         <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6">
