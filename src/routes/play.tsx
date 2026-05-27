@@ -147,14 +147,11 @@ function LevelSelect() {
           <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
         </div>
         <NotificationTicker />
-        <div className="flex items-center justify-between gap-4 flex-wrap mb-6">
-          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold">
-            Peta Petualangan 🗺️
-          </h1>
-          <div className="scale-110 origin-right">
-            <UserMenu onUnlock={setP} />
-          </div>
-        </div>
+        <PlayerStatusCard progress={p} latestLevel={latestLevel} onUnlock={setP} />
+        <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-6">
+          Peta Petualangan 🗺️
+        </h1>
+
 
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           <div className="rounded-2xl p-4 border-2 border-sky-400/50 bg-gradient-to-br from-sky-50 to-indigo-100 dark:from-sky-950/40 dark:to-indigo-950/40 shadow-md">
@@ -333,13 +330,53 @@ function WorldDivider() {
   );
 }
 
-function UserMenu({ onUnlock }: { onUnlock: (p: Progress) => void }) {
+type WorldKey = "garden" | "crystal_cave" | "meteor_galaxy";
+
+function getWorldInfo(theme: WorldKey | undefined) {
+  if (theme === "crystal_cave") {
+    return {
+      label: "Dunia Kristal", sub: "Katakana", icon: "💎",
+      levels: KATAKANA_LEVELS,
+      barFrom: "from-cyan-400", barTo: "to-indigo-500",
+      cardRing: "ring-cyan-300/60",
+      cardBg: "from-cyan-50 to-indigo-100 dark:from-cyan-950/40 dark:to-indigo-950/40",
+      chipBg: "bg-cyan-100 dark:bg-cyan-900/50 text-cyan-900 dark:text-cyan-100 border-cyan-400",
+    };
+  }
+  if (theme === "meteor_galaxy") {
+    return {
+      label: "Galaksi Meteor", sub: "Kanji", icon: "☄️",
+      levels: KANJI_LEVELS,
+      barFrom: "from-orange-400", barTo: "to-rose-600",
+      cardRing: "ring-orange-300/60",
+      cardBg: "from-orange-50 to-rose-100 dark:from-orange-950/40 dark:to-rose-950/40",
+      chipBg: "bg-orange-100 dark:bg-orange-900/50 text-orange-900 dark:text-orange-100 border-orange-400",
+    };
+  }
+  return {
+    label: "Taman Bunga", sub: "Hiragana", icon: "🌻",
+    levels: LEVELS,
+    barFrom: "from-amber-300", barTo: "to-pink-500",
+    cardRing: "ring-amber-300/60",
+    cardBg: "from-amber-50 to-pink-100 dark:from-amber-950/40 dark:to-pink-950/40",
+    chipBg: "bg-amber-100 dark:bg-amber-900/50 text-amber-900 dark:text-amber-100 border-amber-400",
+  };
+}
+
+function PlayerStatusCard({
+  progress, latestLevel, onUnlock,
+}: {
+  progress: Progress; latestLevel: LevelDef | null; onUnlock: (p: Progress) => void;
+}) {
   const [me, setMe] = useState<MeResponse | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchMe().then(setMe);
-  }, []);
+  useEffect(() => { fetchMe().then(setMe); }, []);
+
+  const world = getWorldInfo((latestLevel?.theme as WorldKey | undefined) ?? "garden");
+  const cleared = world.levels.filter((l) => (progress.bestStars[l.id] ?? 0) > 0).length;
+  const total = world.levels.length;
+  const pct = total === 0 ? 0 : Math.round((cleared / total) * 100);
 
   async function logout() {
     await supabase.auth.signOut();
@@ -347,26 +384,55 @@ function UserMenu({ onUnlock }: { onUnlock: (p: Progress) => void }) {
   }
 
   return (
-    <div className="flex flex-col items-end gap-1.5">
-      <ProfileBar />
-      {me?.isAdmin && (
-        <Link
-          to="/admin"
-          className="text-xs font-bold bg-primary text-primary-foreground px-3 py-1 rounded-full hover:brightness-110 text-center"
-        >
-          🛠️ Admin
-        </Link>
-      )}
-      <AdminUnlock onUnlock={onUnlock} />
-      <button
-        onClick={logout}
-        className="text-xs font-bold px-3 py-1 rounded-full bg-destructive text-destructive-foreground hover:brightness-110 transition text-center"
-      >
-        Logout
-      </button>
+    <div className={["rounded-3xl p-4 sm:p-5 mb-6 border-2 border-border shadow-md bg-gradient-to-br ring-2", world.cardBg, world.cardRing].join(" ")}>
+      <div className="flex items-start gap-4 flex-wrap sm:flex-nowrap">
+        <div className="shrink-0">
+          <ProfileBar size="lg" />
+        </div>
+        <div className="flex-1 min-w-0 w-full">
+          <div className="flex items-center gap-2 flex-wrap mb-2">
+            <span className="font-display text-xl sm:text-2xl font-bold truncate">
+              {me?.nama ?? "Murid"}
+            </span>
+            <span className={["inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border-2", world.chipBg].join(" ")} title={`${world.label} (${world.sub})`}>
+              <span className="text-base leading-none">{world.icon}</span>
+              {world.sub}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between text-xs font-semibold mb-1">
+            <span className="text-muted-foreground">
+              Progress di <b className="text-foreground">{world.label}</b>
+            </span>
+            <span className="tabular-nums">{cleared}/{total} · {pct}%</span>
+          </div>
+          <div className="h-3 w-full rounded-full bg-background/70 border border-border overflow-hidden">
+            <div
+              className={["h-full rounded-full bg-gradient-to-r transition-all duration-700", world.barFrom, world.barTo].join(" ")}
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+
+          <div className="mt-3 flex items-center gap-2 flex-wrap">
+            {me?.isAdmin && (
+              <Link to="/admin" className="text-xs font-bold bg-primary text-primary-foreground px-3 py-1 rounded-full hover:brightness-110">
+                🛠️ Admin
+              </Link>
+            )}
+            <AdminUnlock onUnlock={onUnlock} />
+            <button
+              onClick={logout}
+              className="text-xs font-bold px-3 py-1 rounded-full bg-destructive text-destructive-foreground hover:brightness-110 transition"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
+
 
 function AdminUnlock({ onUnlock }: { onUnlock: (p: Progress) => void }) {
   const handleClick = () => {
