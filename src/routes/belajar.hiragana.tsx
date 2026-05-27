@@ -394,8 +394,9 @@ function BelajarHiragana() {
         </section>
 
         <div className="text-center py-4">
-          <Link to="/play" className="inline-block px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold shadow hover:brightness-110">
-            🎮 Sudah siap, ayo main!
+          <Link to="/play" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold shadow hover:brightness-110">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/20">▶️ MAIN</span>
+            <span>saya sudah selesai belajar, ayo cetak rekor skor game baru!</span>
           </Link>
         </div>
       </div>
