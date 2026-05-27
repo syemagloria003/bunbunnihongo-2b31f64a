@@ -406,8 +406,8 @@ function Landing() {
 
 
 function PosterCard({
-  src, alt, title, subtitle, schedule, price, priceNote, details,
-}: { src: string; alt: string; title: string; subtitle: string; schedule: string; price: string; priceNote?: string; details: string[] }) {
+  src, alt, title, subtitle, schedule, price, oldPrice, priceNote, details,
+}: { src: string; alt: string; title: string; subtitle: string; schedule: string; price: string; oldPrice?: string; priceNote?: string; details: string[] }) {
   return (
     <div className="rounded-2xl overflow-hidden border border-primary/25 bg-card shadow-md flex flex-col sm:flex-row">
       <a
@@ -432,9 +432,13 @@ function PosterCard({
         <p className="text-xs text-muted-foreground mt-0.5">{schedule}</p>
 
         <div className="mt-2 flex items-baseline gap-2 flex-wrap">
+          {oldPrice && (
+            <span className="text-sm text-muted-foreground line-through">{oldPrice}</span>
+          )}
           <span className="text-lg md:text-xl font-display font-extrabold text-green-700">{price}</span>
           {priceNote && <span className="text-[11px] text-muted-foreground">{priceNote}</span>}
         </div>
+
 
         <details className="mt-2 group">
           <summary className="cursor-pointer text-xs font-semibold text-primary hover:underline list-none flex items-center gap-1 select-none">
