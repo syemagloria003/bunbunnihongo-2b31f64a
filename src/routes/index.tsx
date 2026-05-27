@@ -12,7 +12,7 @@ import galN3Absen from "@/assets/gallery/kelas-n3-absen.jpg";
 import posterRegN4 from "@/assets/posters/kelas-reguler-n4.png";
 import posterJlptN3 from "@/assets/posters/kelas-jlpt-n3.png";
 import posterSensei from "@/assets/sensei-syema.png";
-import posterTim from "@/assets/tim-pengajar.png";
+
 
 import face13 from "@/assets/testimoni-faces/13.jpg";
 import face14 from "@/assets/testimoni-faces/14.jpg";
