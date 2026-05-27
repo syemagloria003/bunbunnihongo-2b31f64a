@@ -422,8 +422,8 @@ function BelajarHiragana() {
                   <p className="text-xs text-emerald-700 dark:text-emerald-300">✅ Benar: kiri bawah (¼ kotak)</p>
                 </div>
                 <div className="text-center space-y-1">
-                  <div className="relative w-28 h-28 border-2 border-rose-500 rounded flex items-center justify-center">
-                    <span style={{ fontFamily: "serif" }} className="text-6xl leading-none">ょ</span>
+                  <div className="relative w-28 h-28 border-2 border-rose-500 rounded flex items-center justify-center overflow-hidden">
+                    <span style={{ fontFamily: "serif", fontSize: "7rem" }} className="leading-none">ょ</span>
                   </div>
                   <p className="text-xs text-rose-700 dark:text-rose-300">❌ Salah: gede menuhin kotak</p>
                 </div>
