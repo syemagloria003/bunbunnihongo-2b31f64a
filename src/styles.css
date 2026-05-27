@@ -7,6 +7,8 @@
 @theme inline {
   --font-display: "Fredoka", "Baloo 2", system-ui, sans-serif;
   --font-sans: "Nunito", system-ui, sans-serif;
+  --font-game-display: "Space Grotesk", "Sora", system-ui, sans-serif;
+  --font-game-sans: "DM Sans", "Inter", system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -38,7 +40,11 @@
   --color-leaf-dark: var(--leaf-dark);
   --color-sky: var(--sky);
   --color-petal: var(--petal);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-magenta: var(--neon-magenta);
+  --color-neon-gold: var(--neon-gold);
 }
+
 
 :root {
   --radius: 1rem;
