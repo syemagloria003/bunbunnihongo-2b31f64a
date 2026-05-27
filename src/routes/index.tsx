@@ -388,7 +388,7 @@ function Landing() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="px-6 py-8 md:py-12 scroll-mt-4 bg-gradient-to-b from-background to-primary/5">
+      <section id="faq" className="px-6 py-8 md:py-12 scroll-mt-12 bg-gradient-to-b from-background to-primary/5">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-6">
             <span className="inline-block bg-secondary/30 text-foreground/80 text-[10px] font-bold px-2.5 py-1 rounded-full mb-2 tracking-wider uppercase">
