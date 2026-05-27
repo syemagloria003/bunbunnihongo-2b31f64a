@@ -144,21 +144,22 @@ function BelajarHiragana() {
 
           <p className="text-sm font-bold mt-2">Bedanya apa sih? Gampang banget bedainnya!</p>
 
-          <div className="rounded-xl border-2 border-dashed border-border/60 bg-pink-100 dark:bg-pink-900/50 p-3 space-y-1 text-sm">
+          <div className="rounded-xl border-2 border-dashed border-pink-400 dark:border-pink-400 bg-pink-100 dark:bg-pink-900/50 p-3 space-y-1 text-sm shadow-[0_0_12px_rgba(244,114,182,0.55)] dark:shadow-[0_0_16px_rgba(244,114,182,0.65)]">
             <p className="font-bold">1. Hiragana (Si Kalem Asli Jepang) 🌸</p>
             <p><b>Fungsi:</b> Dipakai buat nulis kata-kata yang asli dari bahasa Jepang. Misalnya: <i>Arigatou</i> (Terima kasih) atau <i>Sayonara</i> (Selamat tinggal).</p>
             <p><b>Bentuknya:</b> Luwes, melengkung-lengkung, dan santai. Ibaratnya kayak mi instan yang udah matang. 🍜</p>
             <p><b>Contoh:</b> <span style={{ fontFamily: "serif" }} className="text-lg">あ</span> (A), <span style={{ fontFamily: "serif" }} className="text-lg">め</span> (Me), <span style={{ fontFamily: "serif" }} className="text-lg">の</span> (No). Kelihatan kan lengkungannya?</p>
           </div>
 
-          <div className="rounded-xl border-2 border-dashed border-border/60 bg-sky-100 dark:bg-sky-900/50 p-3 space-y-1 text-sm">
+          <div className="rounded-xl border-2 border-dashed border-sky-400 dark:border-sky-400 bg-sky-100 dark:bg-sky-900/50 p-3 space-y-1 text-sm shadow-[0_0_12px_rgba(56,189,248,0.55)] dark:shadow-[0_0_16px_rgba(56,189,248,0.65)]">
             <p className="font-bold">2. Katakana (Si Gaul Suka Barang Impor) ⚡</p>
             <p><b>Fungsi:</b> Dipakai khusus untuk kata serapan dari bahasa asing (kayak bahasa Inggris), nama negara asing, atau nama kamu! Yup, karena kita bukan orang Jepang, nama kita bakal ditulis pakai huruf ini.</p>
             <p><b>Bentuknya:</b> Kaku, tajam-tajam, dan tegas. Ibaratnya kayak pedang ninja atau robot transformer. ⚔️</p>
             <p><b>Contoh:</b> <span style={{ fontFamily: "serif" }} className="text-lg">ア</span> (A), <span style={{ fontFamily: "serif" }} className="text-lg">メ</span> (Me), <span style={{ fontFamily: "serif" }} className="text-lg">ノ</span> (No). Kelihatan lebih bersudut dan tajam kan dibanding Hiragana?</p>
           </div>
 
-          <div className="rounded-xl border-2 border-dashed border-primary/40 bg-primary/15 p-3 space-y-2">
+
+          <div className="rounded-xl border-2 border-dashed border-primary bg-primary/15 p-3 space-y-2 shadow-[0_0_14px_hsl(var(--primary)/0.55)] dark:shadow-[0_0_18px_hsl(var(--primary)/0.7)]">
             <p className="font-bold text-sm">🎮 Waktunya Praktik!</p>
             <p className="text-sm">
               Karena kamu udah tahu bedanya, sekarang kita tes sedikit yuk.
@@ -220,7 +221,7 @@ function BelajarHiragana() {
               Eits, jangan sampai terjebak! Di Jepang, ada aturan saklek yang namanya <b>Kakijun</b> (Urutan Coretan).
             </p>
 
-            <div className="rounded-xl border-2 border-dashed border-border/60 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-amber-400 dark:border-amber-400 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-2 shadow-[0_0_12px_rgba(245,158,11,0.55)] dark:shadow-[0_0_16px_rgba(245,158,11,0.65)]">
               <p className="font-bold">Kenapa sih harus repot-repot ngikutin urutan?</p>
               <p className="leading-relaxed">
                 Coba bayangin kamu pakai sepatu dulu, baru pakai kaus kaki. Bisa sih... tapi aneh, ribet, dan nggak nyaman kan?
@@ -234,7 +235,7 @@ function BelajarHiragana() {
               </ul>
             </div>
 
-            <div className="rounded-xl border-2 border-dashed border-primary/40 bg-primary/15 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-primary bg-primary/15 p-3 space-y-2 shadow-[0_0_14px_hsl(var(--primary)/0.55)] dark:shadow-[0_0_18px_hsl(var(--primary)/0.7)]">
               <p className="font-bold">Aturan Mainnya Gampang Banget!</p>
               <p className="leading-relaxed">
                 Nggak perlu pusing, prinsip dasar nulis huruf Jepang itu cuma dua arah ini:
@@ -248,7 +249,7 @@ function BelajarHiragana() {
               </p>
             </div>
 
-            <div className="rounded-xl border-2 border-dashed border-border/60 bg-emerald-100 dark:bg-emerald-900/50 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-emerald-400 dark:border-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 p-3 space-y-2 shadow-[0_0_12px_rgba(16,185,129,0.55)] dark:shadow-[0_0_16px_rgba(16,185,129,0.65)]">
               <p className="font-bold">🎯 Misi Kamu:</p>
               <p className="leading-relaxed">
                 Di kartu-kartu huruf selanjutnya, kamu bakal lihat petunjuk angka atau panah <b>(1, 2, 3...)</b>. Tolong jangan di-skip ya! Ikutin urutannya di awang-awang pakai jarimu dulu, atau coret-coret di kertas kotak mandarin sebelum kamu jawab kuisnya.
@@ -259,7 +260,7 @@ function BelajarHiragana() {
               <p className="font-bold">Gimana, udah siap nulis dengan elegan? Yuk, gas scroll ke section pertama! 🚀</p>
             </div>
 
-            <div className="rounded-xl border-2 border-dashed border-border/60 bg-pink-100 dark:bg-pink-900/50 p-3 space-y-1">
+            <div className="rounded-xl border-2 border-dashed border-pink-400 dark:border-pink-400 bg-pink-100 dark:bg-pink-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(244,114,182,0.55)] dark:shadow-[0_0_16px_rgba(244,114,182,0.65)]">
               <p className="font-bold">💡 Fun Fact:</p>
               <p className="leading-relaxed text-xs">
                 Zaman dulu, huruf Hiragana diciptakan untuk nulis cepat layaknya tulisan latin bersambung. Makanya, kalau urutan coretanmu benar, tanganmu otomatis bakal ngalir dari satu garis ke garis berikutnya tanpa macet!
@@ -285,7 +286,7 @@ function BelajarHiragana() {
               tenggorokan kamu. Yuk, kita mulai!
             </p>
 
-            <div className="rounded-xl border-2 border-dashed border-border/60 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-1">
+            <div className="rounded-xl border-2 border-dashed border-amber-400 dark:border-amber-400 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(245,158,11,0.55)] dark:shadow-[0_0_16px_rgba(245,158,11,0.65)]">
               <p className="font-bold">1. Dakuon si "Tanda Kutip" ( ゛) — Suara Ngotot! 💪</p>
               <p>
                 Dakuon itu cuma nambahin tanda mirip kutip ( ゛) di pojok
@@ -311,7 +312,7 @@ function BelajarHiragana() {
               </ul>
             </div>
 
-            <div className="rounded-xl border-2 border-dashed border-primary/40 bg-primary/15 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-primary bg-primary/15 p-3 space-y-2 shadow-[0_0_14px_hsl(var(--primary)/0.55)] dark:shadow-[0_0_18px_hsl(var(--primary)/0.7)]">
               <p className="font-bold text-sm">🎮 Coba Ketik Sendiri!</p>
               <p className="text-sm">Yuk pakai logika "ngotot" kamu tadi buat jawab kuis ini!</p>
               <Quiz
@@ -323,7 +324,7 @@ function BelajarHiragana() {
               />
             </div>
 
-            <div className="rounded-xl border-2 border-dashed border-border/60 bg-rose-100 dark:bg-rose-900/50 p-3 space-y-1">
+            <div className="rounded-xl border-2 border-dashed border-rose-400 dark:border-rose-400 bg-rose-100 dark:bg-rose-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(244,63,94,0.55)] dark:shadow-[0_0_16px_rgba(244,63,94,0.65)]">
               <p className="font-bold">2. Handakuon si "Tanda Bulat" ( ゜) — Suara Meletup! 💥</p>
               <p>
                 Kalau tanda kutip bikin ngotot, tanda bulat ( ゜) kecil ini
@@ -358,7 +359,7 @@ function BelajarHiragana() {
               Kalau mereka udah nempel, suaranya <b>nggak boleh</b> dibaca satu-satu. Mereka berdua harus masuk "blender" dan dilebur jadi <b>SATU SUARA</b> aja.
             </p>
 
-            <div className="rounded-xl border-2 border-dashed border-border/60 bg-violet-100 dark:bg-violet-900/50 p-3 space-y-1">
+            <div className="rounded-xl border-2 border-dashed border-violet-400 dark:border-violet-400 bg-violet-100 dark:bg-violet-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(167,139,250,0.55)] dark:shadow-[0_0_16px_rgba(167,139,250,0.65)]">
               <p className="font-bold">🥤 Bayangin Kamu Bikin Jus:</p>
               <p>
                 Huruf <b>KI (き)</b> itu semangka. Huruf <b>ya kecil (ゃ)</b> itu melon.
@@ -376,7 +377,7 @@ function BelajarHiragana() {
               </ul>
             </div>
 
-            <div className="rounded-xl border-2 border-dashed border-border/60 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-1">
+            <div className="rounded-xl border-2 border-dashed border-amber-400 dark:border-amber-400 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(245,158,11,0.55)] dark:shadow-[0_0_16px_rgba(245,158,11,0.65)]">
               <p className="font-bold">⚠️ Awas Terkecoh Si Lidah Bule!</p>
               <p>
                 Ada dua huruf yang kalau diblender, bentuk latinnya sedikit beda biar lidah kita lebih gampang nyebutnya:
@@ -388,7 +389,7 @@ function BelajarHiragana() {
               <p>Gampang banget kan? Pokoknya lihat huruf kecil = masukin blender!</p>
             </div>
 
-            <div className="rounded-xl border-2 border-dashed border-primary/40 bg-primary/15 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-primary bg-primary/15 p-3 space-y-2 shadow-[0_0_14px_hsl(var(--primary)/0.55)] dark:shadow-[0_0_18px_hsl(var(--primary)/0.7)]">
               <p className="font-bold text-sm">🎮 Kuis Blender Suara!</p>
               <p className="text-sm">Sekarang coba kita tes mesin blender di otakmu.</p>
               <p className="text-sm">
@@ -407,7 +408,7 @@ function BelajarHiragana() {
               />
             </div>
 
-            <div className="rounded-xl border-2 border-dashed border-border/60 bg-emerald-100 dark:bg-emerald-900/50 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-emerald-400 dark:border-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 p-3 space-y-2 shadow-[0_0_12px_rgba(16,185,129,0.55)] dark:shadow-[0_0_16px_rgba(16,185,129,0.65)]">
               <p className="font-bold">📏 Posisi Duduk Si "Anak Bawang" (Khusus Buku Kotak!)</p>
               <p>
                 Karena <b>ya (ゃ)</b>, <b>yu (ゅ)</b>, dan <b>yo (ょ)</b> ini itungannya "anak bawang", ukuran tubuh mereka saat ditulis itu cuma <b>seperempat (1/4)</b> dari huruf biasa. Mereka nggak boleh makan tempat!
@@ -446,7 +447,7 @@ function BelajarHiragana() {
               </div>
             </div>
 
-            <div className="rounded-xl border-2 border-dashed border-primary/40 bg-primary/15 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-primary bg-primary/15 p-3 space-y-2 shadow-[0_0_14px_hsl(var(--primary)/0.55)] dark:shadow-[0_0_18px_hsl(var(--primary)/0.7)]">
               <p className="font-bold text-sm">🎮 Kuis Visual!</p>
               <p className="text-sm">
                 <b>Mana Posisi yang Benar?</b> Kalau kamu disuruh nulis kata <b>"TOKYO"</b> (とうきょう) di buku kotak secara mendatar, di mana letak huruf <b>yo (ょ)</b> kecilnya bersembunyi?
@@ -486,7 +487,7 @@ function BelajarHiragana() {
               bukan <i>Ki-pu</i> (datar). Tapi: <b>KI…</b> (ngerem/tahan napas
               kaget sebentar) <b>…PU!</b>
             </p>
-            <div className="rounded-xl border-2 border-dashed border-border/60 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-1">
+            <div className="rounded-xl border-2 border-dashed border-amber-400 dark:border-amber-400 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(245,158,11,0.55)] dark:shadow-[0_0_16px_rgba(245,158,11,0.65)]">
               <p className="font-semibold">📚 Contoh kata lain (rasain "rem"-nya):</p>
               <ul className="list-disc list-inside space-y-0.5">
                 <li><b>GAKKOU</b> (<span style={{ fontFamily: "serif" }}>がっこう</span>) — sekolah → <i>GA…(rem)…KKOU</i></li>
@@ -497,7 +498,7 @@ function BelajarHiragana() {
               <p className="text-xs italic">Trik: konsonan setelah っ selalu jadi "dobel" (kk, pp, ss, tt…). Itu tandanya kamu harus ngerem sebentar di situ.</p>
             </div>
 
-            <div className="rounded-xl border-2 border-dashed border-border/60 bg-emerald-100 dark:bg-emerald-900/50 p-3 space-y-2">
+            <div className="rounded-xl border-2 border-dashed border-emerald-400 dark:border-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 p-3 space-y-2 shadow-[0_0_12px_rgba(16,185,129,0.55)] dark:shadow-[0_0_16px_rgba(16,185,129,0.65)]">
               <p className="font-bold">📏 Si Tsu Juga "Anak Bawang", lho!</p>
               <p>
                 Sama persis kayak <b>ya/yu/yo kecil</b> tadi, <b>っ</b> (tsu kecil)
