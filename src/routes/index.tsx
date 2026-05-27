@@ -263,45 +263,47 @@ function Landing() {
               Cerita jujur dari murid Bunbun batch sebelumnya.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {TESTIMONI.map((t, i) => (
-              <article
-                key={i}
-                className="flex flex-col rounded-3xl border-2 border-primary/20 bg-card p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <img
-                    src={t.foto}
-                    alt={`Foto ${t.nama}`}
-                    loading="lazy"
-                    className="w-14 h-14 rounded-full object-cover border-2 border-primary shrink-0"
-                    style={{ objectPosition: "center 25%" }}
-                  />
-                  <div className="min-w-0">
-                    <h3 className="font-bold text-sm leading-tight truncate">{t.nama}</h3>
-                    {t.ig ? (
-                      <a
-                        href={`https://instagram.com/${t.ig}`}
-                        target="_blank" rel="noopener noreferrer"
-                        className="text-xs text-primary hover:underline"
-                      >
-                        @{t.ig}
-                      </a>
-                    ) : (
-                      <span className="text-xs text-muted-foreground">Murid Bunbun</span>
-                    )}
+          <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+            <div className="flex gap-5 animate-marquee w-max hover:[animation-play-state:paused]">
+              {[...TESTIMONI, ...TESTIMONI].map((t, i) => (
+                <article
+                  key={i}
+                  className="shrink-0 w-[320px] sm:w-[360px] flex flex-col rounded-3xl border-2 border-primary/20 bg-card p-5 shadow-sm"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <img
+                      src={t.foto}
+                      alt={`Foto ${t.nama}`}
+                      loading="lazy"
+                      className="w-14 h-14 rounded-full object-cover border-2 border-primary shrink-0"
+                      style={{ objectPosition: "center 25%" }}
+                    />
+                    <div className="min-w-0">
+                      <h3 className="font-bold text-sm leading-tight truncate">{t.nama}</h3>
+                      {t.ig ? (
+                        <a
+                          href={`https://instagram.com/${t.ig}`}
+                          target="_blank" rel="noopener noreferrer"
+                          className="text-xs text-primary hover:underline"
+                        >
+                          @{t.ig}
+                        </a>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">Murid Bunbun</span>
+                      )}
+                    </div>
+                    <span className="ml-auto text-[10px] font-bold bg-primary/15 text-primary px-2 py-1 rounded-full whitespace-nowrap">
+                      Reg {t.level}
+                    </span>
                   </div>
-                  <span className="ml-auto text-[10px] font-bold bg-primary/15 text-primary px-2 py-1 rounded-full whitespace-nowrap">
-                    {t.level} · {t.batch}
-                  </span>
-                </div>
-                <p className="text-sm text-foreground/80 leading-relaxed">
-                  <span className="text-primary font-bold">“</span>
-                  {t.isi}
-                  <span className="text-primary font-bold">”</span>
-                </p>
-              </article>
-            ))}
+                  <p className="text-sm text-foreground/80 leading-relaxed">
+                    <span className="text-primary font-bold">“</span>
+                    {t.isi}
+                    <span className="text-primary font-bold">”</span>
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
           <p className="text-center text-sm text-muted-foreground mt-8">
             Mau lihat lebih banyak testimoni? Cek di{" "}
