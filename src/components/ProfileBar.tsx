@@ -196,6 +196,7 @@ function ProfileModal({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
