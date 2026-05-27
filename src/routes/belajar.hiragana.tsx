@@ -71,50 +71,53 @@ function BelajarHiragana() {
           </p>
         </header>
 
-        {/* Intro */}
+        {/* Intro: Duo Kembar */}
         <section className="honey-card rounded-2xl p-5 space-y-3">
-          <h2 className="font-display text-2xl font-bold">🈂️ Apa itu Hiragana?</h2>
+          <h2 className="font-display text-2xl font-bold">🎌 Kenalan Dulu Sama "Duo Kembar" Jepang</h2>
           <p className="text-sm leading-relaxed">
-            <b>Hiragana (ひらがな)</b> adalah salah satu dari tiga sistem tulisan
-            Jepang (Hiragana, Katakana, Kanji). Bentuknya melengkung-lembut dan
-            digunakan untuk menulis <b>kata-kata asli Jepang</b>, akhiran tata
-            bahasa (okurigana), partikel (は, を, に), serta untuk membantu
-            membaca kanji (furigana).
+            Halo! Selamat datang di tempat paling santai buat belajar nulis Jepang.
           </p>
-          <div>
-            <h3 className="font-bold mt-2 mb-1">📜 Sejarah Singkat</h3>
-            <p className="text-sm leading-relaxed">
-              Hiragana berasal dari bentuk sōsho (cursive) Kanji yang dipakai
-              sekitar abad ke-9 (zaman Heian). Awalnya disebut <i>onnade</i>
-              (tulisan perempuan) karena banyak dipakai oleh perempuan
-              bangsawan—termasuk Murasaki Shikibu yang menulis <i>Genji
-              Monogatari</i>. Sekarang Hiragana jadi dasar literasi anak-anak
-              Jepang dan langkah pertama untuk siapa pun yang belajar bahasa
-              Jepang.
-            </p>
+          <p className="text-sm leading-relaxed">
+            Pernah bingung kenapa tulisan Jepang itu bentuknya beda-beda? Ada yang
+            melengkung cantik, ada yang kaku kayak robot, ada juga yang ruwet
+            banget kayak benang kusut? Tenang, kamu nggak sendirian!
+          </p>
+          <p className="text-sm leading-relaxed">
+            Di Jepang, mereka emang pakai <b>3 jenis huruf</b> sekaligus. Tapi
+            untuk pemula, kita cukup kenalan sama dua saudari kembar ini dulu:
+            <b> Hiragana</b> dan <b>Katakana</b>.
+          </p>
+
+          <p className="text-sm font-bold mt-2">Bedanya apa sih? Gampang banget bedainnya!</p>
+
+          <div className="rounded-xl bg-pink-100/70 dark:bg-pink-950/30 p-3 space-y-1 text-sm">
+            <p className="font-bold">1. Hiragana (Si Kalem Asli Jepang) 🌸</p>
+            <p><b>Fungsi:</b> Dipakai buat nulis kata-kata yang asli dari bahasa Jepang. Misalnya: <i>Arigatou</i> (Terima kasih) atau <i>Sayonara</i> (Selamat tinggal).</p>
+            <p><b>Bentuknya:</b> Luwes, melengkung-lengkung, dan santai. Ibaratnya kayak mi instan yang udah matang. 🍜</p>
+            <p><b>Contoh:</b> <span style={{ fontFamily: "serif" }} className="text-lg">あ</span> (A), <span style={{ fontFamily: "serif" }} className="text-lg">め</span> (Me), <span style={{ fontFamily: "serif" }} className="text-lg">の</span> (No). Kelihatan kan lengkungannya?</p>
           </div>
-          <div>
-            <h3 className="font-bold mt-2 mb-1">🎯 Fungsinya</h3>
-            <ul className="list-disc list-inside text-sm space-y-1">
-              <li>Menulis kata asli Jepang (contoh: たべる = makan).</li>
-              <li>Partikel kalimat (は, が, を, に, で, と, …).</li>
-              <li>Akhiran kata kerja & kata sifat (okurigana).</li>
-              <li>Furigana — bacaan kecil di atas kanji.</li>
-            </ul>
+
+          <div className="rounded-xl bg-sky-100/70 dark:bg-sky-950/30 p-3 space-y-1 text-sm">
+            <p className="font-bold">2. Katakana (Si Gaul Suka Barang Impor) ⚡</p>
+            <p><b>Fungsi:</b> Dipakai khusus untuk kata serapan dari bahasa asing (kayak bahasa Inggris), nama negara asing, atau nama kamu! Yup, karena kita bukan orang Jepang, nama kita bakal ditulis pakai huruf ini.</p>
+            <p><b>Bentuknya:</b> Kaku, tajam-tajam, dan tegas. Ibaratnya kayak pedang ninja atau robot transformer. ⚔️</p>
+            <p><b>Contoh:</b> <span style={{ fontFamily: "serif" }} className="text-lg">ア</span> (A), <span style={{ fontFamily: "serif" }} className="text-lg">メ</span> (Me), <span style={{ fontFamily: "serif" }} className="text-lg">ノ</span> (No). Kelihatan lebih bersudut dan tajam kan dibanding Hiragana?</p>
           </div>
-          <div className="bg-primary/10 rounded-xl p-3 text-sm">
-            <p className="font-bold mb-1">✍️ Kenapa harus ikut urutan goresan?</p>
-            <p>
-              Urutan goresan (<i>kakijun</i>) bukan sekadar aturan—dia membuat
-              huruf jadi <b>seimbang, mudah dibaca</b>, dan tanganmu hafal
-              gerakannya. Kebiasaan ini sangat membantu saat nanti belajar
-              Kanji yang goresannya lebih banyak.
+
+          <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+            <p className="font-bold text-sm">🎮 Waktunya Praktik!</p>
+            <p className="text-sm">
+              Karena kamu udah tahu bedanya, sekarang kita tes sedikit yuk.
+              Nggak usah dihafal dulu bentuknya, cukup pakai logika aja dari
+              penjelasan di atas.
             </p>
-            <p className="mt-2">
-              <b>Tips:</b> latih di <b>buku kotak Mandarin</b> (kotak besar
-              dengan garis bantu silang di tengah). Garis bantu membantumu
-              menempatkan setiap bagian huruf dengan proporsi yang benar.
-            </p>
+            <Quiz
+              question={<>Kalau kamu mau nulis kata <b>"KOMPUTER"</b> (dari bahasa Inggris <i>computer</i>), huruf mana yang bakal kamu pakai?<br />A. Hiragana (Si Melengkung)<br />B. Katakana (Si Kaku)</>}
+              placeholder="Ketik 'A' atau 'B' di sini..."
+              accept={["b"]}
+              successMsg="CAKEP! Bener banget. Karena 'komputer' itu bahasa Inggris, si Katakana yang bakal turun tangan."
+              errorMsg="Hmm, coba pikir lagi — 'komputer' itu kata serapan dari bahasa asing. Geng mana yang kebagian tugas ini?"
+            />
           </div>
         </section>
 
