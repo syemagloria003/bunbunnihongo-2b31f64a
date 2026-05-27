@@ -218,10 +218,6 @@ export function GameCanvas({ level }: { level: LevelDef }) {
           }
         >
           <canvas ref={canvasRef} width={W} height={H} className="block w-full h-full" />
-          {/* Mobile on-screen joystick + jump button */}
-          {isMobile && !needsRotate && !quiz && !result && (
-            <MobileControls onPress={touch} />
-          )}
           {quiz && <KanaGateModal word={quiz.word} options={quiz.options} onAnswer={answer} mode={level.mode} />}
           {result && (
             <div className="absolute inset-0 z-40 flex items-center justify-center bg-foreground/50 backdrop-blur-sm p-4">
