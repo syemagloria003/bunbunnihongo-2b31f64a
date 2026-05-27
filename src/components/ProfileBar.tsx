@@ -22,7 +22,7 @@ export function ProfileBar() {
 
   return (
     <>
-      <div className="flex items-center gap-2 flex-wrap justify-center">
+      <div className="flex items-start gap-2">
         <button
           onClick={() => setOpen(true)}
           className="flex items-center gap-2 bg-primary/15 hover:bg-primary/25 transition rounded-full pl-1 pr-3 py-1"
@@ -33,24 +33,24 @@ export function ProfileBar() {
             alt="Avatar"
             className="w-8 h-8 rounded-full bg-background object-cover ring-2 ring-primary"
           />
-          <span className="text-sm font-semibold">
-            🐝 <span className="text-primary">{me.nama}</span>
-          </span>
+          <span className="text-sm font-semibold text-primary">{me.nama}</span>
         </button>
-        {me.isAdmin && (
-          <Link
-            to="/admin"
-            className="text-xs font-bold bg-primary text-primary-foreground px-3 py-1 rounded-full hover:brightness-110"
+        <div className="flex flex-col gap-1.5">
+          {me.isAdmin && (
+            <Link
+              to="/admin"
+              className="text-xs font-bold bg-primary text-primary-foreground px-3 py-1 rounded-full hover:brightness-110 text-center"
+            >
+              🛠️ Admin
+            </Link>
+          )}
+          <button
+            onClick={logout}
+            className="text-xs font-bold px-3 py-1 rounded-full bg-destructive text-destructive-foreground hover:brightness-110 transition text-center"
           >
-            🛠️ Admin
-          </Link>
-        )}
-        <button
-          onClick={logout}
-          className="text-xs font-semibold px-3 py-1 rounded-full border border-border hover:border-destructive hover:text-destructive transition"
-        >
-          Logout
-        </button>
+            Logout
+          </button>
+        </div>
       </div>
 
       {open && (

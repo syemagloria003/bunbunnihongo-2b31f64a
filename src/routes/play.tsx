@@ -5,7 +5,26 @@ import { loadProgress, saveProgress, type Progress } from "@/game/progress";
 import { supabase } from "@/integrations/supabase/client";
 import { LevelPreview } from "@/components/LevelPreview";
 import { ProfileBar } from "@/components/ProfileBar";
+import { NotificationTicker } from "@/components/NotificationTicker";
 import { getAvatarSrc } from "@/game/avatars";
+
+function rankBadgeClass(i: number): string {
+  if (i === 0) return "bg-gradient-to-br from-yellow-300 to-yellow-500 text-yellow-950 ring-2 ring-yellow-200 shadow";
+  if (i === 1) return "bg-gradient-to-br from-slate-200 to-slate-400 text-slate-900 ring-2 ring-slate-100 shadow";
+  if (i === 2) return "bg-gradient-to-br from-amber-500 to-amber-700 text-amber-50 ring-2 ring-amber-300 shadow";
+  if (i === 3) return "bg-gradient-to-br from-sky-300 to-sky-500 text-sky-950 ring-2 ring-sky-200";
+  if (i === 4) return "bg-gradient-to-br from-emerald-300 to-emerald-500 text-emerald-950 ring-2 ring-emerald-200";
+  if (i === 5) return "bg-gradient-to-br from-pink-300 to-pink-500 text-pink-950 ring-2 ring-pink-200";
+  if (i === 6) return "bg-gradient-to-br from-purple-300 to-purple-500 text-purple-50 ring-2 ring-purple-200";
+  return "bg-gradient-to-br from-stone-300 to-stone-500 text-stone-950 ring-2 ring-stone-200";
+}
+
+function rankLabel(i: number): string {
+  if (i === 0) return "🥇";
+  if (i === 1) return "🥈";
+  if (i === 2) return "🥉";
+  return `#${i + 1}`;
+}
 
 export const Route = createFileRoute("/play")({
   head: () => ({
@@ -130,17 +149,18 @@ function LevelSelect() {
             <AdminUnlock onUnlock={setP} />
           </div>
         </div>
+        <NotificationTicker />
         <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6">
           Peta Petualangan 🗺️
         </h1>
 
         <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="honey-card rounded-2xl p-4">
+          <div className="rounded-2xl p-4 border-2 border-sky-400/50 bg-gradient-to-br from-sky-50 to-indigo-100 dark:from-sky-950/40 dark:to-indigo-950/40 shadow-md">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="font-display font-bold text-lg">🏆 Skor hari ini</h3>
-              <Link to="/leaderboard" className="text-xs font-semibold text-primary hover:underline">Lihat semua →</Link>
+              <h3 className="font-display font-bold text-lg text-sky-900 dark:text-sky-100">🏆 Skor hari ini</h3>
+              <Link to="/leaderboard" className="text-xs font-semibold text-sky-700 dark:text-sky-300 hover:underline">Lihat semua →</Link>
             </div>
-            <p className="text-xs text-muted-foreground mb-3">
+            <p className="text-xs text-sky-800/70 dark:text-sky-200/70 mb-3">
               Ayo kalahkan teman-temanmu — cepet-cepetan naik level! 🔥
             </p>
             {today.length === 0 ? (
@@ -150,14 +170,16 @@ function LevelSelect() {
                 {today.map((r, i) => {
                   const isMe = r.user_id === meId;
                   return (
-                    <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm", isMe ? "bg-primary/15 ring-2 ring-primary" : "bg-background/60"].join(" ")}>
-                      <span className="font-bold w-6 text-center">{i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`}</span>
+                    <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm", isMe ? "bg-primary/20 ring-2 ring-primary" : "bg-white/60 dark:bg-background/40"].join(" ")}>
+                      <span className={["inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-extrabold shrink-0", rankBadgeClass(i)].join(" ")}>
+                        {i < 3 ? rankLabel(i) : i + 1}
+                      </span>
                       <img src={getAvatarSrc(r.avatar_id)} alt="" className="w-7 h-7 rounded-full bg-background object-cover shrink-0 ring-1 ring-border" loading="lazy" />
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold truncate">{r.nama}{isMe && " (kamu)"}</p>
                         <p className="text-[10px] text-muted-foreground truncate">{r.level_name}</p>
                       </div>
-                      <span className="font-bold text-primary">{r.skor}</span>
+                      <span className="font-bold text-sky-700 dark:text-sky-300">{r.skor}</span>
                     </li>
                   );
                 })}
@@ -165,11 +187,11 @@ function LevelSelect() {
             )}
           </div>
 
-          <div className="honey-card rounded-2xl p-4">
-            <h3 className="font-display font-bold text-lg mb-1">⚔️ Saingan di level kamu</h3>
+          <div className="rounded-2xl p-4 border-2 border-fuchsia-400/50 bg-gradient-to-br from-fuchsia-50 to-rose-100 dark:from-fuchsia-950/40 dark:to-rose-950/40 shadow-md">
+            <h3 className="font-display font-bold text-lg mb-1 text-fuchsia-900 dark:text-fuchsia-100">⚔️ Saingan di level kamu</h3>
             {latestLevel ? (
               <>
-                <p className="text-xs text-muted-foreground mb-3">
+                <p className="text-xs text-fuchsia-800/70 dark:text-fuchsia-200/70 mb-3">
                   Level terbaru: <b className="text-foreground">{latestLevel.name}</b> — bandingkan skormu dengan teman selevel.
                 </p>
                 {peers.length === 0 ? (
@@ -179,11 +201,13 @@ function LevelSelect() {
                     {peers.slice(0, 8).map((r, i) => {
                       const isMe = r.user_id === meId;
                       return (
-                        <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm", isMe ? "bg-primary/15 ring-2 ring-primary" : "bg-background/60"].join(" ")}>
-                          <span className="font-bold w-6 text-center">#{i + 1}</span>
+                        <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm", isMe ? "bg-primary/20 ring-2 ring-primary" : "bg-white/60 dark:bg-background/40"].join(" ")}>
+                          <span className={["inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-extrabold shrink-0", rankBadgeClass(i)].join(" ")}>
+                            {i < 3 ? rankLabel(i) : i + 1}
+                          </span>
                           <img src={getAvatarSrc(r.avatar_id)} alt="" className="w-7 h-7 rounded-full bg-background object-cover shrink-0 ring-1 ring-border" loading="lazy" />
                           <span className="flex-1 truncate font-semibold">{r.nama}{isMe && " (kamu)"}</span>
-                          <span className="font-bold text-primary">{r.skor}</span>
+                          <span className="font-bold text-fuchsia-700 dark:text-fuchsia-300">{r.skor}</span>
                         </li>
                       );
                     })}
@@ -196,12 +220,7 @@ function LevelSelect() {
           </div>
         </div>
 
-        {p.crystal && (
-          <div className="honey-card rounded-2xl p-4 mb-4 text-center">
-            <p className="font-bold">💎 Kristal Hiragana milikmu!</p>
-            <p className="text-sm text-muted-foreground">Dunia Kristal Katakana sudah terbuka di bawah.</p>
-          </div>
-        )}
+
 
         <h2 className="font-display text-2xl font-bold mb-3">🌻 Taman Bunga (Hiragana)</h2>
         <div className="grid sm:grid-cols-2 gap-4 mb-8">
