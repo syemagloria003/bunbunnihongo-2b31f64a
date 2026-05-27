@@ -391,9 +391,11 @@ function PlayerStatusCard({
   }
 
   return (
-    <div className={["rounded-3xl p-4 sm:p-5 mb-6 border-2 border-border shadow-md bg-gradient-to-br ring-2", world.cardBg, world.cardRing].join(" ")}>
-      <div className="flex items-start gap-4 flex-wrap sm:flex-nowrap">
-        <div className="shrink-0">
+    <div className="game-panel rounded-3xl p-4 sm:p-5 mb-6 relative overflow-hidden">
+      <span className={["absolute -top-24 -right-20 w-72 h-72 rounded-full blur-3xl pointer-events-none opacity-50 animate-aurora bg-gradient-to-br", world.barFrom, world.barTo].join(" ")} />
+      <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+      <div className="flex items-start gap-4 flex-wrap sm:flex-nowrap relative">
+        <div className="shrink-0 animate-neon-pulse rounded-full">
           <ProfileBar size="lg" />
         </div>
         <div className="flex-1 min-w-0 w-full">
@@ -401,23 +403,25 @@ function PlayerStatusCard({
             <span className="font-display text-xl sm:text-2xl font-bold truncate">
               {me?.nama ?? "Murid"}
             </span>
-            <span className={["inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border-2", world.chipBg].join(" ")} title={`${world.label} (${world.sub})`}>
+            <span className={["inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border-2 backdrop-blur-sm", world.chipBg].join(" ")} title={`${world.label} (${world.sub})`}>
               <span className="text-base leading-none">{world.icon}</span>
               {world.sub}
             </span>
           </div>
 
-          <div className="flex items-center justify-between text-xs font-semibold mb-1">
-            <span className="text-muted-foreground">
-              Progress di <b className="text-foreground">{world.label}</b>
+          <div className="flex items-center justify-between text-xs font-semibold mb-1.5">
+            <span className="text-muted-foreground uppercase tracking-wider text-[10px]">
+              {world.label}
             </span>
-            <span className="tabular-nums">{cleared}/{total} · {pct}%</span>
+            <span className="tabular-nums font-mono text-foreground">{cleared}/{total} · {pct}%</span>
           </div>
-          <div className="h-3 w-full rounded-full bg-background/70 border border-border overflow-hidden">
+          <div className="relative h-3 w-full rounded-full bg-black/40 ring-1 ring-white/10 overflow-hidden">
             <div
-              className={["h-full rounded-full bg-gradient-to-r transition-all duration-700", world.barFrom, world.barTo].join(" ")}
+              className={["h-full rounded-full bg-gradient-to-r transition-all duration-700 relative", world.barFrom, world.barTo].join(" ")}
               style={{ width: `${pct}%` }}
-            />
+            >
+              <span className="absolute inset-0 shimmer-bar rounded-full" />
+            </div>
           </div>
 
           <div className="mt-3 flex items-center gap-2 flex-wrap">
@@ -439,6 +443,7 @@ function PlayerStatusCard({
     </div>
   );
 }
+
 
 
 function AdminUnlock({ onUnlock }: { onUnlock: (p: Progress) => void }) {
