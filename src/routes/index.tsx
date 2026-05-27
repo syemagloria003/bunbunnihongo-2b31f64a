@@ -202,7 +202,7 @@ function Landing() {
               Kelas yang dibuka 📣
             </h2>
             <p className="text-muted-foreground mb-3 text-xs">
-              Saat ini tersedia 2 kelas reguler.
+              Saat ini tersedia 2 kelas reguler. <span className="italic">*Kelas private belum tersedia.</span>
             </p>
             <div className="flex flex-col gap-3 flex-1">
               <PosterCard
