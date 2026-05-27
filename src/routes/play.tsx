@@ -262,7 +262,16 @@ function LevelSelect() {
 
         <WorldDivider />
 
-        <h2 className="font-display text-2xl font-bold mb-3">💎 Dunia Kristal (Katakana)</h2>
+        <div className="flex items-center gap-2 mb-3 flex-wrap">
+          <h2 className="font-display text-2xl font-bold">💎 Dunia Kristal (Katakana)</h2>
+          <Link
+            to="/belajar/katakana"
+            className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sky-500 text-white font-bold text-sm shadow-md hover:brightness-110 hover:-translate-y-0.5 transition border-2 border-sky-700 overflow-visible"
+          >
+            <span className="absolute -z-10 inset-0 rounded-full animate-fire-glow bg-sky-500/60 blur-md" />
+            📖 Belajar dulu
+          </Link>
+        </div>
         {!p.crystal && (
           <p className="text-sm text-muted-foreground mb-3">
             Tamatkan <b>Ratu Tawon</b> dengan ⭐⭐⭐ untuk mendapatkan Kristal dan membuka dunia ini.
