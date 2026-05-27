@@ -113,7 +113,11 @@ function BelajarHiragana() {
     <div className="min-h-screen px-4 sm:px-6 py-6">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center justify-between gap-2">
-          <Link to="/play" className="text-sm font-semibold hover:text-primary">← Kembali ke Peta</Link>
+          <Link to="/play" className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-primary text-primary-foreground font-bold text-xs sm:text-sm shadow hover:brightness-110">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/20">▶️ MAIN</span>
+            <span className="hidden sm:inline">saya sudah selesai belajar, ayo cetak rekor skor game baru!</span>
+            <span className="sm:hidden">selesai belajar, cetak rekor!</span>
+          </Link>
           <span className="text-2xl">📖</span>
         </div>
 
