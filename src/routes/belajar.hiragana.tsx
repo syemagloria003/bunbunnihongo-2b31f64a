@@ -411,19 +411,19 @@ function BelajarHiragana() {
               {/* Mini illustration */}
               <div className="flex items-center gap-4 justify-center pt-1">
                 <div className="text-center space-y-1">
-                  <div className="relative w-20 h-20 border-2 border-emerald-500 rounded grid grid-cols-2 grid-rows-2">
+                  <div className="relative w-28 h-28 border-2 border-emerald-500 rounded grid grid-cols-2 grid-rows-2">
                     <div className="border-r border-b border-dashed border-emerald-300" />
                     <div className="border-b border-dashed border-emerald-300" />
-                    <div className="border-r border-dashed border-emerald-300 flex items-end justify-start p-0.5">
-                      <span style={{ fontFamily: "serif" }} className="text-base leading-none">ょ</span>
+                    <div className="border-r border-dashed border-emerald-300 flex items-center justify-center overflow-hidden">
+                      <span style={{ fontFamily: "serif" }} className="text-5xl leading-none">ょ</span>
                     </div>
                     <div />
                   </div>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-300">✅ Benar: kiri bawah</p>
+                  <p className="text-xs text-emerald-700 dark:text-emerald-300">✅ Benar: kiri bawah (¼ kotak)</p>
                 </div>
                 <div className="text-center space-y-1">
-                  <div className="relative w-20 h-20 border-2 border-rose-500 rounded flex items-center justify-center">
-                    <span style={{ fontFamily: "serif" }} className="text-4xl leading-none">ょ</span>
+                  <div className="relative w-28 h-28 border-2 border-rose-500 rounded flex items-center justify-center">
+                    <span style={{ fontFamily: "serif" }} className="text-6xl leading-none">ょ</span>
                   </div>
                   <p className="text-xs text-rose-700 dark:text-rose-300">❌ Salah: gede menuhin kotak</p>
                 </div>
