@@ -248,7 +248,17 @@ function Landing() {
 
           {/* Kanan: testimoni vertical marquee */}
           <div id="testimoni" className="scroll-mt-20 flex flex-col">
-            <div className="relative h-[520px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
+            <h2 className="text-xl md:text-2xl font-display font-bold mb-1">
+              Kata murid Bunbun 💌
+            </h2>
+            <p className="text-muted-foreground mb-3 text-xs">
+              Lebih banyak testimoni di{" "}
+              <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
+                @bunbun_nihongo
+              </a>{" "}
+              ✨
+            </p>
+            <div className="relative flex-1 min-h-[420px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
               <div className="flex flex-col gap-3 p-3 animate-marquee-y hover:[animation-play-state:paused]">
                 {[...TESTIMONI, ...TESTIMONI].map((t, i) => (
                   <article
@@ -290,13 +300,6 @@ function Landing() {
                 ))}
               </div>
             </div>
-            <p className="text-center text-[11px] text-muted-foreground mt-2">
-              Lebih banyak testimoni di{" "}
-              <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
-                @bunbun_nihongo
-              </a>{" "}
-              ✨
-            </p>
           </div>
         </div>
       </section>
