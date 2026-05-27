@@ -308,7 +308,7 @@ function Landing() {
 
 
       {/* Sensei + CTA — 2x2 grid biar tinggi sejajar */}
-      <section id="sensei" className="px-6 py-6 md:py-8 bg-muted/20 scroll-mt-20 md:min-h-[calc(100vh-4rem)] md:flex md:items-start">
+      <section id="sensei" className="px-6 py-6 md:py-8 bg-muted/20 scroll-mt-20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 md:grid-rows-[auto_1fr] gap-3 items-stretch w-full">
 
           {/* Row 1, Kiri: heading sensei */}
