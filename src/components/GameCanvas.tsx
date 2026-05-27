@@ -339,6 +339,26 @@ export function GameCanvas({ level }: { level: LevelDef }) {
             </div>
           )}
         </div>
+
+        {/* Mobile joystick + jump button — siblings of canvas wrapper so they sit in the empty bottom band in fullscreen */}
+        {isMobile && !needsRotate && !quiz && !result && (
+          <MobileControls onPress={touch} />
+        )}
+
+        {/* Mobile landscape, not yet fullscreen — guide user to tap the ⛶ button */}
+        {isMobile && !isPortrait && !isFullscreen && (
+          <button
+            type="button"
+            onClick={() => containerRef.current?.requestFullscreen?.().catch(() => {})}
+            className="absolute inset-0 z-[55] flex flex-col items-center justify-center gap-3 bg-foreground/75 text-background backdrop-blur-sm"
+          >
+            <div className="text-6xl animate-pulse">⛶</div>
+            <p className="font-display font-bold text-xl">Ketuk untuk Layar Penuh</p>
+            <p className="text-xs opacity-90 max-w-xs text-center px-4">
+              Petualangan lebih seru di mode layar penuh. Ketuk di mana saja.
+            </p>
+          </button>
+        )}
       </div>
 
       {!isMobile && (
