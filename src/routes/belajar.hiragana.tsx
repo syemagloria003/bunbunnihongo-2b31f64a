@@ -202,11 +202,82 @@ function BelajarHiragana() {
         )}
 
         {/* Gojuon table */}
-        <section className="space-y-3">
+        <section className="space-y-4">
           <div>
             <h2 className="font-display text-2xl font-bold">🌸 Gojūon — 46 Huruf Dasar</h2>
-            <p className="text-sm text-muted-foreground">Dibaca per baris: a–i–u–e–o, lalu ka–ki–ku–ke–ko, dan seterusnya.</p>
           </div>
+
+          <div className="honey-card rounded-2xl p-4 text-sm space-y-3">
+            <p className="font-bold text-base">🛑 Tunggu Dulu: Huruf Jepang Itu Ditulis, Bukan Digambar!</p>
+            <p className="leading-relaxed">
+              Sebelum kamu geser ke section selanjutnya dan mulai praktek nulis, ada satu rahasia penting yang wajib kamu tahu biar tulisanmu nggak kelihatan kayak tulisan alien 👽.
+            </p>
+            <p className="leading-relaxed">
+              Pernah nggak kamu ngelihat huruf Jepang terus mikir, <i>"Ah gampang, tinggal tarik garis aja ngikutin bentuknya..."</i>
+            </p>
+            <p className="leading-relaxed">
+              Eits, jangan sampai terjebak! Di Jepang, ada aturan saklek yang namanya <b>Kakijun</b> (Urutan Coretan).
+            </p>
+
+            <div className="rounded-xl bg-amber-100/70 dark:bg-amber-950/30 p-3 space-y-2">
+              <p className="font-bold">Kenapa sih harus repot-repot ngikutin urutan?</p>
+              <p className="leading-relaxed">
+                Coba bayangin kamu pakai sepatu dulu, baru pakai kaus kaki. Bisa sih... tapi aneh, ribet, dan nggak nyaman kan?
+              </p>
+              <p className="leading-relaxed">
+                Sama kayak nulis huruf Jepang. Kalau urutannya ngasal:
+              </p>
+              <ul className="list-disc list-inside space-y-1 pl-1">
+                <li><b>Bentuknya jadi aneh:</b> Orang Jepang asli (dan gurumu!) pasti langsung tahu kalau huruf itu "digambar" ngasal, bukan ditulis. Proporsinya bakal meleyot-meleyot.</li>
+                <li><b>Tangan cepat pegal:</b> Urutan coretan itu diciptakan supaya tangan kita ngalir dengan mulus dari satu garis ke garis berikutnya.</li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+              <p className="font-bold">Aturan Mainnya Gampang Banget!</p>
+              <p className="leading-relaxed">
+                Nggak perlu pusing, prinsip dasar nulis huruf Jepang itu cuma dua arah ini:
+              </p>
+              <div className="flex flex-col gap-1 pl-1">
+                <p>➡️ <b>Selalu mulai dari Kiri ke Kanan</b></p>
+                <p>⬇️ <b>Selalu mulai dari Atas ke Bawah</b></p>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                (Kalau ada garis yang menyilang, biasanya garis horizontal/mendatar yang digambar duluan, baru ditimpa garis vertikal/menurun).
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-emerald-100/70 dark:bg-emerald-950/30 p-3 space-y-2">
+              <p className="font-bold">🎯 Misi Kamu:</p>
+              <p className="leading-relaxed">
+                Di kartu-kartu huruf selanjutnya, kamu bakal lihat petunjuk angka atau panah <b>(1, 2, 3...)</b>. Tolong jangan di-skip ya! Ikutin urutannya di awang-awang pakai jarimu dulu, atau coret-coret di kertas kotak mandarin sebelum kamu jawab kuisnya.
+              </p>
+              <p className="leading-relaxed">
+                Kalau urutannya udah benar dari awal, dijamin tulisan tanganmu otomatis rapi dan estetik ala native speaker!
+              </p>
+              <p className="font-bold">Gimana, udah siap nulis dengan elegan? Yuk, gas scroll ke section pertama! 🚀</p>
+            </div>
+
+            <div className="rounded-xl bg-pink-100/70 dark:bg-pink-950/30 p-3 space-y-1">
+              <p className="font-bold">💡 Fun Fact:</p>
+              <p className="leading-relaxed text-xs">
+                Zaman dulu, huruf Hiragana diciptakan untuk nulis cepat layaknya tulisan latin bersambung. Makanya, kalau urutan coretanmu benar, tanganmu otomatis bakal ngalir dari satu garis ke garis berikutnya tanpa macet!
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-sky-100/70 dark:bg-sky-950/30 p-3 space-y-2">
+              <p className="font-bold">🤔 Kira-kira materi setelah pengenalan urutan nulis ini, kamu mau langsung kasih kuis tebak bentuk huruf satuan, atau merangkai huruf jadi kata sederhana (misal: A-I = Cinta)?</p>
+              <div className="flex gap-2">
+                <Link to="/play" className="inline-flex items-center px-4 py-2 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:brightness-110">
+                  🎮 Langsung main
+                </Link>
+                <span className="inline-flex items-center px-4 py-2 rounded-xl border-2 border-border text-sm text-muted-foreground opacity-60">
+                  📝 Kuis kata (segera hadir)
+                </span>
+              </div>
+            </div>
+          </div>
+
           <GojuonGrid onPick={open} active={active} />
         </section>
 
