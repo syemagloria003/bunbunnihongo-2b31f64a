@@ -112,23 +112,29 @@ function Landing() {
       <Header loggedIn={loggedIn} />
 
       {/* Hero */}
-      <section className="px-6 py-12 md:py-20 bg-gradient-to-b from-primary/10 via-background to-background">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+      <section className="px-6 py-6 md:py-8 bg-gradient-to-b from-primary/10 via-background to-background">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-[1.45fr_1fr] gap-8 items-center">
           <div>
-            <span className="inline-block bg-primary/15 text-primary text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-wider uppercase">
-              はじめまして! Yoroshiku 🌸
-            </span>
-            <h1 className="text-4xl md:text-5xl font-display font-extrabold leading-tight mb-3">
-              Bunbun Nihongo
-            </h1>
-            <p className="text-xl md:text-2xl font-display font-bold text-primary mb-4">
-              Kursus Online Bahasa Jepang
-            </p>
-            <p className="text-base md:text-lg text-foreground/80 mb-5">
+            <div className="flex items-center gap-3 md:gap-4 mb-3">
+              <img
+                src={logo}
+                alt="Logo Bunbun Nihongo"
+                className="w-14 h-14 md:w-16 md:h-16 rounded-2xl shadow-md shrink-0"
+              />
+              <div className="min-w-0">
+                <h1 className="text-2xl md:text-4xl font-display font-extrabold leading-tight">
+                  Bunbun Nihongo
+                </h1>
+                <p className="text-sm md:text-lg font-display font-bold text-primary leading-tight">
+                  Kursus Online Bahasa Jepang
+                </p>
+              </div>
+            </div>
+            <p className="text-sm md:text-base text-foreground/80 mb-3">
               Yuk wujudkan mimpimu fasih Bahasa Jepang bareng Bunbun! Ini yang bikin
               belajar di sini beda 👇
             </p>
-            <ul className="space-y-2 mb-6 text-sm md:text-base">
+            <ul className="space-y-1.5 mb-4 text-sm md:text-[15px]">
               {[
                 <><strong>Sensei terjamin</strong> — minimal lulusan JLPT N2</>,
                 <><strong>Kurikulum standar internasional</strong> sesuai level JLPT (N5 → N3)</>,
@@ -149,30 +155,53 @@ function Landing() {
               <a
                 href={WA_LINK}
                 target="_blank" rel="noopener noreferrer"
-                className="px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold text-lg shadow-lg hover:brightness-105 transition"
+                className="px-5 py-2.5 rounded-2xl bg-primary text-primary-foreground font-bold text-base shadow-lg hover:brightness-105 transition"
               >
                 💬 Chat Admin
               </a>
               <a
                 href="#kelas"
-                className="px-6 py-3 rounded-2xl border-2 border-primary bg-background font-bold text-lg hover:bg-primary/10 transition"
+                className="px-5 py-2.5 rounded-2xl border-2 border-primary bg-background font-bold text-base hover:bg-primary/10 transition"
               >
                 📚 Lihat Kelas
               </a>
             </div>
-            <p className="text-xs text-muted-foreground mt-4">
-              Sudah jadi murid Bunbun? <Link to="/login" className="text-primary font-semibold underline">Login di sini</Link> untuk akses game sebagai latihan tambahan setelah kelas.
+            <p className="text-xs text-muted-foreground mt-3">
+              Sudah jadi murid Bunbun? <Link to="/login" className="text-primary font-semibold underline">Login di sini</Link> untuk akses game latihan setelah kelas.
             </p>
           </div>
-          <div className="relative">
-            <img
-              src={logo}
-              alt="Logo Bunbun Nihongo"
-              className="float-bee mx-auto w-56 md:w-72 h-auto rounded-3xl shadow-2xl"
-            />
+
+          {/* Vertical marquee — suasana kelas */}
+          <div className="hidden md:block">
+            <div className="text-center mb-2">
+              <span className="inline-block bg-primary/15 text-primary text-[10px] font-bold px-3 py-1 rounded-full tracking-wider uppercase">
+                📸 Suasana Kelas
+              </span>
+            </div>
+            <div className="relative h-[520px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card shadow-xl [mask-image:linear-gradient(to_bottom,transparent,black_6%,black_94%,transparent)]">
+              <div className="flex flex-col gap-3 p-3 animate-marquee-y">
+                {[...gallery, ...gallery].map((g, i) => (
+                  <figure
+                    key={`hero-${g.src}-${i}`}
+                    className="relative shrink-0 w-full h-44 rounded-2xl overflow-hidden bg-muted"
+                  >
+                    <img
+                      src={g.src}
+                      alt={g.label}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                    <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white text-[11px] font-semibold px-2.5 py-1.5">
+                      {g.label}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
 
 
       {/* Meet the Sensei — poster */}
@@ -333,37 +362,8 @@ function Landing() {
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="px-6 py-14">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-center mb-2">
-            Suasana kelas 📸
-          </h2>
-          <p className="text-center text-muted-foreground mb-8 text-sm">
-            Cuplikan dari batch-batch sebelumnya
-          </p>
-          <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
-            <div className="flex gap-4 animate-marquee w-max">
-              {[...gallery, ...gallery].map((g, i) => (
-                <figure
-                  key={`${g.src}-${i}`}
-                  className="relative shrink-0 w-64 md:w-80 h-48 md:h-56 rounded-2xl border-2 border-border bg-card shadow-sm overflow-hidden flex items-center justify-center"
-                >
-                  <img
-                    src={g.src}
-                    alt={g.label}
-                    loading="lazy"
-                    className="max-w-full max-h-full object-contain"
-                  />
-                  <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white text-xs font-semibold px-3 py-2">
-                    {g.label}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+
+
 
       {/* CTA */}
       <section className="px-6 py-14">

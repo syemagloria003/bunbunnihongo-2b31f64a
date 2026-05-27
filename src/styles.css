@@ -141,3 +141,12 @@
   animation: marquee 40s linear infinite;
 }
 .animate-marquee:hover { animation-play-state: paused; }
+
+@keyframes marquee-y {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+.animate-marquee-y {
+  animation: marquee-y 30s linear infinite;
+}
+.animate-marquee-y:hover { animation-play-state: paused; }
