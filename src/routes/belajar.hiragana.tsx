@@ -16,8 +16,9 @@ export const Route = createFileRoute("/belajar/hiragana")({
 
 /** Speak a kana slowly in Japanese for learning. */
 function speakKana(text: string) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-    window.alert("Browser kamu belum mendukung suara. Coba pakai Chrome/Edge ya.");
+  if (typeof window === "undefined") return;
+  if (!("speechSynthesis" in window)) {
+    alert("Browser kamu belum mendukung suara. Coba pakai Chrome/Edge ya.");
     return;
   }
   window.speechSynthesis.cancel();
