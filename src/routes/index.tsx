@@ -195,7 +195,7 @@ function Landing() {
 
       {/* Kelas Dibuka + Testimoni — 2x3 grid biar batas atas/bawah sejajar */}
       <section id="kelas" className="px-6 py-6 md:py-8 bg-muted/30 scroll-mt-20 md:min-h-[calc(100vh-4rem)] md:flex md:items-center">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 md:grid-rows-[auto_auto_1fr] gap-x-6 w-full">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 md:grid-rows-[auto_auto_auto] gap-x-6 w-full">
           {/* Row 1: headings */}
           <h2 className="text-xl md:text-2xl font-display font-bold mb-1">
             Kelas yang dibuka 📣
