@@ -202,7 +202,7 @@ function Landing() {
               Kelas yang dibuka 📣
             </h2>
             <p className="text-muted-foreground mb-3 text-xs">
-              Saat ini tersedia 2 kelas reguler.
+              Saat ini tersedia 2 kelas reguler. <span className="italic">*Kelas private belum tersedia.</span>
             </p>
             <div className="flex flex-col gap-3 flex-1">
               <PosterCard
@@ -248,13 +248,7 @@ function Landing() {
 
           {/* Kanan: testimoni vertical marquee */}
           <div id="testimoni" className="scroll-mt-20 flex flex-col">
-            <h2 className="text-xl md:text-2xl font-display font-bold mb-1">
-              Kata murid Bunbun 💌
-            </h2>
-            <p className="text-muted-foreground mb-3 text-xs">
-              Cerita jujur dari murid batch sebelumnya.
-            </p>
-            <div className="relative flex-1 min-h-[420px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
+            <div className="relative h-[520px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
               <div className="flex flex-col gap-3 p-3 animate-marquee-y hover:[animation-play-state:paused]">
                 {[...TESTIMONI, ...TESTIMONI].map((t, i) => (
                   <article
@@ -382,6 +376,9 @@ function Landing() {
                 <Link to="/login" className="text-[oklch(0.85_0.17_90)] font-semibold underline">Login</Link>{" "}
                 untuk akses game latihan.
               </p>
+              <p className="text-xs text-[oklch(0.98_0.02_70)]/60 mt-3 pt-3 border-t border-white/15">
+                © 2026 Bunbun Nihongo — Kursus Online Bahasa Jepang.
+              </p>
             </div>
           </div>
 
@@ -393,7 +390,6 @@ function Landing() {
 
 
 
-      <Footer />
     </div>
   );
 }
@@ -492,13 +488,5 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
         )}
       </nav>
     </header>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="px-6 py-8 text-center text-xs text-muted-foreground border-t border-border/50">
-      <p>© 2026 Bunbun Nihongo — Kursus Online Bahasa Jepang.</p>
-    </footer>
   );
 }
