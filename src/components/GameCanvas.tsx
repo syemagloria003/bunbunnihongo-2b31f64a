@@ -208,9 +208,9 @@ export function GameCanvas({ level }: { level: LevelDef }) {
           style={isFullscreen ? { aspectRatio: `${W}/${H}`, maxWidth: "100%", maxHeight: "100%" } : undefined}
         >
           <canvas ref={canvasRef} width={W} height={H} className="block w-full h-full" />
-          {/* Mobile gesture layer — drag to move, tap to jump */}
+          {/* Mobile on-screen joystick + jump button */}
           {isMobile && !needsRotate && !quiz && !result && (
-            <GestureLayer onPress={touch} />
+            <MobileControls onPress={touch} />
           )}
           {quiz && <KanaGateModal word={quiz.word} options={quiz.options} onAnswer={answer} mode={level.mode} />}
           {result && (
@@ -305,6 +305,33 @@ export function GameCanvas({ level }: { level: LevelDef }) {
               </p>
             </div>
           )}
+
+          {/* Help modal — inside container so it shows in fullscreen too */}
+          {showHelp && (
+            <div
+              className="absolute inset-0 z-[60] flex items-center justify-center bg-foreground/60 backdrop-blur-sm p-3"
+              onClick={() => setShowHelp(false)}
+            >
+              <div
+                className="honey-card rounded-2xl p-3 max-w-[280px] w-full text-[11px]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h3 className="font-display font-bold text-sm mb-2 text-center">🎮 Cara Main</h3>
+                <ul className="space-y-1 mb-2 leading-snug">
+                  <li><span className="font-bold">Stik bulat (kiri bawah)</span> — tarik ke kiri/kanan untuk berjalan.</li>
+                  <li><span className="font-bold">Tombol merah (kanan bawah)</span> — tekan untuk lompat. Tekan 2× di udara = <em>double flap</em>.</li>
+                  <li>Lompati / injak 🕷️ dari atas. Jangan kena samping!</li>
+                  <li>🍯 = skor. Pintu <strong>?</strong> = jawab benar untuk lewat.</li>
+                </ul>
+                <button
+                  onClick={() => setShowHelp(false)}
+                  className="w-full py-1.5 rounded-lg bg-primary text-primary-foreground font-bold text-xs"
+                >
+                  Mengerti!
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -313,39 +340,8 @@ export function GameCanvas({ level }: { level: LevelDef }) {
       )}
       {isMobile && !needsRotate && !isFullscreen && (
         <p className="text-xs text-muted-foreground px-3 text-center">
-          Geser jari ← → untuk berjalan · Ketuk untuk lompat (ketuk 2x untuk flap)
+          Pakai stik bulat untuk jalan · Tombol merah untuk lompat
         </p>
-      )}
-
-      {showHelp && (
-        <div
-          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-foreground/50 backdrop-blur-sm p-3"
-          onClick={() => setShowHelp(false)}
-        >
-          <div
-            className="honey-card rounded-2xl p-5 max-w-sm w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="font-display font-bold text-xl mb-3 text-center">🎮 Cara Main</h3>
-            <ul className="text-sm space-y-2 mb-4">
-              <li>
-                <span className="font-bold">Geser ← →</span> — Tahan & tarik jari ke kiri/kanan di mana saja di layar untuk berjalan.
-              </li>
-              <li>
-                <span className="font-bold">Ketuk</span> — Sentuh layar singkat untuk melompat. Ketuk <em>dua kali</em> saat di udara untuk <em>double flap</em>.
-              </li>
-              <li>Lompati / injak musuh dari atas 🕷️. Jangan kena dari samping!</li>
-              <li>Kumpulkan tetes madu 🍯 untuk skor.</li>
-              <li>Pintu <strong>?</strong> = jawab kana/kanji yang benar untuk lewat. Salah = ❤️ berkurang.</li>
-            </ul>
-            <button
-              onClick={() => setShowHelp(false)}
-              className="w-full py-2.5 rounded-xl bg-primary text-primary-foreground font-bold"
-            >
-              Mengerti!
-            </button>
-          </div>
-        </div>
       )}
     </div>
   );
@@ -388,58 +384,72 @@ function HUD({
   );
 }
 
-type PointerState = { x0: number; t0: number; key: "ArrowLeft" | "ArrowRight" | null; moved: boolean };
+function MobileControls({ onPress }: { onPress: (key: string, down: boolean) => void }) {
+  const baseRef = useRef<HTMLDivElement>(null);
+  const [knob, setKnob] = useState({ x: 0, y: 0 });
+  const activePtr = useRef<number | null>(null);
+  const currentDir = useRef<"ArrowLeft" | "ArrowRight" | null>(null);
+  const RADIUS = 48;
+  const DEAD = 14;
 
-function GestureLayer({ onPress }: { onPress: (key: string, down: boolean) => void }) {
-  const ptrs = useRef(new Map<number, PointerState>());
-  const holds = useRef({ ArrowLeft: 0, ArrowRight: 0 });
-
-  const setDir = (k: "ArrowLeft" | "ArrowRight", down: boolean) => {
-    const prev = holds.current[k];
-    const nextVal = down ? prev + 1 : Math.max(0, prev - 1);
-    holds.current[k] = nextVal;
-    if (prev === 0 && nextVal > 0) onPress(k, true);
-    if (prev > 0 && nextVal === 0) onPress(k, false);
+  const setDir = (k: "ArrowLeft" | "ArrowRight" | null) => {
+    if (currentDir.current === k) return;
+    if (currentDir.current) onPress(currentDir.current, false);
+    if (k) onPress(k, true);
+    currentDir.current = k;
   };
 
-  const THRESHOLD = 18;
+  const reset = () => {
+    setDir(null);
+    setKnob({ x: 0, y: 0 });
+    activePtr.current = null;
+  };
 
   return (
-    <div
-      className="absolute inset-0 z-30 touch-none select-none"
-      onPointerDown={(e) => {
-        e.preventDefault();
-        ptrs.current.set(e.pointerId, { x0: e.clientX, t0: Date.now(), key: null, moved: false });
-        (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
-      }}
-      onPointerMove={(e) => {
-        const p = ptrs.current.get(e.pointerId);
-        if (!p) return;
-        const dx = e.clientX - p.x0;
-        if (Math.abs(dx) > 8) p.moved = true;
-        let k: "ArrowLeft" | "ArrowRight" | null = null;
-        if (dx > THRESHOLD) k = "ArrowRight";
-        else if (dx < -THRESHOLD) k = "ArrowLeft";
-        if (k !== p.key) {
-          if (p.key) setDir(p.key, false);
-          if (k) setDir(k, true);
-          p.key = k;
-        }
-      }}
-      onPointerUp={(e) => {
-        const p = ptrs.current.get(e.pointerId);
-        if (!p) return;
-        if (p.key) setDir(p.key, false);
-        const dur = Date.now() - p.t0;
-        if (!p.moved && dur < 280) onPress("jump", true);
-        ptrs.current.delete(e.pointerId);
-      }}
-      onPointerCancel={(e) => {
-        const p = ptrs.current.get(e.pointerId);
-        if (p?.key) setDir(p.key, false);
-        ptrs.current.delete(e.pointerId);
-      }}
-    />
+    <>
+      {/* Joystick base — bottom-left */}
+      <div
+        ref={baseRef}
+        className="absolute z-30 bottom-4 left-4 w-28 h-28 rounded-full bg-foreground/30 border-2 border-background/40 backdrop-blur-sm touch-none select-none"
+        onPointerDown={(e) => {
+          e.preventDefault();
+          if (activePtr.current !== null) return;
+          activePtr.current = e.pointerId;
+          (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+        }}
+        onPointerMove={(e) => {
+          if (activePtr.current !== e.pointerId) return;
+          const rect = baseRef.current!.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          let dx = e.clientX - cx;
+          let dy = e.clientY - cy;
+          const dist = Math.hypot(dx, dy);
+          if (dist > RADIUS) { dx = (dx / dist) * RADIUS; dy = (dy / dist) * RADIUS; }
+          setKnob({ x: dx, y: dy });
+          if (dx > DEAD) setDir("ArrowRight");
+          else if (dx < -DEAD) setDir("ArrowLeft");
+          else setDir(null);
+        }}
+        onPointerUp={(e) => { if (activePtr.current === e.pointerId) reset(); }}
+        onPointerCancel={(e) => { if (activePtr.current === e.pointerId) reset(); }}
+      >
+        <div
+          className="absolute top-1/2 left-1/2 w-14 h-14 rounded-full bg-background/90 border-2 border-primary shadow-lg pointer-events-none"
+          style={{ transform: `translate(calc(-50% + ${knob.x}px), calc(-50% + ${knob.y}px))` }}
+        />
+      </div>
+
+      {/* Jump button — bottom-right */}
+      <button
+        type="button"
+        aria-label="Lompat"
+        className="absolute z-30 bottom-6 right-6 w-20 h-20 rounded-full bg-red-500 border-4 border-red-700 text-background font-display font-bold text-2xl shadow-xl active:scale-95 active:bg-red-600 touch-none select-none"
+        onPointerDown={(e) => { e.preventDefault(); onPress("jump", true); }}
+      >
+        ⤴
+      </button>
+    </>
   );
 }
 
