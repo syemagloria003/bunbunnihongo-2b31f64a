@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -11,6 +12,12 @@ import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 import appCss from "../styles.css?url";
+
+const GAME_ROUTE_PREFIXES = ["/play", "/belajar", "/leaderboard", "/admin"];
+function isGameRoute(pathname: string): boolean {
+  return GAME_ROUTE_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + "/"));
+}
+
 
 
 function NotFoundComponent() {
@@ -93,8 +100,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap",
       },
+
     ],
   }),
   shellComponent: RootShell,
@@ -119,6 +127,14 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const game = isGameRoute(pathname);
+    document.body.classList.toggle("game-theme", game);
+    return () => { document.body.classList.remove("game-theme"); };
+  }, [pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -127,6 +143,7 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
 
 function AuthListener() {
   const router = useRouter();

@@ -7,6 +7,8 @@
 @theme inline {
   --font-display: "Fredoka", "Baloo 2", system-ui, sans-serif;
   --font-sans: "Nunito", system-ui, sans-serif;
+  --font-game-display: "Space Grotesk", "Sora", system-ui, sans-serif;
+  --font-game-sans: "DM Sans", "Inter", system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -38,7 +40,11 @@
   --color-leaf-dark: var(--leaf-dark);
   --color-sky: var(--sky);
   --color-petal: var(--petal);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-magenta: var(--neon-magenta);
+  --color-neon-gold: var(--neon-gold);
 }
+
 
 :root {
   --radius: 1rem;
@@ -69,7 +75,13 @@
   --leaf-dark: oklch(0.52 0.20 38);                 /* deep orange */
   --sky: oklch(0.92 0.04 70);                       /* warm cream-sky */
   --petal: oklch(0.58 0.22 28);                     /* red accent */
+
+  /* Neon tokens (used by .game-theme) */
+  --neon-cyan: oklch(0.85 0.18 200);
+  --neon-magenta: oklch(0.72 0.30 340);
+  --neon-gold: oklch(0.88 0.18 90);
 }
+
 
 .dark {
   --background: oklch(0.22 0.04 45);
@@ -157,4 +169,145 @@
 }
 .animate-fire-glow {
   animation: fire-glow 1.2s ease-in-out infinite;
+}
+
+/* ============================================================
+   GAME THEME — applied to <body class="game-theme"> on game routes
+   Deep galaxy + neon honey palette, ala game UI 2026.
+   ============================================================ */
+.game-theme {
+  --background: oklch(0.16 0.05 285);                /* deep midnight purple */
+  --foreground: oklch(0.97 0.02 280);
+  --card: oklch(0.22 0.06 285);                      /* slate plum */
+  --card-foreground: oklch(0.97 0.02 280);
+  --popover: oklch(0.22 0.06 285);
+  --popover-foreground: oklch(0.97 0.02 280);
+  --primary: oklch(0.85 0.18 200);                   /* electric cyan */
+  --primary-foreground: oklch(0.14 0.05 285);
+  --secondary: oklch(0.88 0.18 90);                  /* neon honey */
+  --secondary-foreground: oklch(0.14 0.05 285);
+  --muted: oklch(0.28 0.05 285);
+  --muted-foreground: oklch(0.78 0.04 280);
+  --accent: oklch(0.72 0.30 340);                    /* magenta */
+  --accent-foreground: oklch(0.99 0.01 280);
+  --destructive: oklch(0.66 0.25 25);
+  --destructive-foreground: oklch(0.99 0.01 80);
+  --border: oklch(0.38 0.08 285);
+  --input: oklch(0.32 0.06 285);
+  --ring: oklch(0.85 0.18 200);
+
+  --honey: oklch(0.88 0.18 90);
+  --honey-dark: oklch(0.70 0.18 75);
+
+  font-family: var(--font-game-sans);
+}
+
+body.game-theme {
+  background-color: oklch(0.12 0.05 285);
+  background-image:
+    radial-gradient(ellipse 70% 50% at 15% 0%, color-mix(in oklab, var(--accent) 38%, transparent), transparent 60%),
+    radial-gradient(ellipse 60% 55% at 95% 20%, color-mix(in oklab, var(--primary) 32%, transparent), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 110%, color-mix(in oklab, var(--secondary) 24%, transparent), transparent 65%),
+    radial-gradient(1.5px 1.5px at 12% 22%, rgba(255,255,255,0.85), transparent 60%),
+    radial-gradient(1px 1px at 28% 78%, rgba(255,255,255,0.7), transparent 60%),
+    radial-gradient(1.5px 1.5px at 62% 12%, rgba(255,255,255,0.85), transparent 60%),
+    radial-gradient(1px 1px at 82% 64%, rgba(255,255,255,0.7), transparent 60%),
+    radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.6), transparent 60%),
+    radial-gradient(1.5px 1.5px at 92% 88%, rgba(255,255,255,0.8), transparent 60%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.game-theme h1,
+.game-theme h2,
+.game-theme h3,
+.game-theme h4 {
+  font-family: var(--font-game-display);
+  letter-spacing: -0.02em;
+}
+
+/* Override honey-card inside game theme to be glassy + neon-edged */
+.game-theme .honey-card {
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--accent) 8%, var(--card)) 0%,
+      color-mix(in oklab, var(--primary) 4%, var(--card)) 100%);
+  border: 1px solid color-mix(in oklab, var(--primary) 35%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 12%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--primary) 18%, transparent),
+    0 18px 50px -18px color-mix(in oklab, var(--accent) 60%, transparent),
+    0 0 30px -12px color-mix(in oklab, var(--primary) 70%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.game-theme .hex-bg {
+  background-color: var(--card);
+  background-image:
+    radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--primary) 28%, transparent) 0 30%, transparent 31%);
+}
+
+/* Frosted glass panel utility — for headers, leaderboards, status cards */
+.game-panel {
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, white 6%, transparent),
+      color-mix(in oklab, white 2%, transparent)),
+    color-mix(in oklab, var(--card) 70%, transparent);
+  border: 1px solid color-mix(in oklab, var(--primary) 25%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 10%, transparent),
+    0 10px 40px -10px color-mix(in oklab, var(--accent) 35%, transparent);
+  backdrop-filter: blur(10px) saturate(140%);
+}
+
+/* Neon button */
+.btn-neon {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: var(--primary-foreground);
+  border: 1px solid color-mix(in oklab, white 25%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 35%, transparent),
+    0 6px 20px -6px color-mix(in oklab, var(--accent) 80%, transparent),
+    0 0 24px -8px color-mix(in oklab, var(--primary) 80%, transparent);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+.btn-neon:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 45%, transparent),
+    0 10px 30px -8px color-mix(in oklab, var(--accent) 90%, transparent),
+    0 0 36px -8px color-mix(in oklab, var(--primary) 95%, transparent);
+}
+
+/* Aurora sweep animation for hero areas */
+@keyframes aurora-sweep {
+  0%, 100% { transform: translate3d(-10%, -5%, 0) rotate(0deg); }
+  50% { transform: translate3d(10%, 5%, 0) rotate(8deg); }
+}
+.animate-aurora {
+  animation: aurora-sweep 12s ease-in-out infinite;
+}
+
+@keyframes neon-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 55%, transparent), 0 0 18px -4px color-mix(in oklab, var(--accent) 65%, transparent); }
+  50% { box-shadow: 0 0 0 6px color-mix(in oklab, var(--primary) 0%, transparent), 0 0 28px -2px color-mix(in oklab, var(--accent) 85%, transparent); }
+}
+.animate-neon-pulse {
+  animation: neon-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes shimmer-bar {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-bar {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, white 35%, transparent) 50%,
+    transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer-bar 2.2s linear infinite;
 }
