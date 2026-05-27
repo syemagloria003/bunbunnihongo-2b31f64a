@@ -248,7 +248,17 @@ function Landing() {
 
           {/* Kanan: testimoni vertical marquee */}
           <div id="testimoni" className="scroll-mt-20 flex flex-col">
-            <div className="relative h-[520px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
+            <h2 className="text-xl md:text-2xl font-display font-bold mb-1">
+              Kata murid Bunbun 💌
+            </h2>
+            <p className="text-muted-foreground mb-3 text-xs">
+              Lebih banyak testimoni di{" "}
+              <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
+                @bunbun_nihongo
+              </a>{" "}
+              ✨
+            </p>
+            <div className="relative flex-1 min-h-[420px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
               <div className="flex flex-col gap-3 p-3 animate-marquee-y hover:[animation-play-state:paused]">
                 {[...TESTIMONI, ...TESTIMONI].map((t, i) => (
                   <article
@@ -290,96 +300,88 @@ function Landing() {
                 ))}
               </div>
             </div>
-            <p className="text-center text-[11px] text-muted-foreground mt-2">
-              Lebih banyak testimoni di{" "}
-              <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
-                @bunbun_nihongo
-              </a>{" "}
-              ✨
-            </p>
           </div>
         </div>
       </section>
 
-      {/* Sensei + CTA — side by side, fit 1 layar */}
+      {/* Sensei + CTA — 2x2 grid biar tinggi sejajar */}
       <section id="sensei" className="px-6 py-6 md:py-8 bg-muted/20 scroll-mt-20 md:min-h-[calc(100vh-4rem)] md:flex md:items-center">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 items-start w-full">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 md:grid-rows-[auto_1fr] gap-3 items-stretch w-full">
 
-          {/* Kiri: heading + foto sensei */}
-          <div className="flex flex-col gap-3">
-            <div>
-              <span className="inline-block bg-accent/15 text-accent text-[10px] font-bold px-2.5 py-1 rounded-full mb-1.5 tracking-wider uppercase">
-                Meet the Sensei
-              </span>
-              <h2 className="text-xl md:text-2xl font-display font-bold mb-1">
-                Diajar langsung oleh founder kami 🎓
-              </h2>
-              <p className="text-muted-foreground text-xs md:text-sm">
-                <strong>Syema Sensei</strong>, lulusan terbaik UNESA & bersertifikat <strong>JLPT N2</strong> — sabar, detail, paham banget cara ngajar dari nol sampai mahir.
-              </p>
-            </div>
-            <div className="rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg bg-card flex items-center justify-center">
-              <img
-                src={posterSensei}
-                alt="Profil Syema Sensei — Founder Bunbun Nihongo"
-                loading="lazy"
-                className="w-full h-auto max-h-[440px] object-contain block"
-              />
-            </div>
+          {/* Row 1, Kiri: heading sensei */}
+          <div>
+            <span className="inline-block bg-accent/15 text-accent text-[10px] font-bold px-2.5 py-1 rounded-full mb-1.5 tracking-wider uppercase">
+              Meet the Sensei
+            </span>
+            <h2 className="text-xl md:text-2xl font-display font-bold mb-1">
+              Diajar langsung oleh founder kami 🎓
+            </h2>
+            <p className="text-muted-foreground text-xs md:text-sm">
+              <strong>Syema Sensei</strong>, lulusan terbaik UNESA & bersertifikat <strong>JLPT N2</strong> — sabar, detail, paham banget cara ngajar dari nol sampai mahir.
+            </p>
           </div>
 
-          {/* Kanan: tim card (sejajar heading) + CTA card (sejajar foto sensei) */}
-          <div className="flex flex-col gap-3">
-            <div className="rounded-2xl border-2 border-dashed border-primary/30 bg-card/60 p-3.5">
-              <h3 className="text-sm md:text-base font-display font-bold mb-0.5 flex items-center gap-2">
-                <span>🐝</span> Didukung tim pengajar Bunbun
-              </h3>
-              <p className="text-muted-foreground text-xs">
-                Selain Syema Sensei, Bunbun juga punya <strong>tim pengajar bersertifikat JLPT N2 / N1</strong> yang sudah melalui <strong>seleksi & pelatihan metode Bunbun</strong>. Kelasmu tetap terjamin kualitasnya 💛
-              </p>
-            </div>
+          {/* Row 1, Kanan: tim card */}
+          <div className="rounded-2xl border-2 border-dashed border-primary/30 bg-card/60 p-3.5">
+            <h3 className="text-sm md:text-base font-display font-bold mb-0.5 flex items-center gap-2">
+              <span>🐝</span> Didukung tim pengajar Bunbun
+            </h3>
+            <p className="text-muted-foreground text-xs">
+              Selain Syema Sensei, Bunbun juga punya <strong>tim pengajar bersertifikat JLPT N2 / N1</strong> yang sudah melalui <strong>seleksi & pelatihan metode Bunbun</strong>. Kelasmu tetap terjamin kualitasnya 💛
+            </p>
+          </div>
 
-            <div className="rounded-3xl p-5 md:p-6 text-center flex flex-col bg-[oklch(0.22_0.05_45)] text-[oklch(0.98_0.02_70)] border-2 border-[oklch(0.68_0.20_45)] shadow-xl flex-1">
-              <h2 className="text-lg md:text-xl font-display font-bold mb-1.5 text-[oklch(0.92_0.12_85)]">
-                Siap mulai perjalanan Bahasa Jepangmu? 🚀
-              </h2>
-              <p className="text-[oklch(0.98_0.02_70)]/80 text-xs md:text-sm mb-3">
-                Chat admin sekarang untuk konsultasi gratis & daftar kelas.
+          {/* Row 2, Kiri: foto sensei */}
+          <div className="rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg bg-card flex items-center justify-center">
+            <img
+              src={posterSensei}
+              alt="Profil Syema Sensei — Founder Bunbun Nihongo"
+              loading="lazy"
+              className="w-full h-full max-h-[440px] object-contain block"
+            />
+          </div>
+
+          {/* Row 2, Kanan: CTA card — tinggi mengikuti foto sensei */}
+          <div className="rounded-3xl p-5 md:p-6 text-center flex flex-col bg-[oklch(0.22_0.05_45)] text-[oklch(0.98_0.02_70)] border-2 border-[oklch(0.68_0.20_45)] shadow-xl">
+            <h2 className="text-lg md:text-xl font-display font-bold mb-1.5 text-[oklch(0.92_0.12_85)]">
+              Siap mulai perjalanan Bahasa Jepangmu? 🚀
+            </h2>
+            <p className="text-[oklch(0.98_0.02_70)]/80 text-xs md:text-sm mb-3">
+              Chat admin sekarang untuk konsultasi gratis & daftar kelas.
+            </p>
+            <a
+              href={WA_LINK}
+              target="_blank" rel="noopener noreferrer"
+              className="inline-block px-5 py-2.5 rounded-2xl bg-green-500 text-white font-bold text-sm md:text-base shadow-lg hover:bg-green-400 transition"
+            >
+              💬 Tanya & Daftar via WhatsApp
+            </a>
+            <div className="mt-4 pt-3 border-t border-white/15 text-left text-xs md:text-sm space-y-1.5">
+              <p className="font-semibold text-center mb-2 text-[oklch(0.92_0.12_85)]">Kepoin Bunbun Nihongo juga di:</p>
+              <p className="flex items-center gap-2 flex-wrap">
+                <span>📷</span>
+                <span className="font-semibold">Instagram:</span>
+                <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-[oklch(0.85_0.17_90)] hover:underline">@bunbun_nihongo</a>
               </p>
-              <a
-                href={WA_LINK}
-                target="_blank" rel="noopener noreferrer"
-                className="inline-block px-5 py-2.5 rounded-2xl bg-green-500 text-white font-bold text-sm md:text-base shadow-lg hover:bg-green-400 transition"
-              >
-                💬 Tanya & Daftar via WhatsApp
-              </a>
-              <div className="mt-4 pt-3 border-t border-white/15 text-left text-xs md:text-sm space-y-1.5">
-                <p className="font-semibold text-center mb-2 text-[oklch(0.92_0.12_85)]">Kepoin Bunbun Nihongo juga di:</p>
-                <p className="flex items-center gap-2 flex-wrap">
-                  <span>📷</span>
-                  <span className="font-semibold">Instagram:</span>
-                  <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-[oklch(0.85_0.17_90)] hover:underline">@bunbun_nihongo</a>
-                </p>
-                <p className="flex items-center gap-2 flex-wrap">
-                  <span>🌐</span>
-                  <span className="font-semibold">Website:</span>
-                  <a href="https://www.bunbunnihongo.my.id" target="_blank" rel="noopener noreferrer" className="text-[oklch(0.85_0.17_90)] hover:underline break-all">www.bunbunnihongo.my.id</a>
-                </p>
-                <p className="flex items-center gap-2 flex-wrap">
-                  <span>📱</span>
-                  <span className="font-semibold">WhatsApp:</span>
-                  <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="text-[oklch(0.85_0.17_90)] hover:underline">+62 895-3286-71000</a>
-                </p>
-              </div>
-              <p className="text-[11px] text-[oklch(0.98_0.02_70)]/60 mt-auto pt-3">
-                Sudah jadi murid Bunbun?{" "}
-                <Link to="/login" className="text-[oklch(0.85_0.17_90)] font-semibold underline">Login</Link>{" "}
-                untuk akses game latihan.
+              <p className="flex items-center gap-2 flex-wrap">
+                <span>🌐</span>
+                <span className="font-semibold">Website:</span>
+                <a href="https://www.bunbunnihongo.my.id" target="_blank" rel="noopener noreferrer" className="text-[oklch(0.85_0.17_90)] hover:underline break-all">www.bunbunnihongo.my.id</a>
               </p>
-              <p className="text-xs text-[oklch(0.98_0.02_70)]/60 mt-3 pt-3 border-t border-white/15">
-                © 2026 Bunbun Nihongo — Kursus Online Bahasa Jepang.
+              <p className="flex items-center gap-2 flex-wrap">
+                <span>📱</span>
+                <span className="font-semibold">WhatsApp:</span>
+                <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="text-[oklch(0.85_0.17_90)] hover:underline">+62 895-3286-71000</a>
               </p>
             </div>
+            <p className="text-[11px] text-[oklch(0.98_0.02_70)]/60 mt-auto pt-3">
+              Sudah jadi murid Bunbun?{" "}
+              <Link to="/login" className="text-[oklch(0.85_0.17_90)] font-semibold underline">Login</Link>{" "}
+              untuk akses game latihan.
+            </p>
+            <p className="text-xs text-[oklch(0.98_0.02_70)]/60 mt-3 pt-3 border-t border-white/15">
+              © 2026 Bunbun Nihongo — Kursus Online Bahasa Jepang.
+            </p>
           </div>
 
         </div>
