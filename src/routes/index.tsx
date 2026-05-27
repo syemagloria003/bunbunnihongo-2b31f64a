@@ -577,8 +577,10 @@ function PosterCard({
 }
 
 function Header({ loggedIn }: { loggedIn: boolean }) {
+  const warningText = "⚠️ Hindari Penipuan: Pembayaran HANYA via BCA a.n SYEMA GLORIA — No. Rek 0332170528  •  Admin Resmi WhatsApp: +62 895-3286-71000  •  Di luar itu bukan tanggung jawab Bunbun Nihongo";
   return (
-    <header className="px-6 py-4 flex items-center justify-between border-b border-border/50 bg-background/80 backdrop-blur sticky top-0 z-30">
+    <div className="sticky top-0 z-30">
+    <header className="px-6 py-4 flex items-center justify-between border-b border-border/50 bg-background/80 backdrop-blur">
       <Link to="/" className="font-display font-bold text-xl md:text-2xl flex items-center gap-2">
         <img src={logo} alt="" className="w-9 h-9 rounded-lg" />
         Bunbun Nihongo
