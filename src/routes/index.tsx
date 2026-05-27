@@ -112,7 +112,7 @@ function Landing() {
       <Header loggedIn={loggedIn} />
 
       {/* Hero */}
-      <section className="px-6 py-6 md:py-8 bg-gradient-to-b from-primary/10 via-background to-background">
+      <section id="beranda" className="px-6 py-6 md:py-8 scroll-mt-20 bg-gradient-to-b from-primary/10 via-background to-background">
         <div className="max-w-6xl mx-auto grid md:grid-cols-[1.45fr_1fr] gap-8 items-center">
           <div>
             <div className="flex items-center gap-3 md:gap-4 mb-3">
@@ -194,7 +194,7 @@ function Landing() {
 
 
       {/* Kelas Dibuka + Testimoni — 2x3 grid biar batas atas/bawah sejajar */}
-      <section id="kelas" className="px-6 py-6 md:py-8 bg-muted/30 scroll-mt-20 md:min-h-[calc(100vh-4rem)] md:flex md:items-center">
+      <section id="kelas" className="px-6 py-6 md:py-8 bg-muted/30 scroll-mt-20 md:min-h-[calc(100vh-4rem)] md:flex md:items-start">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 md:grid-rows-[auto_auto_auto] gap-x-6 w-full">
           {/* Row 1: headings */}
           <h2 className="text-xl md:text-2xl font-display font-bold mb-1">
@@ -308,7 +308,7 @@ function Landing() {
 
 
       {/* Sensei + CTA — 2x2 grid biar tinggi sejajar */}
-      <section id="sensei" className="px-6 py-6 md:py-8 bg-muted/20 scroll-mt-20 md:min-h-[calc(100vh-4rem)] md:flex md:items-center">
+      <section id="sensei" className="px-6 py-6 md:py-8 bg-muted/20 scroll-mt-20 md:min-h-[calc(100vh-4rem)] md:flex md:items-start">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 md:grid-rows-[auto_1fr] gap-3 items-stretch w-full">
 
           {/* Row 1, Kiri: heading sensei */}
@@ -473,6 +473,7 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
         Bunbun Nihongo
       </Link>
       <nav className="flex gap-3 text-sm font-semibold items-center">
+        <a href="#beranda" className="hidden sm:inline hover:text-primary">Beranda</a>
         <a href="#kelas" className="hidden sm:inline hover:text-primary">Kelas Dibuka</a>
         <a href="#testimoni" className="hidden sm:inline hover:text-primary">Testimoni</a>
         <a href="#sensei" className="hidden sm:inline hover:text-primary">Sensei</a>
