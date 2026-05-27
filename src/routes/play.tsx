@@ -306,7 +306,16 @@ function LevelSelect() {
 
         <WorldDivider />
 
-        <h2 className="font-display text-2xl font-bold mb-3">☄️ Dunia Galaksi Meteor (Kanji)</h2>
+        <div className="flex items-center gap-2 mb-3 flex-wrap">
+          <h2 className="font-display text-2xl font-bold">☄️ Dunia Galaksi Meteor (Kanji)</h2>
+          <Link
+            to="/belajar/kanji"
+            className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500 text-white font-bold text-sm shadow-md hover:brightness-110 hover:-translate-y-0.5 transition border-2 border-amber-700 overflow-visible"
+          >
+            <span className="absolute -z-10 inset-0 rounded-full animate-fire-glow bg-amber-500/60 blur-md" />
+            📖 Belajar dulu
+          </Link>
+        </div>
         {!p.meteor && (
           <p className="text-sm text-muted-foreground mb-3">
             Tamatkan level Katakana terakhir dengan ⭐⭐⭐ untuk mendapatkan Meteor dan membuka dunia ini.
