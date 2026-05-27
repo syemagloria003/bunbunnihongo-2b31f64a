@@ -29,7 +29,7 @@ function PlayLayout() {
   return <LevelSelect />;
 }
 
-interface TodayRow { user_id: string; nama: string; skor: number; level_id: string; level_name: string; }
+interface TodayRow { user_id: string; nama: string; avatar_id: string | null; skor: number; level_id: string; level_name: string; }
 
 function LevelSelect() {
   const [p, setP] = useState<Progress | null>(null);
@@ -62,16 +62,30 @@ function LevelSelect() {
 
       const userIds = Array.from(new Set((scores ?? []).map((s) => s.user_id)));
       const { data: profs } = userIds.length
-        ? await supabase.from("profiles").select("id, nama_lengkap").in("id", userIds)
-        : { data: [] as { id: string; nama_lengkap: string }[] };
-      const nameMap = new Map((profs ?? []).map((x) => [x.id, x.nama_lengkap]));
+        ? await supabase.from("profiles").select("id, nama_lengkap, nama_panggilan, avatar_id").in("id", userIds)
+        : { data: [] as { id: string; nama_lengkap: string; nama_panggilan: string | null; avatar_id: string | null }[] };
+      const profMap = new Map(
+        (profs ?? []).map((x) => [
+          x.id,
+          {
+            nama:
+              x.nama_panggilan && x.nama_panggilan.trim().length > 0
+                ? x.nama_panggilan.trim()
+                : x.nama_lengkap,
+            avatar_id: x.avatar_id,
+          },
+        ]),
+      );
 
       const bestByUser = new Map<string, TodayRow>();
       for (const s of scores ?? []) {
         const prev = bestByUser.get(s.user_id);
         if (!prev || s.skor > prev.skor) {
+          const meta = profMap.get(s.user_id);
           bestByUser.set(s.user_id, {
-            user_id: s.user_id, nama: nameMap.get(s.user_id) ?? "Murid",
+            user_id: s.user_id,
+            nama: meta?.nama ?? "Murid",
+            avatar_id: meta?.avatar_id ?? null,
             skor: s.skor, level_id: s.level_id, level_name: s.level_name,
           });
         }
@@ -85,8 +99,11 @@ function LevelSelect() {
           if (s.level_id !== latestLevel.id) continue;
           const prev = peerMap.get(s.user_id);
           if (!prev || s.skor > prev.skor) {
+            const meta = profMap.get(s.user_id);
             peerMap.set(s.user_id, {
-              user_id: s.user_id, nama: nameMap.get(s.user_id) ?? "Murid",
+              user_id: s.user_id,
+              nama: meta?.nama ?? "Murid",
+              avatar_id: meta?.avatar_id ?? null,
               skor: s.skor, level_id: s.level_id, level_name: s.level_name,
             });
           }
@@ -106,9 +123,12 @@ function LevelSelect() {
   return (
     <div className="min-h-screen px-4 sm:px-6 py-6 sm:py-8">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between gap-2 mb-3">
+        <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
           <Link to="/" className="text-sm font-semibold hover:text-primary shrink-0">← Beranda</Link>
-          <AdminUnlock onUnlock={setP} />
+          <div className="flex items-center gap-2 flex-wrap justify-end">
+            <ProfileBar />
+            <AdminUnlock onUnlock={setP} />
+          </div>
         </div>
         <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6">
           Peta Petualangan 🗺️
