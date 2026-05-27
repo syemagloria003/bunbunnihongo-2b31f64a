@@ -225,10 +225,10 @@ function LevelSelect() {
           <span className="text-xl text-red-500 animate-pulse" aria-hidden>➡️</span>
           <Link
             to="/belajar/hiragana"
-            className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-500 text-white font-bold text-sm shadow-lg shadow-red-500/40 hover:brightness-110 hover:-translate-y-0.5 transition border-2 border-red-700 overflow-visible"
+            className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-400 text-amber-950 font-bold text-sm shadow-md hover:brightness-110 hover:-translate-y-0.5 transition border-2 border-amber-600 overflow-visible"
           >
-            <span className="absolute -z-10 inset-0 rounded-full animate-fire-glow bg-orange-400/60 blur-md" />
-            <span className="text-yellow-200">📖</span> Belajar dulu
+            <span className="absolute -z-10 inset-0 rounded-full animate-fire-glow bg-red-500/50 blur-md" />
+            <span className="text-red-600">📖</span> Belajar dulu
           </Link>
         </div>
         <div className="grid sm:grid-cols-2 gap-4 mb-8">
