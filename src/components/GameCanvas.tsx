@@ -324,8 +324,8 @@ export function GameCanvas({ level }: { level: LevelDef }) {
               >
                 <h3 className="font-display font-bold text-sm mb-2 text-center">🎮 Cara Main</h3>
                 <ul className="space-y-1 mb-2 leading-snug">
-                  <li><span className="font-bold">Stik bulat (kiri bawah)</span> — tarik ke kiri/kanan untuk berjalan.</li>
-                  <li><span className="font-bold">Tombol merah (kanan bawah)</span> — tekan untuk lompat. Tekan 2× di udara = <em>double flap</em>.</li>
+                  <li><span className="font-bold">Stik bulat (kanan bawah)</span> — tarik ke kiri/kanan untuk berjalan.</li>
+                  <li><span className="font-bold">Tombol merah (kiri bawah)</span> — tekan untuk lompat. Tekan 2× di udara = <em>double flap</em>.</li>
                   <li>Lompati / injak 🕷️ dari atas. Jangan kena samping!</li>
                   <li>🍯 = skor. Pintu <strong>?</strong> = jawab benar untuk lewat.</li>
                 </ul>
