@@ -96,7 +96,7 @@ export function NotificationTicker() {
   const loop = [...items, ...items];
 
   return (
-    <div className="relative overflow-hidden rounded-full border-2 mb-4 shadow-[0_0_24px_-6px_oklch(0.85_0.22_140/0.7)] border-[oklch(0.88_0.20_135)] bg-[linear-gradient(90deg,oklch(0.55_0.22_150)_0%,oklch(0.50_0.22_180)_50%,oklch(0.48_0.24_210)_100%)]">
+    <div className="relative overflow-hidden rounded-full border-2 border-primary/40 bg-gradient-to-r from-background via-primary/10 to-background mb-4 shadow-sm">
       <div className="flex items-center">
         <span className="shrink-0 bg-primary text-primary-foreground text-[11px] font-bold px-3 py-1.5 rounded-full m-1">
           📢 LIVE
