@@ -124,12 +124,28 @@ function Landing() {
             <p className="text-xl md:text-2xl font-display font-bold text-primary mb-4">
               Kursus Online Bahasa Jepang
             </p>
-            <p className="text-base md:text-lg text-foreground/80 mb-6">
+            <p className="text-base md:text-lg text-foreground/80 mb-5">
               Belajar Bahasa Jepang <strong>dari nol sampai JLPT N3</strong> via Zoom,
               bareng <strong>sensei minimal JLPT N2</strong>, kurikulum standar internasional,
               dan <strong>maksimal 10 murid per kelas</strong>. Pertemuan banyak, harga
               terjangkau.
             </p>
+            <ul className="space-y-2 mb-6 text-sm md:text-base">
+              {[
+                <><strong>Sensei terjamin</strong> — minimal lulusan JLPT N2</>,
+                <><strong>Kurikulum standar internasional</strong> sesuai level JLPT</>,
+                <><strong>Maksimal 10 murid</strong> per kelas, kecil & efektif</>,
+                <><strong>Senin–Jumat</strong> ketemu sensei — intensif tapi ramah kantong</>,
+                <><strong>Bebas tanya di luar jam kelas</strong> via WhatsApp</>,
+                <><strong>Kelas direkam</strong>, bisa di-review kapan saja</>,
+                <><strong>Latihan ala game</strong> di platform Bunbun untuk penguatan materi</>,
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-5 h-5 rounded-full bg-green-500 text-white text-xs font-bold">✓</span>
+                  <span className="text-foreground/85">{item}</span>
+                </li>
+              ))}
+            </ul>
             <div className="flex flex-wrap gap-3">
               <a
                 href={WA_LINK}
@@ -159,49 +175,6 @@ function Landing() {
         </div>
       </section>
 
-      {/* Highlights */}
-      <section className="px-6 py-14">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-center mb-8">
-            Kenapa pilih Bunbun? 🐰
-          </h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-            <Feature icon="🎓" title="Sensei terjamin" desc="Minimal lulusan JLPT N2. Sudah pasti paham seluk-beluk Bahasa Jepang." />
-            <Feature icon="📖" title="Kurikulum standar internasional" desc="Materi terstruktur, sesuai standar JLPT — bukan asal-asalan." />
-            <Feature icon="👥" title="Maksimal 10 murid" desc="Kelas kecil & efektif. Sensei kenal tiap murid, kamu bebas tanya." />
-            <Feature icon="💸" title="Meet banyak, terjangkau" desc="Senin–Jumat full ketemu sensei, harga ramah kantong." />
-          </div>
-        </div>
-      </section>
-
-      {/* Perks — trust builders */}
-      <section className="px-6 py-14 bg-gradient-to-b from-secondary/20 to-background">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-center mb-2">
-            Lebih dari sekadar kelas Zoom ✨
-          </h2>
-          <p className="text-center text-muted-foreground mb-8 text-sm max-w-2xl mx-auto">
-            Kami pastikan kamu nggak belajar sendirian. Ada support penuh dari sensei & sistem belajar yang fleksibel.
-          </p>
-          <div className="grid md:grid-cols-3 gap-5">
-            <Perk
-              icon="💬"
-              title="Bebas tanya di luar jam kelas"
-              desc="Stuck di tengah malam? Tinggal japri di WhatsApp grup — sensei & teman sekelas siap bantu."
-            />
-            <Perk
-              icon="🎥"
-              title="Rekaman Zoom tiap pertemuan"
-              desc="Ketinggalan kelas atau mau review materi? Tenang, semua sesi direkam dan dibagikan."
-            />
-            <Perk
-              icon="🎮"
-              title="Latihan tambahan interaktif"
-              desc="Setelah Zoom, lanjut latihan interaktif di platform khusus murid biar makin nempel."
-            />
-          </div>
-        </div>
-      </section>
 
       {/* Meet the Sensei — poster */}
       <section id="sensei" className="px-6 py-16 bg-muted/20 scroll-mt-20">
@@ -424,27 +397,8 @@ function Landing() {
   );
 }
 
-function Feature({ icon, title, desc }: { icon: string; title: string; desc: string }) {
-  return (
-    <div className="honey-card rounded-2xl p-5">
-      <div className="text-4xl mb-2">{icon}</div>
-      <h3 className="font-bold text-base mb-1">{title}</h3>
-      <p className="text-sm text-muted-foreground">{desc}</p>
-    </div>
-  );
-}
 
-function Perk({ icon, title, desc }: { icon: string; title: string; desc: string }) {
-  return (
-    <div className="rounded-2xl p-6 bg-card border-2 border-border/60 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition">
-      <div className="w-12 h-12 rounded-xl bg-primary/15 text-primary flex items-center justify-center text-2xl mb-3">
-        {icon}
-      </div>
-      <h3 className="font-bold text-base mb-1">{title}</h3>
-      <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-    </div>
-  );
-}
+
 
 
 function PosterCard({
