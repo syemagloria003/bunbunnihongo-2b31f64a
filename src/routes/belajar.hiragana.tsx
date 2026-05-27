@@ -144,19 +144,20 @@ function BelajarHiragana() {
 
           <p className="text-sm font-bold mt-2">Bedanya apa sih? Gampang banget bedainnya!</p>
 
-          <div className="rounded-xl border-2 border-dashed border-border/60 bg-pink-100 dark:bg-pink-900/50 p-3 space-y-1 text-sm">
+          <div className="rounded-xl border-2 border-dashed border-pink-400 dark:border-pink-400 bg-pink-100 dark:bg-pink-900/50 p-3 space-y-1 text-sm shadow-[0_0_12px_rgba(244,114,182,0.55)] dark:shadow-[0_0_16px_rgba(244,114,182,0.65)]">
             <p className="font-bold">1. Hiragana (Si Kalem Asli Jepang) 🌸</p>
             <p><b>Fungsi:</b> Dipakai buat nulis kata-kata yang asli dari bahasa Jepang. Misalnya: <i>Arigatou</i> (Terima kasih) atau <i>Sayonara</i> (Selamat tinggal).</p>
             <p><b>Bentuknya:</b> Luwes, melengkung-lengkung, dan santai. Ibaratnya kayak mi instan yang udah matang. 🍜</p>
             <p><b>Contoh:</b> <span style={{ fontFamily: "serif" }} className="text-lg">あ</span> (A), <span style={{ fontFamily: "serif" }} className="text-lg">め</span> (Me), <span style={{ fontFamily: "serif" }} className="text-lg">の</span> (No). Kelihatan kan lengkungannya?</p>
           </div>
 
-          <div className="rounded-xl border-2 border-dashed border-border/60 bg-sky-100 dark:bg-sky-900/50 p-3 space-y-1 text-sm">
+          <div className="rounded-xl border-2 border-dashed border-sky-400 dark:border-sky-400 bg-sky-100 dark:bg-sky-900/50 p-3 space-y-1 text-sm shadow-[0_0_12px_rgba(56,189,248,0.55)] dark:shadow-[0_0_16px_rgba(56,189,248,0.65)]">
             <p className="font-bold">2. Katakana (Si Gaul Suka Barang Impor) ⚡</p>
             <p><b>Fungsi:</b> Dipakai khusus untuk kata serapan dari bahasa asing (kayak bahasa Inggris), nama negara asing, atau nama kamu! Yup, karena kita bukan orang Jepang, nama kita bakal ditulis pakai huruf ini.</p>
             <p><b>Bentuknya:</b> Kaku, tajam-tajam, dan tegas. Ibaratnya kayak pedang ninja atau robot transformer. ⚔️</p>
             <p><b>Contoh:</b> <span style={{ fontFamily: "serif" }} className="text-lg">ア</span> (A), <span style={{ fontFamily: "serif" }} className="text-lg">メ</span> (Me), <span style={{ fontFamily: "serif" }} className="text-lg">ノ</span> (No). Kelihatan lebih bersudut dan tajam kan dibanding Hiragana?</p>
           </div>
+
 
           <div className="rounded-xl border-2 border-dashed border-primary/40 bg-primary/15 p-3 space-y-2">
             <p className="font-bold text-sm">🎮 Waktunya Praktik!</p>
