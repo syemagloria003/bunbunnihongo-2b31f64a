@@ -249,10 +249,10 @@ function Landing() {
       </section>
 
 
-      {/* Testimoni — WA screenshots */}
+      {/* Testimoni — dari murid */}
       <section id="testimoni" className="px-6 py-16 bg-gradient-to-b from-background via-secondary/10 to-background scroll-mt-20">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
+          <div className="text-center mb-10">
             <span className="inline-block bg-primary/15 text-primary text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wider uppercase">
               Kata murid kami
             </span>
@@ -260,27 +260,50 @@ function Landing() {
               Testimoni langsung dari murid 💌
             </h2>
             <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-              Screenshot asli dari WhatsApp — bukan rekayasa.
+              Cerita jujur dari murid Bunbun batch sebelumnya.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[wa1, wa2, wa3, wa4].map((src, i) => (
-              <a
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {TESTIMONI.map((t, i) => (
+              <article
                 key={i}
-                href={src}
-                target="_blank" rel="noopener noreferrer"
-                className="block rounded-2xl overflow-hidden border-2 border-border bg-card shadow-md hover:shadow-xl hover:-translate-y-1 transition"
+                className="flex flex-col rounded-3xl border-2 border-primary/20 bg-card p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition"
               >
-                <img
-                  src={src}
-                  alt={`Testimoni murid Bunbun Nihongo ${i + 1}`}
-                  loading="lazy"
-                  className="w-full h-auto block"
-                />
-              </a>
+                <div className="flex items-center gap-3 mb-3">
+                  <img
+                    src={t.foto}
+                    alt={`Foto ${t.nama}`}
+                    loading="lazy"
+                    className="w-14 h-14 rounded-full object-cover border-2 border-primary shrink-0"
+                    style={{ objectPosition: "center 25%" }}
+                  />
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-sm leading-tight truncate">{t.nama}</h3>
+                    {t.ig ? (
+                      <a
+                        href={`https://instagram.com/${t.ig}`}
+                        target="_blank" rel="noopener noreferrer"
+                        className="text-xs text-primary hover:underline"
+                      >
+                        @{t.ig}
+                      </a>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">Murid Bunbun</span>
+                    )}
+                  </div>
+                  <span className="ml-auto text-[10px] font-bold bg-primary/15 text-primary px-2 py-1 rounded-full whitespace-nowrap">
+                    {t.level} · {t.batch}
+                  </span>
+                </div>
+                <p className="text-sm text-foreground/80 leading-relaxed">
+                  <span className="text-primary font-bold">“</span>
+                  {t.isi}
+                  <span className="text-primary font-bold">”</span>
+                </p>
+              </article>
             ))}
           </div>
-          <p className="text-center text-sm text-muted-foreground mt-6">
+          <p className="text-center text-sm text-muted-foreground mt-8">
             Mau lihat lebih banyak testimoni? Cek di{" "}
             <a
               href={IG_LINK}
