@@ -147,14 +147,11 @@ function LevelSelect() {
           <Link to="/" className="text-sm font-semibold hover:text-primary">← Beranda</Link>
         </div>
         <NotificationTicker />
-        <div className="flex items-center justify-between gap-4 flex-wrap mb-6">
-          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold">
-            Peta Petualangan 🗺️
-          </h1>
-          <div className="scale-110 origin-right">
-            <UserMenu onUnlock={setP} />
-          </div>
-        </div>
+        <PlayerStatusCard progress={p} latestLevel={latestLevel} onUnlock={setP} />
+        <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-6">
+          Peta Petualangan 🗺️
+        </h1>
+
 
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           <div className="rounded-2xl p-4 border-2 border-sky-400/50 bg-gradient-to-br from-sky-50 to-indigo-100 dark:from-sky-950/40 dark:to-indigo-950/40 shadow-md">
