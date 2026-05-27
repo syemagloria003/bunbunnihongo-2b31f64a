@@ -1,57 +1,31 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
 import { fetchMe, updateProfile, type MeResponse } from "@/game/leaderboard";
-import { supabase } from "@/integrations/supabase/client";
 import { AVATARS, getAvatarSrc } from "@/game/avatars";
 
 export function ProfileBar() {
   const [me, setMe] = useState<MeResponse | null>(null);
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchMe().then(setMe);
   }, []);
 
-  async function logout() {
-    await supabase.auth.signOut();
-    await navigate({ to: "/login" });
-  }
-
   if (!me) return null;
 
   return (
     <>
-      <div className="flex items-start gap-2">
-        <button
-          onClick={() => setOpen(true)}
-          className="flex items-center gap-2 bg-primary/15 hover:bg-primary/25 transition rounded-full pl-1 pr-3 py-1"
-          title="Edit profil"
-        >
-          <img
-            src={getAvatarSrc(me.avatarId)}
-            alt="Avatar"
-            className="w-8 h-8 rounded-full bg-background object-cover ring-2 ring-primary"
-          />
-          <span className="text-sm font-semibold text-primary">{me.nama}</span>
-        </button>
-        <div className="flex flex-col gap-1.5">
-          {me.isAdmin && (
-            <Link
-              to="/admin"
-              className="text-xs font-bold bg-primary text-primary-foreground px-3 py-1 rounded-full hover:brightness-110 text-center"
-            >
-              🛠️ Admin
-            </Link>
-          )}
-          <button
-            onClick={logout}
-            className="text-xs font-bold px-3 py-1 rounded-full bg-destructive text-destructive-foreground hover:brightness-110 transition text-center"
-          >
-            Logout
-          </button>
-        </div>
-      </div>
+      <button
+        onClick={() => setOpen(true)}
+        className="flex items-center gap-2 bg-primary/15 hover:bg-primary/25 transition rounded-full pl-1 pr-3 py-1"
+        title="Edit profil"
+      >
+        <img
+          src={getAvatarSrc(me.avatarId)}
+          alt="Avatar"
+          className="w-8 h-8 rounded-full bg-background object-cover ring-2 ring-primary"
+        />
+        <span className="text-sm font-semibold text-primary">{me.nama}</span>
+      </button>
 
       {open && (
         <ProfileModal
