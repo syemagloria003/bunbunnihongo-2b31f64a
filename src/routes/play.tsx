@@ -154,22 +154,25 @@ function LevelSelect() {
 
 
         <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="rounded-2xl p-4 border-2 border-sky-400/50 bg-gradient-to-br from-sky-50 to-indigo-100 dark:from-sky-950/40 dark:to-indigo-950/40 shadow-md">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="font-display font-bold text-lg text-sky-900 dark:text-sky-100">🏆 Skor hari ini</h3>
-              <Link to="/leaderboard" className="text-xs font-semibold text-sky-700 dark:text-sky-300 hover:underline">Lihat semua →</Link>
+          <div className="game-panel rounded-2xl p-4 relative overflow-hidden">
+            <span className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-primary/30 blur-3xl pointer-events-none" />
+            <div className="flex items-center justify-between mb-2 relative">
+              <h3 className="font-display font-bold text-lg flex items-center gap-2">
+                <span className="text-xl">🏆</span> Skor hari ini
+              </h3>
+              <Link to="/leaderboard" className="text-xs font-semibold text-primary hover:underline">Lihat semua →</Link>
             </div>
-            <p className="text-xs text-sky-800/70 dark:text-sky-200/70 mb-3">
+            <p className="text-xs text-muted-foreground mb-3 relative">
               Ayo kalahkan teman-temanmu — cepet-cepetan naik level! 🔥
             </p>
             {today.length === 0 ? (
-              <p className="text-sm text-muted-foreground py-2">Belum ada yang main hari ini. Jadilah yang pertama! 🐝</p>
+              <p className="text-sm text-muted-foreground py-2 relative">Belum ada yang main hari ini. Jadilah yang pertama! 🐝</p>
             ) : (
-              <ol className="space-y-1.5">
+              <ol className="space-y-1.5 relative">
                 {today.map((r, i) => {
                   const isMe = r.user_id === meId;
                   return (
-                    <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm", isMe ? "bg-primary/20 ring-2 ring-primary" : "bg-white/60 dark:bg-background/40"].join(" ")}>
+                    <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm backdrop-blur-sm", isMe ? "bg-primary/25 ring-2 ring-primary" : "bg-white/5 ring-1 ring-white/10"].join(" ")}>
                       <span className={["inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-extrabold shrink-0", rankBadgeClass(i)].join(" ")}>
                         {i < 3 ? rankLabel(i) : i + 1}
                       </span>
@@ -178,7 +181,7 @@ function LevelSelect() {
                         <p className="font-semibold truncate">{r.nama}{isMe && " (kamu)"}</p>
                         <p className="text-[10px] text-muted-foreground truncate">{r.level_name}</p>
                       </div>
-                      <span className="font-bold text-sky-700 dark:text-sky-300">{r.skor}</span>
+                      <span className="font-bold text-primary">{r.skor}</span>
                     </li>
                   );
                 })}
@@ -186,27 +189,30 @@ function LevelSelect() {
             )}
           </div>
 
-          <div className="rounded-2xl p-4 border-2 border-fuchsia-400/50 bg-gradient-to-br from-fuchsia-50 to-rose-100 dark:from-fuchsia-950/40 dark:to-rose-950/40 shadow-md">
-            <h3 className="font-display font-bold text-lg mb-1 text-fuchsia-900 dark:text-fuchsia-100">⚔️ Saingan di level kamu</h3>
+          <div className="game-panel rounded-2xl p-4 relative overflow-hidden">
+            <span className="absolute -top-16 -left-16 w-40 h-40 rounded-full bg-accent/30 blur-3xl pointer-events-none" />
+            <h3 className="font-display font-bold text-lg mb-1 flex items-center gap-2 relative">
+              <span className="text-xl">⚔️</span> Saingan di level kamu
+            </h3>
             {latestLevel ? (
               <>
-                <p className="text-xs text-fuchsia-800/70 dark:text-fuchsia-200/70 mb-3">
+                <p className="text-xs text-muted-foreground mb-3 relative">
                   Level terbaru: <b className="text-foreground">{latestLevel.name}</b> — bandingkan skormu dengan teman selevel.
                 </p>
                 {peers.length === 0 ? (
-                  <p className="text-sm text-muted-foreground py-2">Belum ada teman lain main di level ini hari ini. Pamer skormu duluan! ✨</p>
+                  <p className="text-sm text-muted-foreground py-2 relative">Belum ada teman lain main di level ini hari ini. Pamer skormu duluan! ✨</p>
                 ) : (
-                  <ol className="space-y-1.5">
+                  <ol className="space-y-1.5 relative">
                     {peers.slice(0, 8).map((r, i) => {
                       const isMe = r.user_id === meId;
                       return (
-                        <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm", isMe ? "bg-primary/20 ring-2 ring-primary" : "bg-white/60 dark:bg-background/40"].join(" ")}>
+                        <li key={r.user_id} className={["flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm backdrop-blur-sm", isMe ? "bg-primary/25 ring-2 ring-primary" : "bg-white/5 ring-1 ring-white/10"].join(" ")}>
                           <span className={["inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-extrabold shrink-0", rankBadgeClass(i)].join(" ")}>
                             {i < 3 ? rankLabel(i) : i + 1}
                           </span>
                           <img src={getAvatarSrc(r.avatar_id)} alt="" className="w-7 h-7 rounded-full bg-background object-cover shrink-0 ring-1 ring-border" loading="lazy" />
                           <span className="flex-1 truncate font-semibold">{r.nama}{isMe && " (kamu)"}</span>
-                          <span className="font-bold text-fuchsia-700 dark:text-fuchsia-300">{r.skor}</span>
+                          <span className="font-bold text-accent">{r.skor}</span>
                         </li>
                       );
                     })}
@@ -218,6 +224,7 @@ function LevelSelect() {
             )}
           </div>
         </div>
+
 
 
         <WorldDivider />
