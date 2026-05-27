@@ -5,7 +5,26 @@ import { loadProgress, saveProgress, type Progress } from "@/game/progress";
 import { supabase } from "@/integrations/supabase/client";
 import { LevelPreview } from "@/components/LevelPreview";
 import { ProfileBar } from "@/components/ProfileBar";
+import { NotificationTicker } from "@/components/NotificationTicker";
 import { getAvatarSrc } from "@/game/avatars";
+
+function rankBadgeClass(i: number): string {
+  if (i === 0) return "bg-gradient-to-br from-yellow-300 to-yellow-500 text-yellow-950 ring-2 ring-yellow-200 shadow";
+  if (i === 1) return "bg-gradient-to-br from-slate-200 to-slate-400 text-slate-900 ring-2 ring-slate-100 shadow";
+  if (i === 2) return "bg-gradient-to-br from-amber-500 to-amber-700 text-amber-50 ring-2 ring-amber-300 shadow";
+  if (i === 3) return "bg-gradient-to-br from-sky-300 to-sky-500 text-sky-950 ring-2 ring-sky-200";
+  if (i === 4) return "bg-gradient-to-br from-emerald-300 to-emerald-500 text-emerald-950 ring-2 ring-emerald-200";
+  if (i === 5) return "bg-gradient-to-br from-pink-300 to-pink-500 text-pink-950 ring-2 ring-pink-200";
+  if (i === 6) return "bg-gradient-to-br from-purple-300 to-purple-500 text-purple-50 ring-2 ring-purple-200";
+  return "bg-gradient-to-br from-stone-300 to-stone-500 text-stone-950 ring-2 ring-stone-200";
+}
+
+function rankLabel(i: number): string {
+  if (i === 0) return "🥇";
+  if (i === 1) return "🥈";
+  if (i === 2) return "🥉";
+  return `#${i + 1}`;
+}
 
 export const Route = createFileRoute("/play")({
   head: () => ({
