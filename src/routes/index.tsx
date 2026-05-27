@@ -14,10 +14,63 @@ import posterJlptN3 from "@/assets/posters/kelas-jlpt-n3.png";
 import posterSensei from "@/assets/sensei-syema.png";
 import posterTim from "@/assets/tim-pengajar.png";
 
-import wa1 from "@/assets/testimoni/wa1.jpeg";
-import wa2 from "@/assets/testimoni/wa2.jpeg";
-import wa3 from "@/assets/testimoni/wa3.jpeg";
-import wa4 from "@/assets/testimoni/wa4.jpeg";
+import face13 from "@/assets/testimoni-faces/13.jpg";
+import face14 from "@/assets/testimoni-faces/14.jpg";
+import face15 from "@/assets/testimoni-faces/15.jpg";
+import face16 from "@/assets/testimoni-faces/16.jpg";
+import face17 from "@/assets/testimoni-faces/17.jpg";
+import face18 from "@/assets/testimoni-faces/18.jpg";
+import face19 from "@/assets/testimoni-faces/19.jpg";
+import face20 from "@/assets/testimoni-faces/20.jpg";
+import face21 from "@/assets/testimoni-faces/21.jpg";
+
+type Testimoni = {
+  foto: string;
+  nama: string;
+  ig?: string;
+  batch: string;
+  level: "N5" | "N3";
+  isi: string;
+};
+
+const TESTIMONI: Testimoni[] = [
+  {
+    foto: face13, nama: "Esia Nuur Muttaqin", ig: "theyluv_hwa", batch: "Batch 1", level: "N5",
+    isi: "Aku cepet paham sama sukaa cara belajar nya senseii, cuma akunya aja yang jarang nimbrung karena jam nya tabrakan sama kuliah/jam pulang. (Tapi aman ya ada record xixi)",
+  },
+  {
+    foto: face14, nama: "Ennova Dianita", ig: "ennvd", batch: "Batch 1", level: "N5",
+    isi: "Suka banget karena ngebut dan jelas. Temanku bilang mau ikut kalo senseinya ini (Syema Sensei) wkwkk, request. Terus kurangku choukai sih Sensei (kurang tugas tambahan ini mah ya wkwkk), dokkai aman.",
+  },
+  {
+    foto: face15, nama: "Novianta Yonantias", batch: "Batch 1", level: "N5",
+    isi: "Ngikutin kelas sensei seneng banget, karna banyak banget ilmu yang dikasih. Nggak melulu terpatok sama text yang ada di buku. Sering ngingetin sama catatan² penting saat belajar bahasa jepang, jadinya akunya juga terbantu mengingat dan memahaminya. Terkadang juga ngasih motivasi belajar bahasa Jepang yang bikin hati tercambuk..wkkwkw. Saran: banyakin PR please…. (emang murid langka wkwk)",
+  },
+  {
+    foto: face16, nama: "Muhammad Fannan Syakur Ma'mun", ig: "muh_fannan", batch: "Batch 1", level: "N5",
+    isi: "Kelasnya nya asik, Materi nya jelas dan mudah di pahami. Cara ngajar sensei juga unik. Kalau jarang hadir aman, ada record nya. Saya jarang hadir karna kadang ada matkul sama kegiatan kampus, jangan di tiru ya.",
+  },
+  {
+    foto: face17, nama: "Aruni Rensi Triana", ig: "arunirenstr", batch: "Batch 1", level: "N3",
+    isi: "Belajar JLPT N3 di Bunbun seru banget! Syema sensei super baik dan jelasin materinya detail. Apalagi kalau bahas kanji, bushunya dibedah satu-satu, jadi kalo nemu jukugo baru bisa ngira-ngira makna kanjinya 🥰 Metode ngajarnya juga cocok banget, bikin aku fokus nyimak dan satu kelas jadi aktif semua. Pokoknya recommended banget! 💖",
+  },
+  {
+    foto: face18, nama: "Aisyah Amartya Hayyu", ig: "sasyamhyyu", batch: "Batch 1", level: "N3",
+    isi: "Seneng banget join kelas di bunbun bareng Syema sensei~! 😍💕 Kelasnya fun, interaktif, penjelasan jelas dan detail tanpa bikin pusing. Banyak insight di luar buku yang bikin ilmu nancep banget. Makanya sayang kalo sampe skip kelas. Terima kasih sensei! 😄🧸 Ini feedback nya sensei.. sudah sangat jujur karna merasa saangaaat sangaaat terbantu buat mahamin bunpou",
+  },
+  {
+    foto: face19, nama: "Shofiyya Qonitina Denillah", ig: "shofiy25", batch: "Batch 1", level: "N3",
+    isi: "Diantara yang lain disini pertemuannya yang paling banyak (N3-100 pertemuan) dan harganya dibilang terjangkau apalagi kemarin daftar pas grand opening hehe. Senseinya juga detail banget kalo ngajarin. Dapet record sama buku kanji berkarakter juga. Pokoknya mantapppp. Buruan deh join 🤩",
+  },
+  {
+    foto: face20, nama: "Adi Antoro", ig: "adiantoro86", batch: "Batch 1", level: "N3",
+    isi: "Kelas nya telah selesai 🏠. Saya join kelas N3 yang batch 1, diajar oleh Syema sensei. Pengetahuan nya bukan yg kaleng-kaleng loh. Saat ku sodorin sebuah kalimat utk di translate pun langsung capciscus no loading no waiting list. Jadi kalo aku, gak nyesel sih diajar oleh syema sensei. Harapan dan impian saya, masih boleh bertanya lewat wa chat walau kelas nya sdh selesai 😍. Oh 1 lagi, benefit join di bunbun ini ada grup wa untuk kaiwa. Grup kaiwa ini bebas jam nya dan free for life.",
+  },
+  {
+    foto: face21, nama: "Gabrella Prananda Claudia", batch: "Batch 2", level: "N5",
+    isi: "Bunbun menurutku salah satu bimbel online yang ngebantu aku buat bisa ngerti bahasa jepang. Yang awalnya menurutku sulit, tapi sejak di Bunbun aku jadi banyak paham dan udah mulai bisa kaiwa. Karena Senseinya selalu memberikan contoh kalimat, terus kita nerjemahin kebahasa jepang, penjelasannya cukup sederhana sehingga kita mudah paham, the best bunbun, bahasa jepang terasa mudah, 日本語をおもしろいです bersama Bunbun 🎀",
+  },
+];
 
 const WA_LINK = "https://wa.me/62895328671000?text=Halo%20Bunbun%20Nihongo,%20saya%20mau%20tanya%20kelas%20yang%20sedang%20dibuka.";
 const IG_LINK = "https://instagram.com/bunbun_nihongo";
