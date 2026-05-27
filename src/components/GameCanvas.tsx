@@ -384,58 +384,72 @@ function HUD({
   );
 }
 
-type PointerState = { x0: number; t0: number; key: "ArrowLeft" | "ArrowRight" | null; moved: boolean };
+function MobileControls({ onPress }: { onPress: (key: string, down: boolean) => void }) {
+  const baseRef = useRef<HTMLDivElement>(null);
+  const [knob, setKnob] = useState({ x: 0, y: 0 });
+  const activePtr = useRef<number | null>(null);
+  const currentDir = useRef<"ArrowLeft" | "ArrowRight" | null>(null);
+  const RADIUS = 48;
+  const DEAD = 14;
 
-function GestureLayer({ onPress }: { onPress: (key: string, down: boolean) => void }) {
-  const ptrs = useRef(new Map<number, PointerState>());
-  const holds = useRef({ ArrowLeft: 0, ArrowRight: 0 });
-
-  const setDir = (k: "ArrowLeft" | "ArrowRight", down: boolean) => {
-    const prev = holds.current[k];
-    const nextVal = down ? prev + 1 : Math.max(0, prev - 1);
-    holds.current[k] = nextVal;
-    if (prev === 0 && nextVal > 0) onPress(k, true);
-    if (prev > 0 && nextVal === 0) onPress(k, false);
+  const setDir = (k: "ArrowLeft" | "ArrowRight" | null) => {
+    if (currentDir.current === k) return;
+    if (currentDir.current) onPress(currentDir.current, false);
+    if (k) onPress(k, true);
+    currentDir.current = k;
   };
 
-  const THRESHOLD = 18;
+  const reset = () => {
+    setDir(null);
+    setKnob({ x: 0, y: 0 });
+    activePtr.current = null;
+  };
 
   return (
-    <div
-      className="absolute inset-0 z-30 touch-none select-none"
-      onPointerDown={(e) => {
-        e.preventDefault();
-        ptrs.current.set(e.pointerId, { x0: e.clientX, t0: Date.now(), key: null, moved: false });
-        (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
-      }}
-      onPointerMove={(e) => {
-        const p = ptrs.current.get(e.pointerId);
-        if (!p) return;
-        const dx = e.clientX - p.x0;
-        if (Math.abs(dx) > 8) p.moved = true;
-        let k: "ArrowLeft" | "ArrowRight" | null = null;
-        if (dx > THRESHOLD) k = "ArrowRight";
-        else if (dx < -THRESHOLD) k = "ArrowLeft";
-        if (k !== p.key) {
-          if (p.key) setDir(p.key, false);
-          if (k) setDir(k, true);
-          p.key = k;
-        }
-      }}
-      onPointerUp={(e) => {
-        const p = ptrs.current.get(e.pointerId);
-        if (!p) return;
-        if (p.key) setDir(p.key, false);
-        const dur = Date.now() - p.t0;
-        if (!p.moved && dur < 280) onPress("jump", true);
-        ptrs.current.delete(e.pointerId);
-      }}
-      onPointerCancel={(e) => {
-        const p = ptrs.current.get(e.pointerId);
-        if (p?.key) setDir(p.key, false);
-        ptrs.current.delete(e.pointerId);
-      }}
-    />
+    <>
+      {/* Joystick base — bottom-left */}
+      <div
+        ref={baseRef}
+        className="absolute z-30 bottom-4 left-4 w-28 h-28 rounded-full bg-foreground/30 border-2 border-background/40 backdrop-blur-sm touch-none select-none"
+        onPointerDown={(e) => {
+          e.preventDefault();
+          if (activePtr.current !== null) return;
+          activePtr.current = e.pointerId;
+          (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+        }}
+        onPointerMove={(e) => {
+          if (activePtr.current !== e.pointerId) return;
+          const rect = baseRef.current!.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          let dx = e.clientX - cx;
+          let dy = e.clientY - cy;
+          const dist = Math.hypot(dx, dy);
+          if (dist > RADIUS) { dx = (dx / dist) * RADIUS; dy = (dy / dist) * RADIUS; }
+          setKnob({ x: dx, y: dy });
+          if (dx > DEAD) setDir("ArrowRight");
+          else if (dx < -DEAD) setDir("ArrowLeft");
+          else setDir(null);
+        }}
+        onPointerUp={(e) => { if (activePtr.current === e.pointerId) reset(); }}
+        onPointerCancel={(e) => { if (activePtr.current === e.pointerId) reset(); }}
+      >
+        <div
+          className="absolute top-1/2 left-1/2 w-14 h-14 rounded-full bg-background/90 border-2 border-primary shadow-lg pointer-events-none"
+          style={{ transform: `translate(calc(-50% + ${knob.x}px), calc(-50% + ${knob.y}px))` }}
+        />
+      </div>
+
+      {/* Jump button — bottom-right */}
+      <button
+        type="button"
+        aria-label="Lompat"
+        className="absolute z-30 bottom-6 right-6 w-20 h-20 rounded-full bg-red-500 border-4 border-red-700 text-background font-display font-bold text-2xl shadow-xl active:scale-95 active:bg-red-600 touch-none select-none"
+        onPointerDown={(e) => { e.preventDefault(); onPress("jump", true); }}
+      >
+        ⤴
+      </button>
+    </>
   );
 }
 
