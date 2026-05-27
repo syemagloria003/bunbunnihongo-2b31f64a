@@ -112,7 +112,7 @@ function Landing() {
       <Header loggedIn={loggedIn} />
 
       {/* Hero */}
-      <section className="px-6 py-6 md:py-8 bg-gradient-to-b from-primary/10 via-background to-background">
+      <section id="beranda" className="px-6 py-6 md:py-8 scroll-mt-20 bg-gradient-to-b from-primary/10 via-background to-background">
         <div className="max-w-6xl mx-auto grid md:grid-cols-[1.45fr_1fr] gap-8 items-center">
           <div>
             <div className="flex items-center gap-3 md:gap-4 mb-3">
