@@ -11,7 +11,10 @@ import {
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
-    meta: [{ title: "Admin — BeeGana" }],
+    meta: [
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      { title: "Admin — BeeGana" },
+    ],
   }),
   beforeLoad: async () => {
     const { data: { user } } = await supabase.auth.getUser();

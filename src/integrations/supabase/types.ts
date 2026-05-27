@@ -16,22 +16,28 @@ export type Database = {
     Tables: {
       profiles: {
         Row: {
+          avatar_id: string | null
           created_at: string
           email: string
           id: string
           nama_lengkap: string
+          nama_panggilan: string | null
         }
         Insert: {
+          avatar_id?: string | null
           created_at?: string
           email: string
           id: string
           nama_lengkap: string
+          nama_panggilan?: string | null
         }
         Update: {
+          avatar_id?: string | null
           created_at?: string
           email?: string
           id?: string
           nama_lengkap?: string
+          nama_panggilan?: string | null
         }
         Relationships: []
       }
@@ -88,6 +94,7 @@ export type Database = {
       get_leaderboard: {
         Args: { _limit?: number }
         Returns: {
+          avatar_id: string
           nama: string
           skor: number
           tanggal: string
