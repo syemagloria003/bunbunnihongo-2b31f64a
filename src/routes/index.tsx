@@ -349,47 +349,48 @@ function Landing() {
           </div>
 
 
-          {/* Kanan: CTA + kontak — sticky di desktop */}
-          <div className="md:sticky md:top-24">
-            <div className="honey-card rounded-3xl p-6 md:p-7 text-center">
-              <h2 className="text-xl md:text-2xl font-display font-bold mb-2">
+          {/* Kanan: CTA + kontak — dark contrast card, sejajar tinggi dengan kolom kiri */}
+          <div className="flex">
+            <div className="rounded-3xl p-6 md:p-7 text-center w-full flex flex-col bg-[oklch(0.22_0.05_45)] text-[oklch(0.98_0.02_70)] border-2 border-[oklch(0.68_0.20_45)] shadow-xl">
+              <h2 className="text-xl md:text-2xl font-display font-bold mb-2 text-[oklch(0.92_0.12_85)]">
                 Siap mulai perjalanan Bahasa Jepangmu? 🚀
               </h2>
-              <p className="text-foreground/80 text-sm mb-5">
+              <p className="text-[oklch(0.98_0.02_70)]/80 text-sm mb-5">
                 Chat admin sekarang untuk konsultasi gratis & daftar kelas.
               </p>
               <a
                 href={WA_LINK}
                 target="_blank" rel="noopener noreferrer"
-                className="inline-block px-6 py-3 rounded-2xl bg-green-600 text-white font-bold text-base shadow-lg hover:bg-green-700 transition"
+                className="inline-block px-6 py-3 rounded-2xl bg-green-500 text-white font-bold text-base shadow-lg hover:bg-green-400 transition"
               >
                 💬 Tanya & Daftar via WhatsApp
               </a>
-              <div className="mt-6 pt-5 border-t border-border/60 text-left text-sm space-y-2">
-                <p className="font-semibold text-center mb-3">Kepoin Bunbun Nihongo juga di:</p>
+              <div className="mt-6 pt-5 border-t border-white/15 text-left text-sm space-y-2">
+                <p className="font-semibold text-center mb-3 text-[oklch(0.92_0.12_85)]">Kepoin Bunbun Nihongo juga di:</p>
                 <p className="flex items-center gap-2 flex-wrap">
                   <span>📷</span>
                   <span className="font-semibold">Instagram:</span>
-                  <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@bunbun_nihongo</a>
+                  <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-[oklch(0.85_0.17_90)] hover:underline">@bunbun_nihongo</a>
                 </p>
                 <p className="flex items-center gap-2 flex-wrap">
                   <span>🌐</span>
                   <span className="font-semibold">Website:</span>
-                  <a href="https://www.bunbunnihongo.my.id" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline break-all">www.bunbunnihongo.my.id</a>
+                  <a href="https://www.bunbunnihongo.my.id" target="_blank" rel="noopener noreferrer" className="text-[oklch(0.85_0.17_90)] hover:underline break-all">www.bunbunnihongo.my.id</a>
                 </p>
                 <p className="flex items-center gap-2 flex-wrap">
                   <span>📱</span>
                   <span className="font-semibold">WhatsApp:</span>
-                  <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">+62 895-3286-71000</a>
+                  <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="text-[oklch(0.85_0.17_90)] hover:underline">+62 895-3286-71000</a>
                 </p>
               </div>
-              <p className="text-xs text-muted-foreground mt-5">
+              <p className="text-xs text-[oklch(0.98_0.02_70)]/60 mt-auto pt-5">
                 Sudah jadi murid Bunbun?{" "}
-                <Link to="/login" className="text-primary font-semibold underline">Login</Link>{" "}
+                <Link to="/login" className="text-[oklch(0.85_0.17_90)] font-semibold underline">Login</Link>{" "}
                 untuk akses game latihan.
               </p>
             </div>
           </div>
+
         </div>
       </section>
 
