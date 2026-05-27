@@ -124,12 +124,28 @@ function Landing() {
             <p className="text-xl md:text-2xl font-display font-bold text-primary mb-4">
               Kursus Online Bahasa Jepang
             </p>
-            <p className="text-base md:text-lg text-foreground/80 mb-6">
+            <p className="text-base md:text-lg text-foreground/80 mb-5">
               Belajar Bahasa Jepang <strong>dari nol sampai JLPT N3</strong> via Zoom,
               bareng <strong>sensei minimal JLPT N2</strong>, kurikulum standar internasional,
               dan <strong>maksimal 10 murid per kelas</strong>. Pertemuan banyak, harga
               terjangkau.
             </p>
+            <ul className="space-y-2 mb-6 text-sm md:text-base">
+              {[
+                <><strong>Sensei terjamin</strong> — minimal lulusan JLPT N2</>,
+                <><strong>Kurikulum standar internasional</strong> sesuai level JLPT</>,
+                <><strong>Maksimal 10 murid</strong> per kelas, kecil & efektif</>,
+                <><strong>Senin–Jumat</strong> ketemu sensei — intensif tapi ramah kantong</>,
+                <><strong>Bebas tanya di luar jam kelas</strong> via WhatsApp</>,
+                <><strong>Kelas direkam</strong>, bisa di-review kapan saja</>,
+                <><strong>Latihan ala game</strong> di platform Bunbun untuk penguatan materi</>,
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-5 h-5 rounded-full bg-green-500 text-white text-xs font-bold">✓</span>
+                  <span className="text-foreground/85">{item}</span>
+                </li>
+              ))}
+            </ul>
             <div className="flex flex-wrap gap-3">
               <a
                 href={WA_LINK}
