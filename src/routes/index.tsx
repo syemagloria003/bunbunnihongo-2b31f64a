@@ -473,6 +473,7 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
         Bunbun Nihongo
       </Link>
       <nav className="flex gap-3 text-sm font-semibold items-center">
+        <a href="#beranda" className="hidden sm:inline hover:text-primary">Beranda</a>
         <a href="#kelas" className="hidden sm:inline hover:text-primary">Kelas Dibuka</a>
         <a href="#testimoni" className="hidden sm:inline hover:text-primary">Testimoni</a>
         <a href="#sensei" className="hidden sm:inline hover:text-primary">Sensei</a>
