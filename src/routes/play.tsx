@@ -291,6 +291,8 @@ function LevelSelect() {
           </div>
         )}
 
+        <WorldDivider />
+
         <h2 className="font-display text-2xl font-bold mb-3">☄️ Dunia Galaksi Meteor (Kanji)</h2>
         {!p.meteor && (
           <p className="text-sm text-muted-foreground mb-3">
