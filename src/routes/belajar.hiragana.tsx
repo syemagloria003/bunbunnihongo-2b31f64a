@@ -482,17 +482,6 @@ function BelajarHiragana() {
           </div>
           <KanaGrid items={SOKUON} cols={4} onPick={open} active={active} />
 
-          <div className="rounded-xl bg-primary/10 p-3 space-y-2">
-            <p className="font-bold text-sm">🎮 Coba Ketik Sendiri!</p>
-            <p className="text-sm">Yuk pakai logika "ngotot" kamu tadi buat jawab kuis ini!</p>
-            <Quiz
-              question={<>Kalau huruf <b>TE</b> (<span style={{ fontFamily: "serif" }} className="text-lg">て</span>) kita kasih tanda kutip/ditebelin suaranya ( ゛ ), menurut lidahmu suaranya bakal berubah jadi apa?</>}
-              placeholder="Ketik jawabanmu (2 huruf) di sini..."
-              accept={["de"]}
-              successMsg="BINGO! Bener banget. Posisi lidah nyebut TE, kalau ditebelin dan ngotot jadinya DE (で)."
-              errorMsg="Hampir! Coba inget pola: KA→GA, SA→ZA, TA→DA… terus TE jadinya apa hayo?"
-            />
-          </div>
         </section>
 
         <div className="text-center py-4">
