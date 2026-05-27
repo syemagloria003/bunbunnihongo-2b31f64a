@@ -433,40 +433,6 @@ function PlayerStatusCard({
   );
 }
 
-function UserMenu({ onUnlock }: { onUnlock: (p: Progress) => void }) {
-  const [me, setMe] = useState<MeResponse | null>(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchMe().then(setMe);
-  }, []);
-
-  async function logout() {
-    await supabase.auth.signOut();
-    await navigate({ to: "/login" });
-  }
-
-  return (
-    <div className="flex flex-col items-end gap-1.5">
-      <ProfileBar />
-      {me?.isAdmin && (
-        <Link
-          to="/admin"
-          className="text-xs font-bold bg-primary text-primary-foreground px-3 py-1 rounded-full hover:brightness-110 text-center"
-        >
-          🛠️ Admin
-        </Link>
-      )}
-      <AdminUnlock onUnlock={onUnlock} />
-      <button
-        onClick={logout}
-        className="text-xs font-bold px-3 py-1 rounded-full bg-destructive text-destructive-foreground hover:brightness-110 transition text-center"
-      >
-        Logout
-      </button>
-    </div>
-  );
-}
 
 function AdminUnlock({ onUnlock }: { onUnlock: (p: Progress) => void }) {
   const handleClick = () => {
