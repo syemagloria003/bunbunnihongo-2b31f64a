@@ -495,7 +495,7 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
 function Footer() {
   return (
     <footer className="px-6 py-8 text-center text-xs text-muted-foreground border-t border-border/50">
-      <p>© {new Date().getFullYear()} Bunbun Nihongo — Kursus Online Bahasa Jepang.</p>
+      <p>© 2026 Bunbun Nihongo — Kursus Online Bahasa Jepang.</p>
     </footer>
   );
 }
