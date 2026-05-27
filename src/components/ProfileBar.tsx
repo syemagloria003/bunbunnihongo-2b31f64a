@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { fetchMe, updateProfile, type MeResponse } from "@/game/leaderboard";
 import { AVATARS, getAvatarSrc } from "@/game/avatars";
 
-export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" | "text" } = {}) {
+export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" } = {}) {
   const [me, setMe] = useState<MeResponse | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -12,27 +12,6 @@ export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" | "text" } = {}
   }, []);
 
   if (!me) return null;
-
-  if (size === "text") {
-    return (
-      <>
-        <button
-          onClick={() => setOpen(true)}
-          className="text-xs font-bold px-3 py-1 rounded-full bg-secondary text-secondary-foreground hover:brightness-110 transition"
-          title="Ubah nama panggilan & avatar"
-        >
-          ✏️ Ubah profil
-        </button>
-        {open && (
-          <ProfileModal
-            me={me}
-            onClose={() => setOpen(false)}
-            onSaved={(next) => { setMe(next); setOpen(false); }}
-          />
-        )}
-      </>
-    );
-  }
 
   const isLg = size === "lg";
 
@@ -56,6 +35,11 @@ export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" | "text" } = {}
               : "w-8 h-8 rounded-full bg-background object-cover ring-2 ring-primary"
           }
         />
+        {isLg && (
+          <span className="absolute bottom-0 right-0 bg-primary text-primary-foreground text-xs w-7 h-7 rounded-full flex items-center justify-center ring-2 ring-background shadow-md">
+            ✏️
+          </span>
+        )}
         {!isLg && <span className="text-sm font-semibold text-primary">{me.nama}</span>}
       </button>
 
