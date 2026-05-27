@@ -208,9 +208,9 @@ export function GameCanvas({ level }: { level: LevelDef }) {
           style={isFullscreen ? { aspectRatio: `${W}/${H}`, maxWidth: "100%", maxHeight: "100%" } : undefined}
         >
           <canvas ref={canvasRef} width={W} height={H} className="block w-full h-full" />
-          {/* Mobile gesture layer — drag to move, tap to jump */}
+          {/* Mobile on-screen joystick + jump button */}
           {isMobile && !needsRotate && !quiz && !result && (
-            <GestureLayer onPress={touch} />
+            <MobileControls onPress={touch} />
           )}
           {quiz && <KanaGateModal word={quiz.word} options={quiz.options} onAnswer={answer} mode={level.mode} />}
           {result && (
