@@ -195,7 +195,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
         ref={containerRef}
         className={
           "relative rounded-2xl overflow-hidden border-4 border-primary shadow-xl bg-black " +
-          (isFullscreen ? "w-screen h-screen flex items-center justify-center !rounded-none !border-0" : "")
+          (isFullscreen ? `w-screen h-screen flex ${isMobile ? "items-start" : "items-center"} justify-center !rounded-none !border-0` : "")
         }
         style={
           isFullscreen
@@ -204,14 +204,20 @@ export function GameCanvas({ level }: { level: LevelDef }) {
         }
       >
         <div
-          className={isFullscreen ? "relative h-full" : "relative w-full h-full"}
-          style={isFullscreen ? { aspectRatio: `${W}/${H}`, maxWidth: "100%", maxHeight: "100%" } : undefined}
+          className={isFullscreen ? "relative" : "relative w-full h-full"}
+          style={
+            isFullscreen
+              ? {
+                  aspectRatio: `${W}/${H}`,
+                  maxWidth: "100%",
+                  // On mobile, leave bottom half of the screen empty for the joystick + jump button
+                  maxHeight: isMobile ? "58vh" : "100%",
+                  height: isMobile ? "58vh" : "100%",
+                }
+              : undefined
+          }
         >
           <canvas ref={canvasRef} width={W} height={H} className="block w-full h-full" />
-          {/* Mobile on-screen joystick + jump button */}
-          {isMobile && !needsRotate && !quiz && !result && (
-            <MobileControls onPress={touch} />
-          )}
           {quiz && <KanaGateModal word={quiz.word} options={quiz.options} onAnswer={answer} mode={level.mode} />}
           {result && (
             <div className="absolute inset-0 z-40 flex items-center justify-center bg-foreground/50 backdrop-blur-sm p-4">
@@ -318,8 +324,8 @@ export function GameCanvas({ level }: { level: LevelDef }) {
               >
                 <h3 className="font-display font-bold text-sm mb-2 text-center">🎮 Cara Main</h3>
                 <ul className="space-y-1 mb-2 leading-snug">
-                  <li><span className="font-bold">Stik bulat (kiri bawah)</span> — tarik ke kiri/kanan untuk berjalan.</li>
-                  <li><span className="font-bold">Tombol merah (kanan bawah)</span> — tekan untuk lompat. Tekan 2× di udara = <em>double flap</em>.</li>
+                  <li><span className="font-bold">Stik bulat (kanan bawah)</span> — tarik ke kiri/kanan untuk berjalan.</li>
+                  <li><span className="font-bold">Tombol merah (kiri bawah)</span> — tekan untuk lompat. Tekan 2× di udara = <em>double flap</em>.</li>
                   <li>Lompati / injak 🕷️ dari atas. Jangan kena samping!</li>
                   <li>🍯 = skor. Pintu <strong>?</strong> = jawab benar untuk lewat.</li>
                 </ul>
@@ -333,6 +339,26 @@ export function GameCanvas({ level }: { level: LevelDef }) {
             </div>
           )}
         </div>
+
+        {/* Mobile joystick + jump button — siblings of canvas wrapper so they sit in the empty bottom band in fullscreen */}
+        {isMobile && !needsRotate && !quiz && !result && (
+          <MobileControls onPress={touch} />
+        )}
+
+        {/* Mobile landscape, not yet fullscreen — guide user to tap the ⛶ button */}
+        {isMobile && !isPortrait && !isFullscreen && (
+          <button
+            type="button"
+            onClick={() => containerRef.current?.requestFullscreen?.().catch(() => {})}
+            className="absolute inset-0 z-[55] flex flex-col items-center justify-center gap-3 bg-foreground/75 text-background backdrop-blur-sm"
+          >
+            <div className="text-6xl animate-pulse">⛶</div>
+            <p className="font-display font-bold text-xl">Ketuk untuk Layar Penuh</p>
+            <p className="text-xs opacity-90 max-w-xs text-center px-4">
+              Petualangan lebih seru di mode layar penuh. Ketuk di mana saja.
+            </p>
+          </button>
+        )}
       </div>
 
       {!isMobile && (
@@ -405,12 +431,42 @@ function MobileControls({ onPress }: { onPress: (key: string, down: boolean) => 
     activePtr.current = null;
   };
 
+  // Safety net: if the OS swallows pointerup (iOS quirk, finger sliding off captured element,
+  // app backgrounded mid-drag, etc.) the bee would keep walking forever. Listen globally so any
+  // pointer release/cancel anywhere always stops movement.
+  useEffect(() => {
+    const stopIfMine = (e: PointerEvent) => {
+      if (activePtr.current !== null && e.pointerId === activePtr.current) reset();
+    };
+    const stopAll = () => { if (activePtr.current !== null) reset(); };
+    window.addEventListener("pointerup", stopIfMine);
+    window.addEventListener("pointercancel", stopIfMine);
+    window.addEventListener("blur", stopAll);
+    document.addEventListener("visibilitychange", stopAll);
+    return () => {
+      window.removeEventListener("pointerup", stopIfMine);
+      window.removeEventListener("pointercancel", stopIfMine);
+      window.removeEventListener("blur", stopAll);
+      document.removeEventListener("visibilitychange", stopAll);
+    };
+  }, []);
+
   return (
     <>
-      {/* Joystick base — bottom-left */}
+      {/* Jump button — bottom-LEFT (red) */}
+      <button
+        type="button"
+        aria-label="Lompat"
+        className="absolute z-30 bottom-6 left-6 w-20 h-20 rounded-full bg-red-500 border-4 border-red-700 text-background font-display font-bold text-2xl shadow-xl active:scale-95 active:bg-red-600 touch-none select-none"
+        onPointerDown={(e) => { e.preventDefault(); onPress("jump", true); }}
+      >
+        ⤴
+      </button>
+
+      {/* Joystick base — bottom-RIGHT */}
       <div
         ref={baseRef}
-        className="absolute z-30 bottom-4 left-4 w-28 h-28 rounded-full bg-foreground/30 border-2 border-background/40 backdrop-blur-sm touch-none select-none"
+        className="absolute z-30 bottom-4 right-4 w-28 h-28 rounded-full bg-foreground/30 border-2 border-background/40 backdrop-blur-sm touch-none select-none"
         onPointerDown={(e) => {
           e.preventDefault();
           if (activePtr.current !== null) return;
@@ -433,22 +489,13 @@ function MobileControls({ onPress }: { onPress: (key: string, down: boolean) => 
         }}
         onPointerUp={(e) => { if (activePtr.current === e.pointerId) reset(); }}
         onPointerCancel={(e) => { if (activePtr.current === e.pointerId) reset(); }}
+        onPointerLeave={(e) => { if (activePtr.current === e.pointerId) reset(); }}
       >
         <div
           className="absolute top-1/2 left-1/2 w-14 h-14 rounded-full bg-background/90 border-2 border-primary shadow-lg pointer-events-none"
           style={{ transform: `translate(calc(-50% + ${knob.x}px), calc(-50% + ${knob.y}px))` }}
         />
       </div>
-
-      {/* Jump button — bottom-right */}
-      <button
-        type="button"
-        aria-label="Lompat"
-        className="absolute z-30 bottom-6 right-6 w-20 h-20 rounded-full bg-red-500 border-4 border-red-700 text-background font-display font-bold text-2xl shadow-xl active:scale-95 active:bg-red-600 touch-none select-none"
-        onPointerDown={(e) => { e.preventDefault(); onPress("jump", true); }}
-      >
-        ⤴
-      </button>
     </>
   );
 }
