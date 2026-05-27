@@ -57,11 +57,6 @@ export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" | "text" } = {}
           }
         />
         {!isLg && <span className="text-sm font-semibold text-primary">{me.nama}</span>}
-        {isLg && (
-          <span className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center ring-2 ring-background shadow-md group-hover:scale-110 transition">
-            ✏️
-          </span>
-        )}
       </button>
 
       {open && (
