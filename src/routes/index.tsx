@@ -193,116 +193,117 @@ function Landing() {
 
 
 
-      {/* Kelas Dibuka + Testimoni — side by side seperti marketplace */}
+      {/* Kelas Dibuka + Testimoni — 2x3 grid biar batas atas/bawah sejajar */}
       <section id="kelas" className="px-6 py-6 md:py-8 bg-muted/30 scroll-mt-20 md:min-h-[calc(100vh-4rem)] md:flex md:items-center">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 items-stretch w-full">
-          {/* Kiri: kelas yang dibuka — stacked seperti marketplace */}
-          <div className="flex flex-col">
-            <h2 className="text-xl md:text-2xl font-display font-bold mb-1">
-              Kelas yang dibuka 📣
-            </h2>
-            <p className="text-muted-foreground mb-3 text-xs">
-              Saat ini tersedia 2 kelas reguler. <span className="italic">*Kelas private belum tersedia.</span>
-            </p>
-            <div className="flex flex-col gap-3 flex-1">
-              <PosterCard
-                src={posterRegN4}
-                alt="Poster Kelas Reguler — Dari 0 sampai JLPT N4"
-                title="Kelas Reguler"
-                subtitle="Dari 0 — JLPT N4"
-                schedule="Senin–Jumat · 16.00–17.30 WIB"
-                price="Rp 3.700.000"
-                oldPrice="Rp 4.700.000"
-                priceNote="early bird · 124x pertemuan"
-                details={[
-                  "124x pertemuan via Zoom (Senin–Jumat)",
-                  "Materi dari nol hingga setara JLPT N4",
-                  "Maksimal 10 murid per kelas",
-                  "Rekaman kelas tersedia untuk di-review",
-                  "Sensei minimal bersertifikat JLPT N2",
-                  "Bebas tanya di luar jam kelas via WhatsApp",
-                  "Akses platform latihan ala game Bunbun",
-                ]}
-              />
-              <PosterCard
-                src={posterJlptN3}
-                alt="Poster Kelas JLPT N3"
-                title="Kelas JLPT N3"
-                subtitle="Lanjutan untuk lulusan N4"
-                schedule="Senin–Jumat · 19.00–20.30 WIB"
-                price="Rp 2.500.000"
-                oldPrice="Rp 3.500.000"
-                priceNote="early bird · 100x pertemuan"
-                details={[
-                  "100x pertemuan via Zoom (Senin–Jumat)",
-                  "Persiapan menyeluruh untuk JLPT N3",
-                  "Maksimal 10 murid per kelas",
-                  "Rekaman kelas tersedia untuk di-review",
-                  "Sensei minimal bersertifikat JLPT N2",
-                  "Bebas tanya di luar jam kelas via WhatsApp",
-                  "Bonus buku Kanji berkarakter Bunbun",
-                ]}
-              />
-            </div>
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 md:grid-rows-[auto_auto_1fr] gap-x-6 w-full">
+          {/* Row 1: headings */}
+          <h2 className="text-xl md:text-2xl font-display font-bold mb-1">
+            Kelas yang dibuka 📣
+          </h2>
+          <h2 id="testimoni" className="scroll-mt-20 text-xl md:text-2xl font-display font-bold mb-1">
+            Kata murid Bunbun 💌
+          </h2>
+
+          {/* Row 2: subtitles */}
+          <p className="text-muted-foreground mb-3 text-xs">
+            Saat ini tersedia 2 kelas reguler. <span className="italic">*Kelas private belum tersedia.</span>
+          </p>
+          <p className="text-muted-foreground mb-3 text-xs">
+            Lebih banyak testimoni di{" "}
+            <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
+              @bunbun_nihongo
+            </a>{" "}
+            ✨
+          </p>
+
+          {/* Row 3, Kiri: kartu kelas */}
+          <div className="flex flex-col gap-3">
+            <PosterCard
+              src={posterRegN4}
+              alt="Poster Kelas Reguler — Dari 0 sampai JLPT N4"
+              title="Kelas Reguler"
+              subtitle="Dari 0 — JLPT N4"
+              schedule="Senin–Jumat · 16.00–17.30 WIB"
+              price="Rp 3.700.000"
+              oldPrice="Rp 4.700.000"
+              priceNote="early bird · 124x pertemuan"
+              details={[
+                "124x pertemuan via Zoom (Senin–Jumat)",
+                "Materi dari nol hingga setara JLPT N4",
+                "Maksimal 10 murid per kelas",
+                "Rekaman kelas tersedia untuk di-review",
+                "Sensei minimal bersertifikat JLPT N2",
+                "Bebas tanya di luar jam kelas via WhatsApp",
+                "Akses platform latihan ala game Bunbun",
+              ]}
+            />
+            <PosterCard
+              src={posterJlptN3}
+              alt="Poster Kelas JLPT N3"
+              title="Kelas JLPT N3"
+              subtitle="Lanjutan untuk lulusan N4"
+              schedule="Senin–Jumat · 19.00–20.30 WIB"
+              price="Rp 2.500.000"
+              oldPrice="Rp 3.500.000"
+              priceNote="early bird · 100x pertemuan"
+              details={[
+                "100x pertemuan via Zoom (Senin–Jumat)",
+                "Persiapan menyeluruh untuk JLPT N3",
+                "Maksimal 10 murid per kelas",
+                "Rekaman kelas tersedia untuk di-review",
+                "Sensei minimal bersertifikat JLPT N2",
+                "Bebas tanya di luar jam kelas via WhatsApp",
+                "Bonus buku Kanji berkarakter Bunbun",
+              ]}
+            />
           </div>
 
-          {/* Kanan: testimoni vertical marquee */}
-          <div id="testimoni" className="scroll-mt-20 flex flex-col">
-            <h2 className="text-xl md:text-2xl font-display font-bold mb-1">
-              Kata murid Bunbun 💌
-            </h2>
-            <p className="text-muted-foreground mb-3 text-xs">
-              Lebih banyak testimoni di{" "}
-              <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
-                @bunbun_nihongo
-              </a>{" "}
-              ✨
-            </p>
-            <div className="relative flex-1 min-h-[420px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
-              <div className="flex flex-col gap-3 p-3 animate-marquee-y hover:[animation-play-state:paused]">
-                {[...TESTIMONI, ...TESTIMONI].map((t, i) => (
-                  <article
-                    key={i}
-                    className="shrink-0 rounded-2xl border border-primary/15 bg-card p-3 shadow-sm"
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <img
-                        src={t.foto}
-                        alt={`Foto ${t.nama}`}
-                        loading="lazy"
-                        className="w-10 h-10 rounded-full object-cover border-2 border-primary shrink-0"
-                        style={{ objectPosition: "center 25%" }}
-                      />
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-bold text-sm leading-tight truncate">{t.nama}</h3>
-                        {t.ig ? (
-                          <a
-                            href={`https://instagram.com/${t.ig}`}
-                            target="_blank" rel="noopener noreferrer"
-                            className="text-[11px] text-primary hover:underline"
-                          >
-                            @{t.ig}
-                          </a>
-                        ) : (
-                          <span className="text-[11px] text-muted-foreground">Murid Bunbun</span>
-                        )}
-                      </div>
-                      <span className="text-[10px] font-bold bg-primary/15 text-primary px-2 py-0.5 rounded-full whitespace-nowrap">
-                        Reg {t.level}
-                      </span>
+          {/* Row 3, Kanan: marquee testimoni — tinggi mengikuti kolom kelas */}
+          <div className="relative h-full min-h-[420px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
+            <div className="flex flex-col gap-3 p-3 animate-marquee-y hover:[animation-play-state:paused]">
+              {[...TESTIMONI, ...TESTIMONI].map((t, i) => (
+                <article
+                  key={i}
+                  className="shrink-0 rounded-2xl border border-primary/15 bg-card p-3 shadow-sm"
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <img
+                      src={t.foto}
+                      alt={`Foto ${t.nama}`}
+                      loading="lazy"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-primary shrink-0"
+                      style={{ objectPosition: "center 25%" }}
+                    />
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-bold text-sm leading-tight truncate">{t.nama}</h3>
+                      {t.ig ? (
+                        <a
+                          href={`https://instagram.com/${t.ig}`}
+                          target="_blank" rel="noopener noreferrer"
+                          className="text-[11px] text-primary hover:underline"
+                        >
+                          @{t.ig}
+                        </a>
+                      ) : (
+                        <span className="text-[11px] text-muted-foreground">Murid Bunbun</span>
+                      )}
                     </div>
-                    <p className="text-xs text-foreground/80 leading-relaxed">
-                      <span className="text-primary font-bold">“</span>
-                      {t.isi}
-                      <span className="text-primary font-bold">”</span>
-                    </p>
-                  </article>
-                ))}
-              </div>
+                    <span className="text-[10px] font-bold bg-primary/15 text-primary px-2 py-0.5 rounded-full whitespace-nowrap">
+                      Reg {t.level}
+                    </span>
+                  </div>
+                  <p className="text-xs text-foreground/80 leading-relaxed">
+                    <span className="text-primary font-bold">“</span>
+                    {t.isi}
+                    <span className="text-primary font-bold">”</span>
+                  </p>
+                </article>
+              ))}
             </div>
           </div>
         </div>
       </section>
+
 
       {/* Sensei + CTA — 2x2 grid biar tinggi sejajar */}
       <section id="sensei" className="px-6 py-6 md:py-8 bg-muted/20 scroll-mt-20 md:min-h-[calc(100vh-4rem)] md:flex md:items-center">
