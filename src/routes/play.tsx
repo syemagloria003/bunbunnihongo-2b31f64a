@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, useMatches, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useMatches, redirect, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { LEVELS, KATAKANA_LEVELS, KANJI_LEVELS, ALL_LEVELS, type LevelDef } from "@/game/levels";
 import { loadProgress, saveProgress, type Progress } from "@/game/progress";
@@ -7,6 +7,7 @@ import { LevelPreview } from "@/components/LevelPreview";
 import { ProfileBar } from "@/components/ProfileBar";
 import { NotificationTicker } from "@/components/NotificationTicker";
 import { getAvatarSrc } from "@/game/avatars";
+import { fetchMe, type MeResponse } from "@/game/leaderboard";
 
 function rankBadgeClass(i: number): string {
   if (i === 0) return "bg-gradient-to-br from-yellow-300 to-yellow-500 text-yellow-950 ring-2 ring-yellow-200 shadow";
@@ -144,10 +145,7 @@ function LevelSelect() {
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
           <Link to="/" className="text-sm font-semibold hover:text-primary shrink-0">← Beranda</Link>
-          <div className="flex items-center gap-2 flex-wrap justify-end">
-            <ProfileBar />
-            <AdminUnlock onUnlock={setP} />
-          </div>
+          <UserMenu onUnlock={setP} />
         </div>
         <NotificationTicker />
         <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6">
@@ -302,6 +300,41 @@ function LevelSelect() {
           })}
         </div>
       </div>
+    </div>
+  );
+}
+
+function UserMenu({ onUnlock }: { onUnlock: (p: Progress) => void }) {
+  const [me, setMe] = useState<MeResponse | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchMe().then(setMe);
+  }, []);
+
+  async function logout() {
+    await supabase.auth.signOut();
+    await navigate({ to: "/login" });
+  }
+
+  return (
+    <div className="flex flex-col items-end gap-1.5">
+      <ProfileBar />
+      {me?.isAdmin && (
+        <Link
+          to="/admin"
+          className="text-xs font-bold bg-primary text-primary-foreground px-3 py-1 rounded-full hover:brightness-110 text-center"
+        >
+          🛠️ Admin
+        </Link>
+      )}
+      <AdminUnlock onUnlock={onUnlock} />
+      <button
+        onClick={logout}
+        className="text-xs font-bold px-3 py-1 rounded-full bg-destructive text-destructive-foreground hover:brightness-110 transition text-center"
+      >
+        Logout
+      </button>
     </div>
   );
 }
