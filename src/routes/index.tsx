@@ -248,13 +248,7 @@ function Landing() {
 
           {/* Kanan: testimoni vertical marquee */}
           <div id="testimoni" className="scroll-mt-20 flex flex-col">
-            <h2 className="text-xl md:text-2xl font-display font-bold mb-1">
-              Kata murid Bunbun 💌
-            </h2>
-            <p className="text-muted-foreground mb-3 text-xs">
-              Cerita jujur dari murid batch sebelumnya.
-            </p>
-            <div className="relative flex-1 min-h-[420px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
+            <div className="relative h-[520px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
               <div className="flex flex-col gap-3 p-3 animate-marquee-y hover:[animation-play-state:paused]">
                 {[...TESTIMONI, ...TESTIMONI].map((t, i) => (
                   <article
