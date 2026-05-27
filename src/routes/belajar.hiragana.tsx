@@ -203,6 +203,8 @@ function BelajarHiragana() {
           </div>
         )}
 
+        <SectionDivider label="Gojūon" />
+
         {/* Gojuon table */}
         <section className="space-y-4">
           <div>
@@ -271,6 +273,8 @@ function BelajarHiragana() {
 
           <GojuonGrid onPick={open} active={active} />
         </section>
+
+        <SectionDivider label="Dakuon & Handakuon" />
 
         {/* Dakuon + Handakuon — Jurus Upgrade */}
         <section className="space-y-3">
@@ -344,6 +348,8 @@ function BelajarHiragana() {
           </div>
           <DakuonGrid onPick={open} active={active} />
         </section>
+
+        <SectionDivider label="Yōon" />
 
         {/* Youon */}
         <section className="space-y-3">
@@ -467,6 +473,8 @@ function BelajarHiragana() {
           </div>
           <KanaGrid items={YOUON} cols={3} onPick={open} active={active} />
         </section>
+
+        <SectionDivider label="Sokuon" />
 
         {/* Sokuon */}
         <section className="space-y-3">
