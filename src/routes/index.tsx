@@ -362,37 +362,8 @@ function Landing() {
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="px-6 py-14">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-center mb-2">
-            Suasana kelas 📸
-          </h2>
-          <p className="text-center text-muted-foreground mb-8 text-sm">
-            Cuplikan dari batch-batch sebelumnya
-          </p>
-          <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
-            <div className="flex gap-4 animate-marquee w-max">
-              {[...gallery, ...gallery].map((g, i) => (
-                <figure
-                  key={`${g.src}-${i}`}
-                  className="relative shrink-0 w-64 md:w-80 h-48 md:h-56 rounded-2xl border-2 border-border bg-card shadow-sm overflow-hidden flex items-center justify-center"
-                >
-                  <img
-                    src={g.src}
-                    alt={g.label}
-                    loading="lazy"
-                    className="max-w-full max-h-full object-contain"
-                  />
-                  <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white text-xs font-semibold px-3 py-2">
-                    {g.label}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+
+
 
       {/* CTA */}
       <section className="px-6 py-14">
