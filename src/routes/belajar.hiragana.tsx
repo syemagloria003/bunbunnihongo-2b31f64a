@@ -269,17 +269,6 @@ function BelajarHiragana() {
               </p>
             </div>
 
-            <div className="rounded-xl bg-sky-100/70 dark:bg-sky-950/30 p-3 space-y-2">
-              <p className="font-bold">🤔 Kira-kira materi setelah pengenalan urutan nulis ini, kamu mau langsung kasih kuis tebak bentuk huruf satuan, atau merangkai huruf jadi kata sederhana (misal: A-I = Cinta)?</p>
-              <div className="flex gap-2">
-                <Link to="/play" className="inline-flex items-center px-4 py-2 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:brightness-110">
-                  🎮 Langsung main
-                </Link>
-                <span className="inline-flex items-center px-4 py-2 rounded-xl border-2 border-border text-sm text-muted-foreground opacity-60">
-                  📝 Kuis kata (segera hadir)
-                </span>
-              </div>
-            </div>
           </div>
 
           <GojuonGrid onPick={open} active={active} />
