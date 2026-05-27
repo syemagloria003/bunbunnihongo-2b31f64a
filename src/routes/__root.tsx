@@ -133,7 +133,12 @@ function RootComponent() {
     if (typeof document === "undefined") return;
     const game = isGameRoute(pathname);
     document.body.classList.toggle("game-theme", game);
-    return () => { document.body.classList.remove("game-theme"); };
+    // Activate Tailwind `dark:` variants on game routes so dark-mode color pairs apply.
+    document.documentElement.classList.toggle("dark", game);
+    return () => {
+      document.body.classList.remove("game-theme");
+      document.documentElement.classList.remove("dark");
+    };
   }, [pathname]);
 
   return (
