@@ -397,27 +397,8 @@ function Landing() {
   );
 }
 
-function Feature({ icon, title, desc }: { icon: string; title: string; desc: string }) {
-  return (
-    <div className="honey-card rounded-2xl p-5">
-      <div className="text-4xl mb-2">{icon}</div>
-      <h3 className="font-bold text-base mb-1">{title}</h3>
-      <p className="text-sm text-muted-foreground">{desc}</p>
-    </div>
-  );
-}
 
-function Perk({ icon, title, desc }: { icon: string; title: string; desc: string }) {
-  return (
-    <div className="rounded-2xl p-6 bg-card border-2 border-border/60 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition">
-      <div className="w-12 h-12 rounded-xl bg-primary/15 text-primary flex items-center justify-center text-2xl mb-3">
-        {icon}
-      </div>
-      <h3 className="font-bold text-base mb-1">{title}</h3>
-      <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-    </div>
-  );
-}
+
 
 
 function PosterCard({
