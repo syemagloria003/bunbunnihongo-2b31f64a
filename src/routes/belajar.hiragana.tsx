@@ -311,6 +311,18 @@ function BelajarHiragana() {
               </ul>
             </div>
 
+            <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+              <p className="font-bold text-sm">🎮 Coba Ketik Sendiri!</p>
+              <p className="text-sm">Yuk pakai logika "ngotot" kamu tadi buat jawab kuis ini!</p>
+              <Quiz
+                question={<>Kalau huruf <b>TE</b> (<span style={{ fontFamily: "serif" }} className="text-lg">て</span>) kita kasih tanda kutip/ditebelin suaranya ( ゛ ), menurut lidahmu suaranya bakal berubah jadi apa?</>}
+                placeholder="Ketik jawabanmu (2 huruf) di sini..."
+                accept={["de"]}
+                successMsg="BINGO! Bener banget. Posisi lidah nyebut TE, kalau ditebelin dan ngotot jadinya DE (で)."
+                errorMsg="Hampir! Coba inget pola: KA→GA, SA→ZA, TA→DA… terus TE jadinya apa hayo?"
+              />
+            </div>
+
             <div className="rounded-xl bg-rose-100/70 dark:bg-rose-950/30 p-3 space-y-1">
               <p className="font-bold">2. Handakuon si "Tanda Bulat" ( ゜) — Suara Meletup! 💥</p>
               <p>
