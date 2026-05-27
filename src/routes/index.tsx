@@ -404,26 +404,42 @@ function Landing() {
 
 
 function PosterCard({
-  src, alt, title, subtitle, schedule,
-}: { src: string; alt: string; title: string; subtitle: string; schedule: string }) {
+  src, alt, title, subtitle, schedule, details,
+}: { src: string; alt: string; title: string; subtitle: string; schedule: string; details: string[] }) {
   return (
-    <div className="rounded-3xl overflow-hidden border-2 border-primary/30 bg-card shadow-lg flex flex-col">
-      <a href={src} target="_blank" rel="noopener noreferrer" className="block bg-muted">
-        <img src={src} alt={alt} loading="lazy" className="w-full h-auto object-contain" />
+    <div className="rounded-2xl overflow-hidden border border-primary/25 bg-card shadow-md flex flex-col sm:flex-row">
+      <a href={src} target="_blank" rel="noopener noreferrer" className="block bg-muted sm:w-40 sm:shrink-0">
+        <img src={src} alt={alt} loading="lazy" className="w-full h-40 sm:h-full object-cover" />
       </a>
-      <div className="p-5">
-        <div className="inline-block bg-primary text-primary-foreground text-xs font-bold px-2.5 py-1 rounded-full mb-2">
+      <div className="p-4 flex-1 min-w-0">
+        <div className="inline-block bg-primary/15 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mb-1.5">
           PENDAFTARAN DIBUKA
         </div>
-        <h3 className="font-display font-bold text-xl">{title}</h3>
-        <p className="text-primary font-semibold text-sm">{subtitle}</p>
-        <p className="text-sm text-muted-foreground mt-1">{schedule}</p>
+        <h3 className="font-display font-bold text-base md:text-lg leading-tight">{title}</h3>
+        <p className="text-primary font-semibold text-xs">{subtitle}</p>
+        <p className="text-xs text-muted-foreground mt-0.5">{schedule}</p>
+
+        <details className="mt-2 group">
+          <summary className="cursor-pointer text-xs font-semibold text-primary hover:underline list-none flex items-center gap-1 select-none">
+            <span className="transition-transform group-open:rotate-90">▸</span>
+            Lihat detail kelas
+          </summary>
+          <ul className="mt-2 space-y-1 text-xs text-foreground/80">
+            {details.map((d, i) => (
+              <li key={i} className="flex items-start gap-1.5">
+                <span className="text-green-600 font-bold mt-0.5">✓</span>
+                <span>{d}</span>
+              </li>
+            ))}
+          </ul>
+        </details>
+
         <a
           href={WA_LINK}
           target="_blank" rel="noopener noreferrer"
-          className="mt-4 inline-block px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-bold hover:brightness-105"
+          className="mt-3 inline-block w-full sm:w-auto text-center px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-bold hover:bg-green-700 transition"
         >
-          💬 Daftar kelas ini
+          🛒 Daftar kelas ini
         </a>
       </div>
     </div>
