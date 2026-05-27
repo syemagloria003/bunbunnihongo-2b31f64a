@@ -2,6 +2,7 @@ import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { fetchLeaderboard, fetchMe, type LeaderboardEntry, type MeResponse } from "@/game/leaderboard";
 import { supabase } from "@/integrations/supabase/client";
+import { getAvatarSrc } from "@/game/avatars";
 
 export const Route = createFileRoute("/leaderboard")({
   head: () => ({
@@ -84,7 +85,7 @@ function LeaderboardPage() {
                 const isMe = me?.nama === r.nama;
                 return (
                   <li
-                    key={`${r.nama}-${r.tanggal}-${i}`}
+                    key={`${r.user_id}-${i}`}
                     className={[
                       "flex items-center gap-3 rounded-xl px-3 py-2 transition",
                       isMe ? "bg-primary/15 ring-2 ring-primary" : "bg-background/60",
@@ -93,6 +94,12 @@ function LeaderboardPage() {
                     <span className="font-display font-bold text-lg w-8 text-center">
                       {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`}
                     </span>
+                    <img
+                      src={getAvatarSrc(r.avatar_id)}
+                      alt=""
+                      loading="lazy"
+                      className="w-9 h-9 rounded-full bg-background object-cover shrink-0 ring-2 ring-primary/40"
+                    />
                     <div className="flex-1 min-w-0">
                       <p className="font-bold truncate">{r.nama}{isMe && " (kamu)"}</p>
                       <p className="text-xs text-muted-foreground">{formatDate(r.tanggal)}</p>
