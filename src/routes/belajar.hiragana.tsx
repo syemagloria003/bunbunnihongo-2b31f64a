@@ -112,11 +112,10 @@ function BelajarHiragana() {
   return (
     <div className="min-h-screen px-4 sm:px-6 py-6">
       <div className="max-w-4xl mx-auto space-y-6">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
           <Link to="/play" className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary/10 text-primary font-bold text-xs sm:text-sm hover:bg-primary/20 transition">
             ← Kembali
           </Link>
-          <span className="text-2xl">📖</span>
         </div>
 
         <header className="text-center space-y-1">
