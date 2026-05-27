@@ -157,20 +157,63 @@ function BelajarHiragana() {
           <GojuonGrid onPick={open} active={active} />
         </section>
 
-        {/* Dakuon + Handakuon */}
+        {/* Dakuon + Handakuon — Jurus Upgrade */}
         <section className="space-y-3">
-          <h2 className="font-display text-2xl font-bold">💧 Dakuon &amp; ⭕ Handakuon</h2>
-          <div className="honey-card rounded-2xl p-4 text-sm space-y-2">
+          <h2 className="font-display text-2xl font-bold">🪄 Jurus Upgrade Huruf (Dakuon &amp; Handakuon)</h2>
+          <div className="honey-card rounded-2xl p-4 text-sm space-y-3">
             <p>
-              <b>Dakuon</b> (濁音) = bunyi “keruh”. Dibuat dengan menambahkan
-              tanda <b>゛</b> (ten-ten/dakuten) di kanan-atas huruf k, s, t, h.
-              Contoh: か → が (ka → ga).
+              Kamu udah kenal beberapa huruf? Keren! Sekarang, kita belajar
+              <b> jurus upgrade huruf</b>.
             </p>
             <p>
-              <b>Handakuon</b> (半濁音) = bunyi “setengah keruh”. Hanya untuk
-              baris h: ditambah tanda lingkaran kecil <b>゜</b> (maru/handakuten)
-              di kanan-atas. Contoh: は → ぱ (ha → pa).
+              <b>Kabar baiknya:</b> Kamu <b>NGGAK PERLU</b> ngafalin huruf baru
+              dari nol! Kita cuma bakal main-main sedikit sama suara dan
+              tenggorokan kamu. Yuk, kita mulai!
             </p>
+
+            <div className="rounded-xl bg-amber-100/70 dark:bg-amber-950/30 p-3 space-y-1">
+              <p className="font-bold">1. Dakuon si "Tanda Kutip" ( ゛) — Suara Ngotot! 💪</p>
+              <p>
+                Dakuon itu cuma nambahin tanda mirip kutip ( ゛) di pojok
+                kanan atas huruf. Efeknya apa? Suaranya jadi lebih tebal.
+                Nggak usah dihafal, mari kita buktikan pakai mulut kamu
+                sendiri:
+              </p>
+              <p>
+                <b>Praktik Langsung!</b> Coba kamu bilang: <b>"KA"</b>. Nah,
+                sekarang tahan posisi lidah dan mulut kamu, lalu bilang "KA"
+                lagi tapi suaranya lebih ditebalkan dan lebih ngotot dari
+                tenggorokan.
+              </p>
+              <p>Bunyi apa yang keluar? Otomatis jadi <b>"GA"</b>, kan?</p>
+              <p>
+                Yep, sesimpel itu! <span style={{ fontFamily: "serif" }} className="text-lg">か</span> (KA)
+                dikasih tanda kutip (゛) ➡️ jadinya <span style={{ fontFamily: "serif" }} className="text-lg">が</span> (GA).
+              </p>
+              <p className="font-semibold">Berlaku juga buat huruf lain:</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>SA (santai) ➡️ ditebelin jadi <b>ZA</b></li>
+                <li>TA (santai) ➡️ ditebelin jadi <b>DA</b></li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl bg-rose-100/70 dark:bg-rose-950/30 p-3 space-y-1">
+              <p className="font-bold">2. Handakuon si "Tanda Bulat" ( ゜) — Suara Meletup! 💥</p>
+              <p>
+                Kalau tanda kutip bikin ngotot, tanda bulat ( ゜) kecil ini
+                bikin suara kamu <b>meletup</b>. Tanda ini cuma berlaku buat
+                geng huruf <b>HA</b> ya.
+              </p>
+              <p>
+                Coba rapatkan bibir atas dan bawahmu sekarang, terus hembuskan
+                udara keluar sampai bibirmu kebuka (kayak nyembur pelan).
+                Pasti bunyinya <b>"Pah!"</b>.
+              </p>
+              <p>
+                <span style={{ fontFamily: "serif" }} className="text-lg">は</span> (HA)
+                dikasih bulat (゜) ➡️ jadinya <span style={{ fontFamily: "serif" }} className="text-lg">ぱ</span> (PA).
+              </p>
+            </div>
           </div>
           <DakuonGrid onPick={open} active={active} />
         </section>
@@ -195,20 +238,42 @@ function BelajarHiragana() {
 
         {/* Sokuon */}
         <section className="space-y-3">
-          <h2 className="font-display text-2xl font-bold">⏸️ Sokuon — Konsonan Ganda</h2>
+          <h2 className="font-display text-2xl font-bold">🛑 Sokuon si "Tsu Kecil" ( っ ) — Ngerem Mendadak!</h2>
           <div className="honey-card rounded-2xl p-4 text-sm space-y-2">
             <p>
-              <b>Sokuon</b> (促音) ditandai dengan <b>っ kecil</b>. Fungsinya
-              menggandakan konsonan berikutnya dan memberi jeda kecil.
-              Contoh: が<b>っ</b>こう (gakkō = sekolah).
+              Kalau kamu lihat huruf <i>tsu</i> tapi ukurannya nyempil kecil
+              (<span style={{ fontFamily: "serif" }}>っ</span>), itu namanya
+              <b> Sokuon</b>. Ini <b>bukan</b> dibaca "tsu", tapi ini adalah
+              tanda <b>ngerem mendadak</b> alias huruf ganda/konsonan ganda.
+            </p>
+            <p>
+              Ibarat kamu lagi jalan, terus tiba-tiba ada lubang dan kamu
+              nahan napas kaget.
+            </p>
+            <p>
+              <b>Contoh:</b> Kata <b>KIPPU</b> (artinya: Tiket). Cara bacanya
+              bukan <i>Ki-pu</i> (datar). Tapi: <b>KI…</b> (ngerem/tahan napas
+              kaget sebentar) <b>…PU!</b>
             </p>
             <p className="text-amber-700 dark:text-amber-300">
               📐 <b>Cara nulisnya:</b> sama seperti yōon — っ kecil ditulis di
               posisi <b>kanan-bawah</b>, sekitar <b>seperempat kotak</b>
-              Mandarin.
+              {" "}Mandarin.
             </p>
           </div>
           <KanaGrid items={SOKUON} cols={4} onPick={open} active={active} />
+
+          <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+            <p className="font-bold text-sm">🎮 Coba Ketik Sendiri!</p>
+            <p className="text-sm">Yuk pakai logika "ngotot" kamu tadi buat jawab kuis ini!</p>
+            <Quiz
+              question={<>Kalau huruf <b>TE</b> (<span style={{ fontFamily: "serif" }} className="text-lg">て</span>) kita kasih tanda kutip/ditebelin suaranya ( ゛ ), menurut lidahmu suaranya bakal berubah jadi apa?</>}
+              placeholder="Ketik jawabanmu (2 huruf) di sini..."
+              accept={["de"]}
+              successMsg="BINGO! Bener banget. Posisi lidah nyebut TE, kalau ditebelin dan ngotot jadinya DE (で)."
+              errorMsg="Hampir! Coba inget pola: KA→GA, SA→ZA, TA→DA… terus TE jadinya apa hayo?"
+            />
+          </div>
         </section>
 
         <div className="text-center py-4">
