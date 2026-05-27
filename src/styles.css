@@ -150,3 +150,11 @@
   animation: marquee-y 30s linear infinite;
 }
 .animate-marquee-y:hover { animation-play-state: paused; }
+
+@keyframes fire-glow {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 0.9; }
+}
+.animate-fire-glow {
+  animation: fire-glow 1.2s ease-in-out infinite;
+}
