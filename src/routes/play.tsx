@@ -256,6 +256,8 @@ function LevelSelect() {
           })}
         </div>
 
+        <WorldDivider />
+
         <h2 className="font-display text-2xl font-bold mb-3">💎 Dunia Kristal (Katakana)</h2>
         {!p.crystal && (
           <p className="text-sm text-muted-foreground mb-3">
