@@ -211,8 +211,9 @@ function Landing() {
                 title="Kelas Reguler"
                 subtitle="Dari 0 — JLPT N4"
                 schedule="Senin–Jumat · 16.00–17.30 WIB"
-                price="Rp 1.250.000"
-                priceNote="untuk 124x pertemuan (≈ Rp 10rb/sesi)"
+                price="Rp 3.700.000"
+                oldPrice="Rp 4.700.000"
+                priceNote="harga early bird · 124x pertemuan"
                 details={[
                   "124x pertemuan via Zoom (Senin–Jumat)",
                   "Materi dari nol hingga setara JLPT N4",
