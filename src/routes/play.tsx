@@ -154,7 +154,7 @@ function LevelSelect() {
 
 
         <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="game-panel rounded-2xl p-4 relative overflow-hidden">
+          <div className="game-panel panel-leaderboard rounded-2xl p-4 relative overflow-hidden">
             <span className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-primary/30 blur-3xl pointer-events-none" />
             <div className="flex items-center justify-between mb-2 relative">
               <h3 className="font-display font-bold text-lg flex items-center gap-2">
@@ -189,7 +189,7 @@ function LevelSelect() {
             )}
           </div>
 
-          <div className="game-panel rounded-2xl p-4 relative overflow-hidden">
+          <div className="game-panel panel-rival rounded-2xl p-4 relative overflow-hidden">
             <span className="absolute -top-16 -left-16 w-40 h-40 rounded-full bg-accent/30 blur-3xl pointer-events-none" />
             <h3 className="font-display font-bold text-lg mb-1 flex items-center gap-2 relative">
               <span className="text-xl">⚔️</span> Saingan di level kamu
@@ -391,7 +391,7 @@ function PlayerStatusCard({
   }
 
   return (
-    <div className="game-panel rounded-3xl p-4 sm:p-5 mb-6 relative overflow-hidden">
+    <div className="game-panel panel-player rounded-3xl p-4 sm:p-5 mb-6 relative overflow-hidden">
       <span className={["absolute -top-24 -right-20 w-72 h-72 rounded-full blur-3xl pointer-events-none opacity-50 animate-aurora bg-gradient-to-br", world.barFrom, world.barTo].join(" ")} />
       <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
       <div className="flex items-start gap-4 flex-wrap sm:flex-nowrap relative">
