@@ -149,6 +149,7 @@ function LevelSelect() {
             <AdminUnlock onUnlock={setP} />
           </div>
         </div>
+        <NotificationTicker />
         <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6">
           Peta Petualangan 🗺️
         </h1>
