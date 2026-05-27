@@ -585,7 +585,7 @@ function charForStroke(char: string): string {
 
 function SectionDivider({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-3 py-2" aria-hidden>
+    <div className="flex items-center gap-3 py-2 mt-10" aria-hidden>
       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary/50 to-primary/70" />
       <span className="text-[11px] font-extrabold tracking-[0.2em] uppercase text-primary px-3 py-1 rounded-full border-2 border-dashed border-primary bg-primary/10 shadow-[0_0_12px_hsl(var(--primary)/0.55)]">
         ⬇ {label}
