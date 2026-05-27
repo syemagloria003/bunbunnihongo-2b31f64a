@@ -1,7 +1,60 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { HIRAGANA, YOUON, SOKUON } from "@/game/kana-data";
 import { KanjiStrokeOrder } from "@/components/KanjiStrokeOrder";
+
+/** Mini interactive quiz: user types an answer, we check against accepted list. */
+function Quiz({
+  question,
+  placeholder,
+  accept,
+  successMsg,
+  errorMsg,
+}: {
+  question: ReactNode;
+  placeholder: string;
+  accept: string[];
+  successMsg: string;
+  errorMsg: string;
+}) {
+  const [val, setVal] = useState("");
+  const [state, setState] = useState<"idle" | "ok" | "no">("idle");
+  const norm = (s: string) => s.trim().toLowerCase().replace(/[.\s!?'"`]/g, "");
+  function check(e: React.FormEvent) {
+    e.preventDefault();
+    if (!val.trim()) return;
+    setState(accept.map(norm).includes(norm(val)) ? "ok" : "no");
+  }
+  return (
+    <div className="space-y-2">
+      <div className="text-sm">{question}</div>
+      <form onSubmit={check} className="flex gap-2">
+        <input
+          value={val}
+          onChange={(e) => { setVal(e.target.value); setState("idle"); }}
+          placeholder={placeholder}
+          className="flex-1 h-10 px-3 rounded-lg border-2 border-border bg-background text-sm focus:outline-none focus:border-primary"
+        />
+        <button
+          type="submit"
+          className="h-10 px-4 rounded-lg bg-primary text-primary-foreground font-bold text-sm hover:brightness-110"
+        >
+          Cek
+        </button>
+      </form>
+      {state === "ok" && (
+        <p className="text-sm font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-100/70 dark:bg-emerald-950/40 rounded-lg p-2">
+          ✅ {successMsg}
+        </p>
+      )}
+      {state === "no" && (
+        <p className="text-sm font-semibold text-rose-700 dark:text-rose-300 bg-rose-100/70 dark:bg-rose-950/40 rounded-lg p-2">
+          ❌ {errorMsg}
+        </p>
+      )}
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/belajar/hiragana")({
   head: () => ({
@@ -71,50 +124,53 @@ function BelajarHiragana() {
           </p>
         </header>
 
-        {/* Intro */}
+        {/* Intro: Duo Kembar */}
         <section className="honey-card rounded-2xl p-5 space-y-3">
-          <h2 className="font-display text-2xl font-bold">🈂️ Apa itu Hiragana?</h2>
+          <h2 className="font-display text-2xl font-bold">🎌 Kenalan Dulu Sama "Duo Kembar" Jepang</h2>
           <p className="text-sm leading-relaxed">
-            <b>Hiragana (ひらがな)</b> adalah salah satu dari tiga sistem tulisan
-            Jepang (Hiragana, Katakana, Kanji). Bentuknya melengkung-lembut dan
-            digunakan untuk menulis <b>kata-kata asli Jepang</b>, akhiran tata
-            bahasa (okurigana), partikel (は, を, に), serta untuk membantu
-            membaca kanji (furigana).
+            Halo! Selamat datang di tempat paling santai buat belajar nulis Jepang.
           </p>
-          <div>
-            <h3 className="font-bold mt-2 mb-1">📜 Sejarah Singkat</h3>
-            <p className="text-sm leading-relaxed">
-              Hiragana berasal dari bentuk sōsho (cursive) Kanji yang dipakai
-              sekitar abad ke-9 (zaman Heian). Awalnya disebut <i>onnade</i>
-              (tulisan perempuan) karena banyak dipakai oleh perempuan
-              bangsawan—termasuk Murasaki Shikibu yang menulis <i>Genji
-              Monogatari</i>. Sekarang Hiragana jadi dasar literasi anak-anak
-              Jepang dan langkah pertama untuk siapa pun yang belajar bahasa
-              Jepang.
-            </p>
+          <p className="text-sm leading-relaxed">
+            Pernah bingung kenapa tulisan Jepang itu bentuknya beda-beda? Ada yang
+            melengkung cantik, ada yang kaku kayak robot, ada juga yang ruwet
+            banget kayak benang kusut? Tenang, kamu nggak sendirian!
+          </p>
+          <p className="text-sm leading-relaxed">
+            Di Jepang, mereka emang pakai <b>3 jenis huruf</b> sekaligus. Tapi
+            untuk pemula, kita cukup kenalan sama dua saudari kembar ini dulu:
+            <b> Hiragana</b> dan <b>Katakana</b>.
+          </p>
+
+          <p className="text-sm font-bold mt-2">Bedanya apa sih? Gampang banget bedainnya!</p>
+
+          <div className="rounded-xl bg-pink-100/70 dark:bg-pink-950/30 p-3 space-y-1 text-sm">
+            <p className="font-bold">1. Hiragana (Si Kalem Asli Jepang) 🌸</p>
+            <p><b>Fungsi:</b> Dipakai buat nulis kata-kata yang asli dari bahasa Jepang. Misalnya: <i>Arigatou</i> (Terima kasih) atau <i>Sayonara</i> (Selamat tinggal).</p>
+            <p><b>Bentuknya:</b> Luwes, melengkung-lengkung, dan santai. Ibaratnya kayak mi instan yang udah matang. 🍜</p>
+            <p><b>Contoh:</b> <span style={{ fontFamily: "serif" }} className="text-lg">あ</span> (A), <span style={{ fontFamily: "serif" }} className="text-lg">め</span> (Me), <span style={{ fontFamily: "serif" }} className="text-lg">の</span> (No). Kelihatan kan lengkungannya?</p>
           </div>
-          <div>
-            <h3 className="font-bold mt-2 mb-1">🎯 Fungsinya</h3>
-            <ul className="list-disc list-inside text-sm space-y-1">
-              <li>Menulis kata asli Jepang (contoh: たべる = makan).</li>
-              <li>Partikel kalimat (は, が, を, に, で, と, …).</li>
-              <li>Akhiran kata kerja & kata sifat (okurigana).</li>
-              <li>Furigana — bacaan kecil di atas kanji.</li>
-            </ul>
+
+          <div className="rounded-xl bg-sky-100/70 dark:bg-sky-950/30 p-3 space-y-1 text-sm">
+            <p className="font-bold">2. Katakana (Si Gaul Suka Barang Impor) ⚡</p>
+            <p><b>Fungsi:</b> Dipakai khusus untuk kata serapan dari bahasa asing (kayak bahasa Inggris), nama negara asing, atau nama kamu! Yup, karena kita bukan orang Jepang, nama kita bakal ditulis pakai huruf ini.</p>
+            <p><b>Bentuknya:</b> Kaku, tajam-tajam, dan tegas. Ibaratnya kayak pedang ninja atau robot transformer. ⚔️</p>
+            <p><b>Contoh:</b> <span style={{ fontFamily: "serif" }} className="text-lg">ア</span> (A), <span style={{ fontFamily: "serif" }} className="text-lg">メ</span> (Me), <span style={{ fontFamily: "serif" }} className="text-lg">ノ</span> (No). Kelihatan lebih bersudut dan tajam kan dibanding Hiragana?</p>
           </div>
-          <div className="bg-primary/10 rounded-xl p-3 text-sm">
-            <p className="font-bold mb-1">✍️ Kenapa harus ikut urutan goresan?</p>
-            <p>
-              Urutan goresan (<i>kakijun</i>) bukan sekadar aturan—dia membuat
-              huruf jadi <b>seimbang, mudah dibaca</b>, dan tanganmu hafal
-              gerakannya. Kebiasaan ini sangat membantu saat nanti belajar
-              Kanji yang goresannya lebih banyak.
+
+          <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+            <p className="font-bold text-sm">🎮 Waktunya Praktik!</p>
+            <p className="text-sm">
+              Karena kamu udah tahu bedanya, sekarang kita tes sedikit yuk.
+              Nggak usah dihafal dulu bentuknya, cukup pakai logika aja dari
+              penjelasan di atas.
             </p>
-            <p className="mt-2">
-              <b>Tips:</b> latih di <b>buku kotak Mandarin</b> (kotak besar
-              dengan garis bantu silang di tengah). Garis bantu membantumu
-              menempatkan setiap bagian huruf dengan proporsi yang benar.
-            </p>
+            <Quiz
+              question={<>Kalau kamu mau nulis kata <b>"KOMPUTER"</b> (dari bahasa Inggris <i>computer</i>), huruf mana yang bakal kamu pakai?<br />A. Hiragana (Si Melengkung)<br />B. Katakana (Si Kaku)</>}
+              placeholder="Ketik 'A' atau 'B' di sini..."
+              accept={["b"]}
+              successMsg="CAKEP! Bener banget. Karena 'komputer' itu bahasa Inggris, si Katakana yang bakal turun tangan."
+              errorMsg="Hmm, coba pikir lagi — 'komputer' itu kata serapan dari bahasa asing. Geng mana yang kebagian tugas ini?"
+            />
           </div>
         </section>
 
@@ -154,20 +210,63 @@ function BelajarHiragana() {
           <GojuonGrid onPick={open} active={active} />
         </section>
 
-        {/* Dakuon + Handakuon */}
+        {/* Dakuon + Handakuon — Jurus Upgrade */}
         <section className="space-y-3">
-          <h2 className="font-display text-2xl font-bold">💧 Dakuon &amp; ⭕ Handakuon</h2>
-          <div className="honey-card rounded-2xl p-4 text-sm space-y-2">
+          <h2 className="font-display text-2xl font-bold">🪄 Jurus Upgrade Huruf (Dakuon &amp; Handakuon)</h2>
+          <div className="honey-card rounded-2xl p-4 text-sm space-y-3">
             <p>
-              <b>Dakuon</b> (濁音) = bunyi “keruh”. Dibuat dengan menambahkan
-              tanda <b>゛</b> (ten-ten/dakuten) di kanan-atas huruf k, s, t, h.
-              Contoh: か → が (ka → ga).
+              Kamu udah kenal beberapa huruf? Keren! Sekarang, kita belajar
+              <b> jurus upgrade huruf</b>.
             </p>
             <p>
-              <b>Handakuon</b> (半濁音) = bunyi “setengah keruh”. Hanya untuk
-              baris h: ditambah tanda lingkaran kecil <b>゜</b> (maru/handakuten)
-              di kanan-atas. Contoh: は → ぱ (ha → pa).
+              <b>Kabar baiknya:</b> Kamu <b>NGGAK PERLU</b> ngafalin huruf baru
+              dari nol! Kita cuma bakal main-main sedikit sama suara dan
+              tenggorokan kamu. Yuk, kita mulai!
             </p>
+
+            <div className="rounded-xl bg-amber-100/70 dark:bg-amber-950/30 p-3 space-y-1">
+              <p className="font-bold">1. Dakuon si "Tanda Kutip" ( ゛) — Suara Ngotot! 💪</p>
+              <p>
+                Dakuon itu cuma nambahin tanda mirip kutip ( ゛) di pojok
+                kanan atas huruf. Efeknya apa? Suaranya jadi lebih tebal.
+                Nggak usah dihafal, mari kita buktikan pakai mulut kamu
+                sendiri:
+              </p>
+              <p>
+                <b>Praktik Langsung!</b> Coba kamu bilang: <b>"KA"</b>. Nah,
+                sekarang tahan posisi lidah dan mulut kamu, lalu bilang "KA"
+                lagi tapi suaranya lebih ditebalkan dan lebih ngotot dari
+                tenggorokan.
+              </p>
+              <p>Bunyi apa yang keluar? Otomatis jadi <b>"GA"</b>, kan?</p>
+              <p>
+                Yep, sesimpel itu! <span style={{ fontFamily: "serif" }} className="text-lg">か</span> (KA)
+                dikasih tanda kutip (゛) ➡️ jadinya <span style={{ fontFamily: "serif" }} className="text-lg">が</span> (GA).
+              </p>
+              <p className="font-semibold">Berlaku juga buat huruf lain:</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>SA (santai) ➡️ ditebelin jadi <b>ZA</b></li>
+                <li>TA (santai) ➡️ ditebelin jadi <b>DA</b></li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl bg-rose-100/70 dark:bg-rose-950/30 p-3 space-y-1">
+              <p className="font-bold">2. Handakuon si "Tanda Bulat" ( ゜) — Suara Meletup! 💥</p>
+              <p>
+                Kalau tanda kutip bikin ngotot, tanda bulat ( ゜) kecil ini
+                bikin suara kamu <b>meletup</b>. Tanda ini cuma berlaku buat
+                geng huruf <b>HA</b> ya.
+              </p>
+              <p>
+                Coba rapatkan bibir atas dan bawahmu sekarang, terus hembuskan
+                udara keluar sampai bibirmu kebuka (kayak nyembur pelan).
+                Pasti bunyinya <b>"Pah!"</b>.
+              </p>
+              <p>
+                <span style={{ fontFamily: "serif" }} className="text-lg">は</span> (HA)
+                dikasih bulat (゜) ➡️ jadinya <span style={{ fontFamily: "serif" }} className="text-lg">ぱ</span> (PA).
+              </p>
+            </div>
           </div>
           <DakuonGrid onPick={open} active={active} />
         </section>
@@ -192,20 +291,42 @@ function BelajarHiragana() {
 
         {/* Sokuon */}
         <section className="space-y-3">
-          <h2 className="font-display text-2xl font-bold">⏸️ Sokuon — Konsonan Ganda</h2>
+          <h2 className="font-display text-2xl font-bold">🛑 Sokuon si "Tsu Kecil" ( っ ) — Ngerem Mendadak!</h2>
           <div className="honey-card rounded-2xl p-4 text-sm space-y-2">
             <p>
-              <b>Sokuon</b> (促音) ditandai dengan <b>っ kecil</b>. Fungsinya
-              menggandakan konsonan berikutnya dan memberi jeda kecil.
-              Contoh: が<b>っ</b>こう (gakkō = sekolah).
+              Kalau kamu lihat huruf <i>tsu</i> tapi ukurannya nyempil kecil
+              (<span style={{ fontFamily: "serif" }}>っ</span>), itu namanya
+              <b> Sokuon</b>. Ini <b>bukan</b> dibaca "tsu", tapi ini adalah
+              tanda <b>ngerem mendadak</b> alias huruf ganda/konsonan ganda.
+            </p>
+            <p>
+              Ibarat kamu lagi jalan, terus tiba-tiba ada lubang dan kamu
+              nahan napas kaget.
+            </p>
+            <p>
+              <b>Contoh:</b> Kata <b>KIPPU</b> (artinya: Tiket). Cara bacanya
+              bukan <i>Ki-pu</i> (datar). Tapi: <b>KI…</b> (ngerem/tahan napas
+              kaget sebentar) <b>…PU!</b>
             </p>
             <p className="text-amber-700 dark:text-amber-300">
               📐 <b>Cara nulisnya:</b> sama seperti yōon — っ kecil ditulis di
               posisi <b>kanan-bawah</b>, sekitar <b>seperempat kotak</b>
-              Mandarin.
+              {" "}Mandarin.
             </p>
           </div>
           <KanaGrid items={SOKUON} cols={4} onPick={open} active={active} />
+
+          <div className="rounded-xl bg-primary/10 p-3 space-y-2">
+            <p className="font-bold text-sm">🎮 Coba Ketik Sendiri!</p>
+            <p className="text-sm">Yuk pakai logika "ngotot" kamu tadi buat jawab kuis ini!</p>
+            <Quiz
+              question={<>Kalau huruf <b>TE</b> (<span style={{ fontFamily: "serif" }} className="text-lg">て</span>) kita kasih tanda kutip/ditebelin suaranya ( ゛ ), menurut lidahmu suaranya bakal berubah jadi apa?</>}
+              placeholder="Ketik jawabanmu (2 huruf) di sini..."
+              accept={["de"]}
+              successMsg="BINGO! Bener banget. Posisi lidah nyebut TE, kalau ditebelin dan ngotot jadinya DE (で)."
+              errorMsg="Hampir! Coba inget pola: KA→GA, SA→ZA, TA→DA… terus TE jadinya apa hayo?"
+            />
+          </div>
         </section>
 
         <div className="text-center py-4">
