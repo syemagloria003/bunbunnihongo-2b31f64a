@@ -17,6 +17,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PlayLevelIdRouteImport } from './routes/play.$levelId'
+import { Route as BelajarKatakanaRouteImport } from './routes/belajar.katakana'
 import { Route as BelajarHiraganaRouteImport } from './routes/belajar.hiragana'
 
 const PracticeRoute = PracticeRouteImport.update({
@@ -59,6 +60,11 @@ const PlayLevelIdRoute = PlayLevelIdRouteImport.update({
   path: '/$levelId',
   getParentRoute: () => PlayRoute,
 } as any)
+const BelajarKatakanaRoute = BelajarKatakanaRouteImport.update({
+  id: '/belajar/katakana',
+  path: '/belajar/katakana',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BelajarHiraganaRoute = BelajarHiraganaRouteImport.update({
   id: '/belajar/hiragana',
   path: '/belajar/hiragana',
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/play': typeof PlayRouteWithChildren
   '/practice': typeof PracticeRoute
   '/belajar/hiragana': typeof BelajarHiraganaRoute
+  '/belajar/katakana': typeof BelajarKatakanaRoute
   '/play/$levelId': typeof PlayLevelIdRoute
 }
 export interface FileRoutesByTo {
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/play': typeof PlayRouteWithChildren
   '/practice': typeof PracticeRoute
   '/belajar/hiragana': typeof BelajarHiraganaRoute
+  '/belajar/katakana': typeof BelajarKatakanaRoute
   '/play/$levelId': typeof PlayLevelIdRoute
 }
 export interface FileRoutesById {
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/play': typeof PlayRouteWithChildren
   '/practice': typeof PracticeRoute
   '/belajar/hiragana': typeof BelajarHiraganaRoute
+  '/belajar/katakana': typeof BelajarKatakanaRoute
   '/play/$levelId': typeof PlayLevelIdRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/play'
     | '/practice'
     | '/belajar/hiragana'
+    | '/belajar/katakana'
     | '/play/$levelId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/play'
     | '/practice'
     | '/belajar/hiragana'
+    | '/belajar/katakana'
     | '/play/$levelId'
   id:
     | '__root__'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/play'
     | '/practice'
     | '/belajar/hiragana'
+    | '/belajar/katakana'
     | '/play/$levelId'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +156,7 @@ export interface RootRouteChildren {
   PlayRoute: typeof PlayRouteWithChildren
   PracticeRoute: typeof PracticeRoute
   BelajarHiraganaRoute: typeof BelajarHiraganaRoute
+  BelajarKatakanaRoute: typeof BelajarKatakanaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -204,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayLevelIdRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/belajar/katakana': {
+      id: '/belajar/katakana'
+      path: '/belajar/katakana'
+      fullPath: '/belajar/katakana'
+      preLoaderRoute: typeof BelajarKatakanaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/belajar/hiragana': {
       id: '/belajar/hiragana'
       path: '/belajar/hiragana'
@@ -233,6 +253,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlayRoute: PlayRouteWithChildren,
   PracticeRoute: PracticeRoute,
   BelajarHiraganaRoute: BelajarHiraganaRoute,
+  BelajarKatakanaRoute: BelajarKatakanaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

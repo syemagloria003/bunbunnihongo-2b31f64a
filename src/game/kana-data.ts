@@ -247,8 +247,22 @@ export const KATAKANA_SOKUON: Kana[] = K_SOKUON_TARGETS.map(([ch, rom]) => {
   return { char: "ッ" + ch, romaji: prefix + rom, type: "katakana" as const, group: "sokuon" as const };
 });
 
+// Katakana gairaigo — special combos for foreign sounds (e.g., ファ, ヴィ, ティ, ウォ).
+// Group reused as "youon" so they share styling.
+const K_GAIRAIGO_RAW: Array<[string, string]> = [
+  ["ファ", "fa"], ["フィ", "fi"], ["フェ", "fe"], ["フォ", "fo"], ["フュ", "fyu"],
+  ["ヴァ", "va"], ["ヴィ", "vi"], ["ヴ", "vu"], ["ヴェ", "ve"], ["ヴォ", "vo"],
+  ["ティ", "ti"], ["ディ", "di"], ["トゥ", "tu"], ["ドゥ", "du"],
+  ["ウィ", "wi"], ["ウェ", "we"], ["ウォ", "wo"],
+  ["シェ", "she"], ["ジェ", "je"], ["チェ", "che"],
+  ["ツァ", "tsa"], ["ツィ", "tsi"], ["ツェ", "tse"], ["ツォ", "tso"],
+];
+export const KATAKANA_GAIRAIGO: Kana[] = K_GAIRAIGO_RAW.map(([ch, rom]) => ({
+  char: ch, romaji: rom, type: "katakana" as const, group: "youon" as const,
+}));
+
 export const ALL_HIRAGANA: Kana[] = [...HIRAGANA, ...YOUON, ...SOKUON];
-export const ALL_KATAKANA: Kana[] = [...KATAKANA, ...KATAKANA_YOUON, ...KATAKANA_SOKUON];
+export const ALL_KATAKANA: Kana[] = [...KATAKANA, ...KATAKANA_YOUON, ...KATAKANA_SOKUON, ...KATAKANA_GAIRAIGO];
 export const ALL_KANA: Kana[] = [...ALL_HIRAGANA, ...ALL_KATAKANA];
 
 export function pickKanaPool(types: KanaType[], groups: KanaGroup[]): Kana[] {
