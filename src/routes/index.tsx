@@ -490,11 +490,3 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
     </header>
   );
 }
-
-function Footer() {
-  return (
-    <footer className="px-6 py-8 text-center text-xs text-muted-foreground border-t border-border/50">
-      <p>© 2026 Bunbun Nihongo — Kursus Online Bahasa Jepang.</p>
-    </footer>
-  );
-}
