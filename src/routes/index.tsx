@@ -259,46 +259,48 @@ function Landing() {
           </div>
 
           {/* Row 3, Kanan: marquee testimoni — tinggi mengikuti kolom kelas */}
-          <div className="relative h-full min-h-[420px] overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
-            <div className="flex flex-col gap-3 p-3 animate-marquee-y hover:[animation-play-state:paused]">
-              {[...TESTIMONI, ...TESTIMONI].map((t, i) => (
-                <article
-                  key={i}
-                  className="shrink-0 rounded-2xl border border-primary/15 bg-card p-3 shadow-sm"
-                >
-                  <div className="flex items-center gap-3 mb-2">
-                    <img
-                      src={t.foto}
-                      alt={`Foto ${t.nama}`}
-                      loading="lazy"
-                      className="w-10 h-10 rounded-full object-cover border-2 border-primary shrink-0"
-                      style={{ objectPosition: "center 25%" }}
-                    />
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-bold text-sm leading-tight truncate">{t.nama}</h3>
-                      {t.ig ? (
-                        <a
-                          href={`https://instagram.com/${t.ig}`}
-                          target="_blank" rel="noopener noreferrer"
-                          className="text-[11px] text-primary hover:underline"
-                        >
-                          @{t.ig}
-                        </a>
-                      ) : (
-                        <span className="text-[11px] text-muted-foreground">Murid Bunbun</span>
-                      )}
+          <div className="relative min-h-[420px]">
+            <div className="absolute inset-0 overflow-hidden rounded-3xl border-2 border-primary/20 bg-card/60 [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]">
+              <div className="flex flex-col gap-3 p-3 animate-marquee-y hover:[animation-play-state:paused]">
+                {[...TESTIMONI, ...TESTIMONI].map((t, i) => (
+                  <article
+                    key={i}
+                    className="shrink-0 rounded-2xl border border-primary/15 bg-card p-3 shadow-sm"
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <img
+                        src={t.foto}
+                        alt={`Foto ${t.nama}`}
+                        loading="lazy"
+                        className="w-10 h-10 rounded-full object-cover border-2 border-primary shrink-0"
+                        style={{ objectPosition: "center 25%" }}
+                      />
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-bold text-sm leading-tight truncate">{t.nama}</h3>
+                        {t.ig ? (
+                          <a
+                            href={`https://instagram.com/${t.ig}`}
+                            target="_blank" rel="noopener noreferrer"
+                            className="text-[11px] text-primary hover:underline"
+                          >
+                            @{t.ig}
+                          </a>
+                        ) : (
+                          <span className="text-[11px] text-muted-foreground">Murid Bunbun</span>
+                        )}
+                      </div>
+                      <span className="text-[10px] font-bold bg-primary/15 text-primary px-2 py-0.5 rounded-full whitespace-nowrap">
+                        Reg {t.level}
+                      </span>
                     </div>
-                    <span className="text-[10px] font-bold bg-primary/15 text-primary px-2 py-0.5 rounded-full whitespace-nowrap">
-                      Reg {t.level}
-                    </span>
-                  </div>
-                  <p className="text-xs text-foreground/80 leading-relaxed">
-                    <span className="text-primary font-bold">“</span>
-                    {t.isi}
-                    <span className="text-primary font-bold">”</span>
-                  </p>
-                </article>
-              ))}
+                    <p className="text-xs text-foreground/80 leading-relaxed">
+                      <span className="text-primary font-bold">“</span>
+                      {t.isi}
+                      <span className="text-primary font-bold">”</span>
+                    </p>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </div>
