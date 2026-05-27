@@ -482,15 +482,58 @@ function BelajarHiragana() {
               nahan napas kaget.
             </p>
             <p>
-              <b>Contoh:</b> Kata <b>KIPPU</b> (artinya: Tiket). Cara bacanya
+              <b>Contoh:</b> Kata <b>KIPPU</b> (きっぷ — artinya: Tiket). Cara bacanya
               bukan <i>Ki-pu</i> (datar). Tapi: <b>KI…</b> (ngerem/tahan napas
               kaget sebentar) <b>…PU!</b>
             </p>
-            <p className="text-amber-700 dark:text-amber-300">
-              📐 <b>Cara nulisnya:</b> sama seperti yōon — っ kecil ditulis di
-              posisi <b>kanan-bawah</b>, sekitar <b>seperempat kotak</b>
-              {" "}Mandarin.
-            </p>
+            <div className="rounded-xl bg-amber-100/70 dark:bg-amber-950/30 p-3 space-y-1">
+              <p className="font-semibold">📚 Contoh kata lain (rasain "rem"-nya):</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li><b>GAKKOU</b> (<span style={{ fontFamily: "serif" }}>がっこう</span>) — sekolah → <i>GA…(rem)…KKOU</i></li>
+                <li><b>BUKKA</b> (<span style={{ fontFamily: "serif" }}>ぶっか</span>) — harga barang → <i>BU…(rem)…KKA</i></li>
+                <li><b>IRASSHAIMASE</b> (<span style={{ fontFamily: "serif" }}>いらっしゃいませ</span>) — selamat datang → <i>IRA…(rem)…SSHAIMASE</i></li>
+                <li><b>MATTE</b> (<span style={{ fontFamily: "serif" }}>まって</span>) — tunggu → <i>MA…(rem)…TTE</i></li>
+              </ul>
+              <p className="text-xs italic">Trik: konsonan setelah っ selalu jadi "dobel" (kk, pp, ss, tt…). Itu tandanya kamu harus ngerem sebentar di situ.</p>
+            </div>
+
+            <div className="rounded-xl bg-emerald-100/60 dark:bg-emerald-950/30 p-3 space-y-2">
+              <p className="font-bold">📏 Si Tsu Juga "Anak Bawang", lho!</p>
+              <p>
+                Sama persis kayak <b>ya/yu/yo kecil</b> tadi, <b>っ</b> (tsu kecil)
+                badannya juga cuma <b>seperempat (¼)</b> dari kotak besar. Jangan
+                ketuker sama <b>つ</b> (tsu besar) yang dibaca "tsu" beneran ya!
+              </p>
+              <p>
+                Kalau kamu nulis mendatar (kiri → kanan) di buku kotak, si っ
+                duduk manis di <b>pojok kiri-bawah</b> kotaknya sendiri —
+                cuma ngambil seperempat ruang.
+              </p>
+
+              <div className="flex items-center gap-4 justify-center pt-1">
+                <div className="text-center space-y-1">
+                  <div className="relative w-28 h-28 border-2 border-emerald-500 rounded grid grid-cols-2 grid-rows-2">
+                    <div className="border-r border-b border-dashed border-emerald-300" />
+                    <div className="border-b border-dashed border-emerald-300" />
+                    <div className="border-r border-dashed border-emerald-300 flex items-center justify-center overflow-hidden">
+                      <span style={{ fontFamily: "serif" }} className="text-5xl leading-none">っ</span>
+                    </div>
+                    <div />
+                  </div>
+                  <p className="text-xs text-emerald-700 dark:text-emerald-300">✅ Benar: kiri bawah (¼ kotak)</p>
+                </div>
+                <div className="text-center space-y-1">
+                  <div className="relative w-28 h-28 border-2 border-rose-500 rounded flex items-center justify-center overflow-hidden">
+                    <span style={{ fontFamily: "serif", fontSize: "7rem" }} className="leading-none">つ</span>
+                  </div>
+                  <p className="text-xs text-rose-700 dark:text-rose-300">❌ Salah: gede = jadi "TSU" beneran!</p>
+                </div>
+              </div>
+
+              <p className="text-xs italic">
+                Catatan: kalau nulis vertikal (atas → bawah) ala manga, っ pindah duduk ke pojok <b>kanan-atas</b>.
+              </p>
+            </div>
           </div>
           <KanaGrid items={SOKUON} cols={4} onPick={open} active={active} />
 
