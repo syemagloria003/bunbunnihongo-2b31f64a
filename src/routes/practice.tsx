@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/practice")({
   head: () => ({
     meta: [
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "Latihan Kana — BeeGana" },
       { name: "description", content: "Mode latihan Hiragana & Katakana tanpa platforming." },
     ],
