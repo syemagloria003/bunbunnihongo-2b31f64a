@@ -230,8 +230,9 @@ function Landing() {
                 title="Kelas JLPT N3"
                 subtitle="Lanjutan untuk lulusan N4"
                 schedule="Senin–Jumat · 19.00–20.30 WIB"
-                price="Rp 1.500.000"
-                priceNote="untuk 100x pertemuan (≈ Rp 15rb/sesi)"
+                price="Rp 2.500.000"
+                oldPrice="Rp 3.500.000"
+                priceNote="harga early bird · 100x pertemuan"
                 details={[
                   "100x pertemuan via Zoom (Senin–Jumat)",
                   "Persiapan menyeluruh untuk JLPT N3",
