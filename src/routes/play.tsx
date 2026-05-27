@@ -189,7 +189,7 @@ function LevelSelect() {
             )}
           </div>
 
-          <div className="game-panel rounded-2xl p-4 relative overflow-hidden">
+          <div className="game-panel panel-rival rounded-2xl p-4 relative overflow-hidden">
             <span className="absolute -top-16 -left-16 w-40 h-40 rounded-full bg-accent/30 blur-3xl pointer-events-none" />
             <h3 className="font-display font-bold text-lg mb-1 flex items-center gap-2 relative">
               <span className="text-xl">⚔️</span> Saingan di level kamu
