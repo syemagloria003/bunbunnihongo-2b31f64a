@@ -197,10 +197,10 @@ function Landing() {
       <section className="px-6 py-6 md:py-8 bg-muted/30 md:min-h-[calc(100vh-4rem)] md:flex md:items-start">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 md:grid-rows-[auto_auto_auto] gap-x-6 w-full">
           {/* Row 1: headings */}
-          <h2 id="kelas" className="scroll-mt-28 text-xl md:text-2xl font-display font-bold mb-1">
+          <h2 id="kelas" className="scroll-mt-24 text-xl md:text-2xl font-display font-bold mb-1">
             Kelas yang dibuka 📣
           </h2>
-          <h2 id="testimoni" className="scroll-mt-28 text-xl md:text-2xl font-display font-bold mb-1">
+          <h2 id="testimoni" className="scroll-mt-24 text-xl md:text-2xl font-display font-bold mb-1">
             Kata murid Bunbun 💌
           </h2>
 
