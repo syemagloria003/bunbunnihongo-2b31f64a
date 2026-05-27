@@ -577,12 +577,47 @@ function charForStroke(char: string): string {
 
 interface PickProps { onPick: (c: string) => void; active: string | null }
 
+const GROUP_RGB: Record<string, string> = {
+  vowel: "244,114,182",
+  k: "245,158,11",
+  s: "56,189,248",
+  t: "16,185,129",
+  n: "167,139,250",
+  h: "244,63,94",
+  m: "234,179,8",
+  y: "45,212,191",
+  r: "129,140,248",
+  w: "217,70,239",
+  g: "132,204,22",
+  z: "34,211,238",
+  d: "249,115,22",
+  b: "168,85,247",
+  p: "236,72,153",
+  youon: "167,139,250",
+  sokuon: "245,158,11",
+};
+
+function groupFor(char: string): string {
+  const all = [...HIRAGANA, ...YOUON, ...SOKUON];
+  return all.find((k) => k.char === char)?.group ?? "vowel";
+}
+
 function KanaCell({ char, romaji, onPick, active }: { char: string; romaji: string } & PickProps) {
   const isActive = active === char;
+  const rgb = GROUP_RGB[groupFor(char)] ?? "244,114,182";
+  const style = isActive
+    ? undefined
+    : {
+        borderColor: `rgb(${rgb})`,
+        boxShadow: `0 0 10px rgba(${rgb},0.55), 0 0 18px rgba(${rgb},0.25)`,
+      };
   return (
-    <div className={["rounded-xl border-2 p-2 text-center bg-background flex flex-col items-center gap-1 transition", isActive ? "border-primary ring-2 ring-primary/40" : "border-border hover:border-primary/60"].join(" ")}>
+    <div
+      className={["rounded-xl border-2 p-2 text-center bg-background flex flex-col items-center gap-1 transition", isActive ? "border-primary ring-2 ring-primary/40 shadow-[0_0_14px_hsl(var(--primary)/0.6)]" : ""].join(" ")}
+      style={style}
+    >
       <div className="text-3xl leading-none mt-1" style={{ fontFamily: "serif" }}>{char}</div>
-      <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{romaji}</div>
+      <div className="text-[10px] font-bold uppercase tracking-wider" style={isActive ? undefined : { color: `rgb(${rgb})` }}>{romaji}</div>
       <div className="flex gap-1 mt-0.5">
         <button
           onClick={() => speakKana(char)}
@@ -600,6 +635,7 @@ function KanaCell({ char, romaji, onPick, active }: { char: string; romaji: stri
     </div>
   );
 }
+
 
 function KanaGrid({ items, cols, onPick, active }: { items: { char: string; romaji: string }[]; cols: number } & PickProps) {
   return (
