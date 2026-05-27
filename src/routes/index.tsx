@@ -159,12 +159,6 @@ function Landing() {
               >
                 💬 Chat Admin
               </a>
-              <a
-                href="#kelas"
-                className="px-5 py-2.5 rounded-2xl border-2 border-primary bg-background font-bold text-base hover:bg-primary/10 transition"
-              >
-                📚 Lihat Kelas
-              </a>
             </div>
             <p className="text-xs text-muted-foreground mt-3">
               Sudah jadi murid Bunbun? <Link to="/login" className="text-primary font-semibold underline">Login di sini</Link> untuk akses game latihan setelah kelas.
@@ -200,50 +194,45 @@ function Landing() {
 
 
       {/* Meet the Sensei — poster */}
-      <section id="sensei" className="px-6 py-16 bg-muted/20 scroll-mt-20">
+      {/* Programs / Kelas yang dibuka — posters */}
+      <section id="kelas" className="px-6 py-14 bg-muted/30 scroll-mt-20">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <span className="inline-block bg-accent/15 text-accent text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wider uppercase">
-              Meet the Sensei
-            </span>
-            <h2 className="text-2xl md:text-3xl font-display font-bold mb-2">
-              Diajar langsung oleh founder kami 🎓
-            </h2>
-            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-              Founder kami, <strong>Syema Sensei</strong>, lulusan terbaik UNESA & bersertifikat <strong>JLPT N2</strong> — sabar, detail, dan paham banget cara ngajar dari nol sampai mahir.
-            </p>
-          </div>
-
-          {/* Founder poster */}
-          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card mb-12">
-            <img
-              src={posterSensei}
-              alt="Profil Syema Sensei — Founder Bunbun Nihongo, JLPT N2, S1 Pendidikan Bahasa Jepang UNESA"
-              loading="lazy"
-              className="w-full h-auto block"
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-center mb-2">
+            Kelas yang dibuka 📣
+          </h2>
+          <p className="text-center text-muted-foreground mb-8 text-sm">
+            Saat ini hanya tersedia 2 kelas reguler. Belum ada kelas privat.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <PosterCard
+              src={posterRegN4}
+              alt="Poster Kelas Reguler — Dari 0 sampai JLPT N4"
+              title="Kelas Reguler"
+              subtitle="Dari 0 — JLPT N4"
+              schedule="Senin–Jumat · 16.00–17.30 WIB"
+            />
+            <PosterCard
+              src={posterJlptN3}
+              alt="Poster Kelas JLPT N3"
+              title="Kelas JLPT N3"
+              subtitle="Lanjutan untuk lulusan N4"
+              schedule="Senin–Jumat · 19.00–20.30 WIB"
             />
           </div>
-
-          {/* Tim pengajar */}
-          <div className="text-center mb-6">
-            <h3 className="text-xl md:text-2xl font-display font-bold mb-2">
-              Tim pengajar Bunbun 🐝
-            </h3>
-            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-              Kelas Bunbun juga didukung oleh pengajar JLPT bersertifikat <strong>(N2 / N1 Only!)</strong> yang telah melalui proses seleksi dan pelatihan metode Bunbun.
-            </p>
-          </div>
-          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card">
-            <img
-              src={posterTim}
-              alt="Tim pengajar Bunbun Nihongo — bersertifikat JLPT N2 / N1"
-              loading="lazy"
-              className="w-full h-auto block"
-            />
+          <p className="text-center text-xs text-muted-foreground mt-6">
+            * Kelas privat belum tersedia saat ini.
+          </p>
+          <div className="text-center mt-6">
+            <a
+              href={WA_LINK}
+              target="_blank" rel="noopener noreferrer"
+              className="inline-block px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold shadow-lg hover:brightness-105"
+            >
+              💬 Tanya & Daftar via WhatsApp
+            </a>
           </div>
         </div>
       </section>
-
 
       {/* Testimoni — dari murid */}
       <section id="testimoni" className="px-6 py-16 bg-gradient-to-b from-background via-secondary/10 to-background scroll-mt-20">
@@ -315,44 +304,46 @@ function Landing() {
         </div>
       </section>
 
-
-
-      {/* Programs / Kelas yang dibuka — posters */}
-      <section id="kelas" className="px-6 py-14 bg-muted/30 scroll-mt-20">
+      <section id="sensei" className="px-6 py-16 bg-muted/20 scroll-mt-20">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-center mb-2">
-            Kelas yang dibuka 📣
-          </h2>
-          <p className="text-center text-muted-foreground mb-8 text-sm">
-            Saat ini hanya tersedia 2 kelas reguler. Belum ada kelas privat.
-          </p>
-          <div className="grid md:grid-cols-2 gap-6">
-            <PosterCard
-              src={posterRegN4}
-              alt="Poster Kelas Reguler — Dari 0 sampai JLPT N4"
-              title="Kelas Reguler"
-              subtitle="Dari 0 — JLPT N4"
-              schedule="Senin–Jumat · 16.00–17.30 WIB"
-            />
-            <PosterCard
-              src={posterJlptN3}
-              alt="Poster Kelas JLPT N3"
-              title="Kelas JLPT N3"
-              subtitle="Lanjutan untuk lulusan N4"
-              schedule="Senin–Jumat · 19.00–20.30 WIB"
+          <div className="text-center mb-8">
+            <span className="inline-block bg-accent/15 text-accent text-xs font-bold px-3 py-1 rounded-full mb-3 tracking-wider uppercase">
+              Meet the Sensei
+            </span>
+            <h2 className="text-2xl md:text-3xl font-display font-bold mb-2">
+              Diajar langsung oleh founder kami 🎓
+            </h2>
+            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+              Founder kami, <strong>Syema Sensei</strong>, lulusan terbaik UNESA & bersertifikat <strong>JLPT N2</strong> — sabar, detail, dan paham banget cara ngajar dari nol sampai mahir.
+            </p>
+          </div>
+
+          {/* Founder poster */}
+          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card mb-12">
+            <img
+              src={posterSensei}
+              alt="Profil Syema Sensei — Founder Bunbun Nihongo, JLPT N2, S1 Pendidikan Bahasa Jepang UNESA"
+              loading="lazy"
+              className="w-full h-auto block"
             />
           </div>
-          <p className="text-center text-xs text-muted-foreground mt-6">
-            * Kelas privat belum tersedia saat ini.
-          </p>
-          <div className="text-center mt-6">
-            <a
-              href={WA_LINK}
-              target="_blank" rel="noopener noreferrer"
-              className="inline-block px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold shadow-lg hover:brightness-105"
-            >
-              💬 Tanya & Daftar via WhatsApp
-            </a>
+
+          {/* Tim pengajar */}
+          <div className="text-center mb-6">
+            <h3 className="text-xl md:text-2xl font-display font-bold mb-2">
+              Tim pengajar Bunbun 🐝
+            </h3>
+            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+              Kelas Bunbun juga didukung oleh pengajar JLPT bersertifikat <strong>(N2 / N1 Only!)</strong> yang telah melalui proses seleksi dan pelatihan metode Bunbun.
+            </p>
+          </div>
+          <div className="max-w-xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-xl bg-card">
+            <img
+              src={posterTim}
+              alt="Tim pengajar Bunbun Nihongo — bersertifikat JLPT N2 / N1"
+              loading="lazy"
+              className="w-full h-auto block"
+            />
           </div>
         </div>
       </section>
