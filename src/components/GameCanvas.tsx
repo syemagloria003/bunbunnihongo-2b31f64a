@@ -431,12 +431,42 @@ function MobileControls({ onPress }: { onPress: (key: string, down: boolean) => 
     activePtr.current = null;
   };
 
+  // Safety net: if the OS swallows pointerup (iOS quirk, finger sliding off captured element,
+  // app backgrounded mid-drag, etc.) the bee would keep walking forever. Listen globally so any
+  // pointer release/cancel anywhere always stops movement.
+  useEffect(() => {
+    const stopIfMine = (e: PointerEvent) => {
+      if (activePtr.current !== null && e.pointerId === activePtr.current) reset();
+    };
+    const stopAll = () => { if (activePtr.current !== null) reset(); };
+    window.addEventListener("pointerup", stopIfMine);
+    window.addEventListener("pointercancel", stopIfMine);
+    window.addEventListener("blur", stopAll);
+    document.addEventListener("visibilitychange", stopAll);
+    return () => {
+      window.removeEventListener("pointerup", stopIfMine);
+      window.removeEventListener("pointercancel", stopIfMine);
+      window.removeEventListener("blur", stopAll);
+      document.removeEventListener("visibilitychange", stopAll);
+    };
+  }, []);
+
   return (
     <>
-      {/* Joystick base — bottom-left */}
+      {/* Jump button — bottom-LEFT (red) */}
+      <button
+        type="button"
+        aria-label="Lompat"
+        className="absolute z-30 bottom-6 left-6 w-20 h-20 rounded-full bg-red-500 border-4 border-red-700 text-background font-display font-bold text-2xl shadow-xl active:scale-95 active:bg-red-600 touch-none select-none"
+        onPointerDown={(e) => { e.preventDefault(); onPress("jump", true); }}
+      >
+        ⤴
+      </button>
+
+      {/* Joystick base — bottom-RIGHT */}
       <div
         ref={baseRef}
-        className="absolute z-30 bottom-4 left-4 w-28 h-28 rounded-full bg-foreground/30 border-2 border-background/40 backdrop-blur-sm touch-none select-none"
+        className="absolute z-30 bottom-4 right-4 w-28 h-28 rounded-full bg-foreground/30 border-2 border-background/40 backdrop-blur-sm touch-none select-none"
         onPointerDown={(e) => {
           e.preventDefault();
           if (activePtr.current !== null) return;
@@ -459,22 +489,13 @@ function MobileControls({ onPress }: { onPress: (key: string, down: boolean) => 
         }}
         onPointerUp={(e) => { if (activePtr.current === e.pointerId) reset(); }}
         onPointerCancel={(e) => { if (activePtr.current === e.pointerId) reset(); }}
+        onPointerLeave={(e) => { if (activePtr.current === e.pointerId) reset(); }}
       >
         <div
           className="absolute top-1/2 left-1/2 w-14 h-14 rounded-full bg-background/90 border-2 border-primary shadow-lg pointer-events-none"
           style={{ transform: `translate(calc(-50% + ${knob.x}px), calc(-50% + ${knob.y}px))` }}
         />
       </div>
-
-      {/* Jump button — bottom-right */}
-      <button
-        type="button"
-        aria-label="Lompat"
-        className="absolute z-30 bottom-6 right-6 w-20 h-20 rounded-full bg-red-500 border-4 border-red-700 text-background font-display font-bold text-2xl shadow-xl active:scale-95 active:bg-red-600 touch-none select-none"
-        onPointerDown={(e) => { e.preventDefault(); onPress("jump", true); }}
-      >
-        ⤴
-      </button>
     </>
   );
 }
