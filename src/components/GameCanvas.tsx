@@ -195,7 +195,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
         ref={containerRef}
         className={
           "relative rounded-2xl overflow-hidden border-4 border-primary shadow-xl bg-black " +
-          (isFullscreen ? "w-screen h-screen flex items-center justify-center !rounded-none !border-0" : "")
+          (isFullscreen ? `w-screen h-screen flex ${isMobile ? "items-start" : "items-center"} justify-center !rounded-none !border-0` : "")
         }
         style={
           isFullscreen
