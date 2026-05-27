@@ -479,12 +479,7 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
 
 function Footer() {
   return (
-    <footer className="px-6 py-8 text-center text-xs text-muted-foreground border-t border-border/50 space-y-2">
-      <p>
-        📱 WhatsApp: <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">+62 895-3286-71000</a>
-        {" · "}
-        📷 Instagram: <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">@bunbun_nihongo</a>
-      </p>
+    <footer className="px-6 py-8 text-center text-xs text-muted-foreground border-t border-border/50">
       <p>© {new Date().getFullYear()} Bunbun Nihongo — Kursus Online Bahasa Jepang.</p>
     </footer>
   );
