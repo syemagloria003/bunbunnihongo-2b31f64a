@@ -467,7 +467,7 @@ const FAQ_ITEMS: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Apakah pembayaran bisa dicicil atau menggunakan DP?",
-    a: <><strong>Pembayaran langsung 100%, tidak bisa dicicil.</strong> Namun, jika kamu ingin pesan seat dulu atau mengamankan harga promo earlybird sebelum kehabisan, bisa <strong>Rp200.000</strong> aja DP, nanti dipotongkan dari harga promo saat daftar (untuk amankan harga promo dan seat). Maksimal H-10 sebelum kelas dimulai sisanya harus dilunasi.</>,
+    a: <><strong>Pembayaran langsung 100%, tidak bisa dicicil.</strong> Namun, kamu bisa DP dulu <strong>Rp200.000</strong>. Sisa-nya wajib dilunasi maksimal H-10 sebelum kelas dimulai, atau seat akan hangus dan dibuka kembali untuk peserta lain.</>,
   },
   {
     q: "Pembayaran bisa melalui apa saja?",
