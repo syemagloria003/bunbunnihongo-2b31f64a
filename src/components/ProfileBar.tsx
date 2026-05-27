@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchMe, updateProfile, type MeResponse } from "@/game/leaderboard";
 import { AVATARS, getAvatarSrc } from "@/game/avatars";
 
-export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" } = {}) {
+export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" | "text" } = {}) {
   const [me, setMe] = useState<MeResponse | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -12,6 +12,27 @@ export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" } = {}) {
 
   if (!me) return null;
 
+  if (size === "text") {
+    return (
+      <>
+        <button
+          onClick={() => setOpen(true)}
+          className="text-xs font-bold px-3 py-1 rounded-full bg-secondary text-secondary-foreground hover:brightness-110 transition"
+          title="Ubah nama panggilan & avatar"
+        >
+          ✏️ Ubah profil
+        </button>
+        {open && (
+          <ProfileModal
+            me={me}
+            onClose={() => setOpen(false)}
+            onSaved={(next) => { setMe(next); setOpen(false); }}
+          />
+        )}
+      </>
+    );
+  }
+
   const isLg = size === "lg";
 
   return (
@@ -20,10 +41,10 @@ export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" } = {}) {
         onClick={() => setOpen(true)}
         className={
           isLg
-            ? "rounded-full ring-4 ring-primary/60 hover:ring-primary transition bg-background"
+            ? "relative rounded-full ring-4 ring-primary/60 hover:ring-primary transition bg-background group"
             : "flex items-center gap-2 bg-primary/15 hover:bg-primary/25 transition rounded-full pl-1 pr-3 py-1"
         }
-        title="Edit profil"
+        title="Klik untuk ubah nama panggilan & avatar"
       >
         <img
           src={getAvatarSrc(me.avatarId)}
@@ -35,6 +56,11 @@ export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" } = {}) {
           }
         />
         {!isLg && <span className="text-sm font-semibold text-primary">{me.nama}</span>}
+        {isLg && (
+          <span className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center ring-2 ring-background shadow-md group-hover:scale-110 transition">
+            ✏️
+          </span>
+        )}
       </button>
 
       {open && (

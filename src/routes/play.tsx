@@ -425,6 +425,7 @@ function PlayerStatusCard({
           </div>
 
           <div className="mt-3 flex items-center gap-2 flex-wrap">
+            <ProfileBar size="text" />
             {me?.isAdmin && (
               <Link to="/admin" className="text-xs font-bold bg-primary text-primary-foreground px-3 py-1 rounded-full hover:brightness-110">
                 🛠️ Admin
