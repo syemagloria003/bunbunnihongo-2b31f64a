@@ -16,6 +16,7 @@ import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PlayBonusAisatsuRouteImport } from './routes/play.bonus-aisatsu'
 import { Route as PlayLevelIdRouteImport } from './routes/play.$levelId'
 import { Route as BelajarKatakanaRouteImport } from './routes/belajar.katakana'
 import { Route as BelajarKanjiRouteImport } from './routes/belajar.kanji'
@@ -56,6 +57,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlayBonusAisatsuRoute = PlayBonusAisatsuRouteImport.update({
+  id: '/bonus-aisatsu',
+  path: '/bonus-aisatsu',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayLevelIdRoute = PlayLevelIdRouteImport.update({
   id: '/$levelId',
   path: '/$levelId',
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/belajar/kanji': typeof BelajarKanjiRoute
   '/belajar/katakana': typeof BelajarKatakanaRoute
   '/play/$levelId': typeof PlayLevelIdRoute
+  '/play/bonus-aisatsu': typeof PlayBonusAisatsuRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/belajar/kanji': typeof BelajarKanjiRoute
   '/belajar/katakana': typeof BelajarKatakanaRoute
   '/play/$levelId': typeof PlayLevelIdRoute
+  '/play/bonus-aisatsu': typeof PlayBonusAisatsuRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/belajar/kanji': typeof BelajarKanjiRoute
   '/belajar/katakana': typeof BelajarKatakanaRoute
   '/play/$levelId': typeof PlayLevelIdRoute
+  '/play/bonus-aisatsu': typeof PlayBonusAisatsuRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/belajar/kanji'
     | '/belajar/katakana'
     | '/play/$levelId'
+    | '/play/bonus-aisatsu'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/belajar/kanji'
     | '/belajar/katakana'
     | '/play/$levelId'
+    | '/play/bonus-aisatsu'
   id:
     | '__root__'
     | '/'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/belajar/kanji'
     | '/belajar/katakana'
     | '/play/$levelId'
+    | '/play/bonus-aisatsu'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -223,6 +235,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/play/bonus-aisatsu': {
+      id: '/play/bonus-aisatsu'
+      path: '/bonus-aisatsu'
+      fullPath: '/play/bonus-aisatsu'
+      preLoaderRoute: typeof PlayBonusAisatsuRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/$levelId': {
       id: '/play/$levelId'
       path: '/$levelId'
@@ -256,10 +275,12 @@ declare module '@tanstack/react-router' {
 
 interface PlayRouteChildren {
   PlayLevelIdRoute: typeof PlayLevelIdRoute
+  PlayBonusAisatsuRoute: typeof PlayBonusAisatsuRoute
 }
 
 const PlayRouteChildren: PlayRouteChildren = {
   PlayLevelIdRoute: PlayLevelIdRoute,
+  PlayBonusAisatsuRoute: PlayBonusAisatsuRoute,
 }
 
 const PlayRouteWithChildren = PlayRoute._addFileChildren(PlayRouteChildren)
