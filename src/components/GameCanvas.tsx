@@ -411,41 +411,50 @@ function HUD({
 }
 
 function TouchControls({ onPress }: { onPress: (key: string, down: boolean) => void }) {
-  // Track active pointer per button so a finger sliding off still releases the key.
-  const heldRef = useRef<Map<number, string>>(new Map());
+  // Track active pointer/touch per button so a finger sliding off still releases the key.
+  // Key in map = pointerId (pointer events) or `t${identifier}` (touch events fallback).
+  const heldRef = useRef<Map<string, string>>(new Map());
 
-  const press = (key: string, pointerId: number, el: Element) => {
-    // Release any previous direction held by this pointer (shouldn't happen, but safe).
-    const prev = heldRef.current.get(pointerId);
+  const pressId = (id: string, key: string) => {
+    const prev = heldRef.current.get(id);
     if (prev && prev !== key) onPress(prev, false);
-    heldRef.current.set(pointerId, key);
+    heldRef.current.set(id, key);
     onPress(key, true);
-    (el as Element & { setPointerCapture?: (id: number) => void }).setPointerCapture?.(pointerId);
   };
 
-  const release = (pointerId: number) => {
-    const key = heldRef.current.get(pointerId);
+  const releaseId = (id: string) => {
+    const key = heldRef.current.get(id);
     if (!key) return;
     onPress(key, false);
-    heldRef.current.delete(pointerId);
+    heldRef.current.delete(id);
   };
 
-  // Safety net: any pointerup/cancel/blur anywhere releases stuck keys.
+  const releaseAll = () => {
+    heldRef.current.forEach((key) => onPress(key, false));
+    heldRef.current.clear();
+  };
+
+  // Safety net: any pointerup/cancel/blur/visibilitychange/touchend anywhere releases stuck keys.
   useEffect(() => {
-    const stopIfMine = (e: PointerEvent) => release(e.pointerId);
-    const stopAll = () => {
-      heldRef.current.forEach((key) => onPress(key, false));
-      heldRef.current.clear();
+    const onPointerEnd = (e: PointerEvent) => releaseId(`p${e.pointerId}`);
+    const onTouchEnd = (e: TouchEvent) => {
+      for (let i = 0; i < e.changedTouches.length; i++) {
+        releaseId(`t${e.changedTouches[i].identifier}`);
+      }
     };
-    window.addEventListener("pointerup", stopIfMine);
-    window.addEventListener("pointercancel", stopIfMine);
-    window.addEventListener("blur", stopAll);
-    document.addEventListener("visibilitychange", stopAll);
+    window.addEventListener("pointerup", onPointerEnd);
+    window.addEventListener("pointercancel", onPointerEnd);
+    window.addEventListener("touchend", onTouchEnd);
+    window.addEventListener("touchcancel", onTouchEnd);
+    window.addEventListener("blur", releaseAll);
+    document.addEventListener("visibilitychange", releaseAll);
     return () => {
-      window.removeEventListener("pointerup", stopIfMine);
-      window.removeEventListener("pointercancel", stopIfMine);
-      window.removeEventListener("blur", stopAll);
-      document.removeEventListener("visibilitychange", stopAll);
+      window.removeEventListener("pointerup", onPointerEnd);
+      window.removeEventListener("pointercancel", onPointerEnd);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
+      window.removeEventListener("blur", releaseAll);
+      document.removeEventListener("visibilitychange", releaseAll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -453,30 +462,43 @@ function TouchControls({ onPress }: { onPress: (key: string, down: boolean) => v
   const dirBtn =
     "w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-background/85 border-2 border-background/80 shadow-lg text-foreground text-2xl font-bold flex items-center justify-center touch-none select-none active:scale-95 active:bg-background";
 
+  const dirHandlers = (key: string) => ({
+    // Pointer events (desktop + modern mobile)
+    onPointerDown: (e: React.PointerEvent) => {
+      // Don't preventDefault — it can suppress subsequent pointerup on some mobile browsers.
+      pressId(`p${e.pointerId}`, key);
+    },
+    onPointerUp: (e: React.PointerEvent) => releaseId(`p${e.pointerId}`),
+    onPointerCancel: (e: React.PointerEvent) => releaseId(`p${e.pointerId}`),
+    onPointerLeave: (e: React.PointerEvent) => releaseId(`p${e.pointerId}`),
+    // Touch events fallback (iOS Safari sometimes drops pointer events)
+    onTouchStart: (e: React.TouchEvent) => {
+      e.preventDefault();
+      for (let i = 0; i < e.changedTouches.length; i++) {
+        pressId(`t${e.changedTouches[i].identifier}`, key);
+      }
+    },
+    onTouchEnd: (e: React.TouchEvent) => {
+      for (let i = 0; i < e.changedTouches.length; i++) {
+        releaseId(`t${e.changedTouches[i].identifier}`);
+      }
+    },
+    onTouchCancel: (e: React.TouchEvent) => {
+      for (let i = 0; i < e.changedTouches.length; i++) {
+        releaseId(`t${e.changedTouches[i].identifier}`);
+      }
+    },
+    onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
+  });
+
   return (
     <>
       {/* Left/Right pad — bottom-left */}
       <div className="absolute z-30 bottom-4 left-4 flex gap-3 items-center">
-        <button
-          type="button"
-          aria-label="Kiri"
-          className={dirBtn}
-          onPointerDown={(e) => { e.preventDefault(); press("ArrowLeft", e.pointerId, e.currentTarget); }}
-          onPointerUp={(e) => release(e.pointerId)}
-          onPointerCancel={(e) => release(e.pointerId)}
-          onPointerLeave={(e) => release(e.pointerId)}
-        >
+        <button type="button" aria-label="Kiri" className={dirBtn} {...dirHandlers("ArrowLeft")}>
           ←
         </button>
-        <button
-          type="button"
-          aria-label="Kanan"
-          className={dirBtn}
-          onPointerDown={(e) => { e.preventDefault(); press("ArrowRight", e.pointerId, e.currentTarget); }}
-          onPointerUp={(e) => release(e.pointerId)}
-          onPointerCancel={(e) => release(e.pointerId)}
-          onPointerLeave={(e) => release(e.pointerId)}
-        >
+        <button type="button" aria-label="Kanan" className={dirBtn} {...dirHandlers("ArrowRight")}>
           →
         </button>
       </div>
@@ -486,13 +508,16 @@ function TouchControls({ onPress }: { onPress: (key: string, down: boolean) => v
         type="button"
         aria-label="Lompat"
         className="absolute z-30 bottom-4 right-4 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-background/85 border-2 border-background/80 shadow-xl text-foreground text-3xl font-bold flex items-center justify-center touch-none select-none active:scale-95 active:bg-background"
-        onPointerDown={(e) => { e.preventDefault(); onPress("jump", true); }}
+        onPointerDown={() => onPress("jump", true)}
+        onTouchStart={(e) => { e.preventDefault(); onPress("jump", true); }}
+        onContextMenu={(e) => e.preventDefault()}
       >
         ↑
       </button>
     </>
   );
 }
+
 
 // keep imports referenced
 void LEVELS;
