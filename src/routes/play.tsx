@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { LevelPreview } from "@/components/LevelPreview";
 import { ProfileBar } from "@/components/ProfileBar";
 import { NotificationTicker } from "@/components/NotificationTicker";
-import { getAvatarSrc } from "@/game/avatars";
+import { getAvatarSrc, isAvatarUnlocked, AVATARS } from "@/game/avatars";
 import { fetchMe, type MeResponse } from "@/game/leaderboard";
 
 function rankBadgeClass(i: number): string {
@@ -541,27 +541,41 @@ function LevelCard({
 }
 
 function BonusAisatsuCard() {
-  return (
-    <Link
-      to="/play/bonus-aisatsu"
-      className="honey-card rounded-2xl p-5 transition-all relative overflow-hidden hover:-translate-y-1 cursor-pointer border-2 border-dashed border-amber-400 bg-gradient-to-br from-amber-100 via-rose-100 to-violet-100 dark:from-amber-950/40 dark:via-rose-950/40 dark:to-violet-950/40 shadow-[0_0_20px_rgba(245,158,11,0.45)] block"
+  const dragon = AVATARS.find((a) => a.id === "dragon");
+  const phoenix = AVATARS.find((a) => a.id === "phoenix");
+  const kitsune = AVATARS.find((a) => a.id === "kitsune");
+  const hasDragon = dragon ? isAvatarUnlocked(dragon) : false;
+  const hasPhoenix = phoenix ? isAvatarUnlocked(phoenix) : false;
+  const hasKitsune = kitsune ? isAvatarUnlocked(kitsune) : false;
+  const stars = hasPhoenix ? 5 : hasDragon || hasKitsune ? 4 : 0;
+
+  const inner = (
+    <div
+      className={[
+        "honey-card rounded-2xl p-5 transition-all relative overflow-hidden",
+        "world-garden",
+        "hover:-translate-y-1 cursor-pointer",
+      ].join(" ")}
     >
-      <div className="flex items-center gap-2 mb-1">
-        <span className="bg-gradient-to-r from-amber-500 via-rose-500 to-violet-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-          BONUS
-        </span>
-        <span className="text-xs font-semibold text-amber-700 dark:text-amber-300">🎁 Avatar Langka</span>
+      <LevelPreview theme="garden" locked={false} />
+      <div className="relative pt-12">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="bg-primary text-primary-foreground text-xs font-bold px-2 py-0.5 rounded-full">
+            Lv BONUS
+          </span>
+          <span className="text-xs font-semibold text-muted-foreground">🎁 Avatar Langka</span>
+        </div>
+        <h3 className="font-display text-2xl font-bold">Tes Telinga &amp; Aisatsu</h3>
+        <p className="text-sm text-muted-foreground">aisatsu &amp; cara baca ala native</p>
+        <div className="mt-2 flex items-center gap-3">
+          <div className="text-base">
+            {[1,2,3,4,5].map((i) => (
+              <span key={i} className={i <= stars ? "" : "opacity-25 grayscale"}>⭐</span>
+            ))}
+          </div>
+        </div>
       </div>
-      <h3 className="font-display text-2xl font-bold flex items-center gap-2">
-        <span>🎧</span> Tes Telinga &amp; Aisatsu
-      </h3>
-      <p className="text-sm text-muted-foreground mb-2">
-        17 soal — sifatnya bonus, boleh dilewati. Lulus = avatar langka 🦊🐲, sempurna = 🔥 Phoenix Aurora.
-      </p>
-      <ul className="text-xs space-y-0.5 pl-1">
-        <li>🦊 <b>Kitsune Roh</b> & 🐲 <b>Naga Sakura</b> — skor ≥ 80%</li>
-        <li>🔥 <b>Phoenix Aurora</b> — skor SEMPURNA 100%</li>
-      </ul>
-    </Link>
+    </div>
   );
+  return <Link to="/play/bonus-aisatsu">{inner}</Link>;
 }
