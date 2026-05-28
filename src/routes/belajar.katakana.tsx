@@ -504,7 +504,90 @@ function BelajarKatakana() {
             </div>
           </div>
           <KanaGrid items={KATAKANA_GAIRAIGO} cols={5} onPick={open} active={active} />
+
+          {/* Tutorial nulis nama asing pake katakana */}
+          <div className="honey-card rounded-2xl p-4 text-sm space-y-3">
+            <h3 className="font-display text-xl font-bold">✍️ Tutorial: Nulis Nama Kamu Pakai Katakana</h3>
+            <p>
+              Nama orang Indonesia itu <b>asing</b> buat orang Jepang, jadi wajib ditulis pakai Katakana.
+              Tapi ada PR-nya: bahasa Jepang <b>nggak punya konsonan mati</b> (huruf konsonan yang berdiri
+              sendiri di akhir suku kata). Solusinya? <b>Tambahin vokal "U"</b> di belakangnya — kecuali
+              beberapa kasus khusus di bawah.
+            </p>
+
+            <div className="rounded-xl border-2 border-dashed border-sky-400 dark:border-sky-400 bg-sky-100 dark:bg-sky-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(56,189,248,0.55)] dark:shadow-[0_0_16px_rgba(56,189,248,0.65)]">
+              <p className="font-bold">📋 Aturan Tambah Vokal di Belakang Konsonan Mati</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Default: tambah <b>"U"</b> → <i>Ahmad → A-fu-ma-do</i> (kecuali D), <i>Ramadan → Ra-ma-da-n</i>.</li>
+                <li>Setelah <b>T</b> atau <b>D</b> → tambah <b>"O"</b> (biar nggak jadi "tsu/zu"). Contoh: <b>Ahmad → アフマド</b> (A-fu-ma-<b>do</b>), <b>Robert → ロバート</b>.</li>
+                <li>Setelah <b>CH / J / SH</b> → tambah <b>"I"</b>. Contoh: <b>March → マーチ</b>.</li>
+                <li>Huruf <b>N</b> di akhir suku kata istimewa — pakai <b>ン</b> tanpa vokal. Contoh: <b>Andi → アンディ</b>, <b>Yanto → ヤント</b>.</li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-violet-400 dark:border-violet-400 bg-violet-100 dark:bg-violet-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(167,139,250,0.55)] dark:shadow-[0_0_16px_rgba(167,139,250,0.65)]">
+              <p className="font-bold">🔁 Ganti Huruf yang Nggak Ada di Jepang</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li><b>L</b> → pakai baris <b>R</b> (ラ リ ル レ ロ). Contoh: <b>Lia → リア</b>, <b>Lulu → ルル</b>.</li>
+                <li><b>V</b> → boleh <b>ヴ</b> atau diganti <b>B</b>. Contoh: <b>Vino → ヴィノ / ビノ</b>.</li>
+                <li><b>F</b> → pakai <b>フ + vokal kecil</b> (ファ フィ フェ フォ). Contoh: <b>Fajar → ファジャル</b>.</li>
+                <li><b>Di / Ti / Tu</b> dari Bunyi Khusus → <b>ディ / ティ / トゥ</b>. Contoh: <b>Dian → ディアン</b>, <b>Tian → ティアン</b>.</li>
+                <li>Suku kata dengan <b>Y</b> (-ya/-yu/-yo) pakai yōon. Contoh: <b>Surya → スルヤ</b>, <b>Wahyu → ワヒュ</b>.</li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-emerald-400 dark:border-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(16,185,129,0.55)] dark:shadow-[0_0_16px_rgba(16,185,129,0.65)]">
+              <p className="font-bold">💡 Contoh Nama Indonesia</p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5 list-disc list-inside">
+                <li><b>Ahmad</b> → <span style={{ fontFamily: "serif" }} className="text-base">アフマド</span> (A-fu-ma-do)</li>
+                <li><b>Andi</b> → <span style={{ fontFamily: "serif" }} className="text-base">アンディ</span></li>
+                <li><b>Budi</b> → <span style={{ fontFamily: "serif" }} className="text-base">ブディ</span></li>
+                <li><b>Citra</b> → <span style={{ fontFamily: "serif" }} className="text-base">チトラ</span></li>
+                <li><b>Dewi</b> → <span style={{ fontFamily: "serif" }} className="text-base">デウィ</span></li>
+                <li><b>Fajar</b> → <span style={{ fontFamily: "serif" }} className="text-base">ファジャル</span></li>
+                <li><b>Lia</b> → <span style={{ fontFamily: "serif" }} className="text-base">リア</span></li>
+                <li><b>Rizal</b> → <span style={{ fontFamily: "serif" }} className="text-base">リザル</span></li>
+                <li><b>Sinta</b> → <span style={{ fontFamily: "serif" }} className="text-base">シンタ</span></li>
+                <li><b>Wahyu</b> → <span style={{ fontFamily: "serif" }} className="text-base">ワヒュ</span></li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-primary bg-primary/15 p-3 space-y-2 shadow-[0_0_14px_hsl(var(--primary)/0.55)] dark:shadow-[0_0_18px_hsl(var(--primary)/0.7)]">
+              <p className="font-bold text-sm">🎮 Coba Tulis Namamu Sendiri!</p>
+              <NameToKatakana />
+              <p className="text-xs italic text-muted-foreground">
+                Catatan: hasil otomatis ini cuma <b>perkiraan</b> berdasarkan aturan di atas. Untuk nama
+                yang punya banyak konsonan numpuk, kadang penulis Jepang nge-tweak sesuai selera bunyinya.
+              </p>
+            </div>
+          </div>
         </section>
+
+        <SectionDivider label="Bonus: Nama-Nama Negara" />
+
+        {/* Bonus: Country names */}
+        <section className="space-y-3">
+          <h2 className="font-display text-2xl font-bold">🌏 Bonus: Nama-Nama Negara dalam Katakana</h2>
+          <div className="honey-card rounded-2xl p-4 text-sm space-y-3">
+            <p>
+              Nama negara asing hampir semuanya ditulis pakai <b>Katakana</b> (karena, ya, asing!). Bunyinya
+              sering diserap dari bahasa lokal negara itu sendiri — bukan dari bahasa Inggris. Makanya
+              <b> "Jerman" jadi ドイツ (Doitsu)</b> dari <i>Deutsch</i>, dan <b>"Belanda" jadi オランダ (Oranda)</b>
+              dari <i>Holland</i>. Yuk hafalan!
+            </p>
+            <CountryGrid />
+            <div className="rounded-xl border-2 border-dashed border-amber-400 dark:border-amber-400 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(245,158,11,0.55)] dark:shadow-[0_0_16px_rgba(245,158,11,0.65)]">
+              <p className="font-bold">💡 Pola yang Bisa Kamu Tangkap</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Konsonan akhir biasanya ditambah <b>U</b> atau <b>O</b>: <i>Egypt → エジプト</i>, <i>Brazil → ブラジル</i>.</li>
+                <li><b>L</b> selalu jadi baris <b>R</b>: <i>Brazil → ブラ<b>ジル</b></i>, <i>Singapore → シンガポー<b>ル</b></i>.</li>
+                <li>Vokal panjang pakai <b>ー</b>: <i>Australia → オースト<b>ラ</b>リア</i>, <i>Singapore → シンガ<b>ポー</b>ル</i>.</li>
+                <li>Bunyi <b>V/F</b> pakai bunyi khusus: <i>Vietnam → <b>ベ</b>トナム</i> (V dilembutkan jadi B), <i>Philippines → <b>フィ</b>リピン</i>.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
 
         <div className="text-center py-4">
           <Link to="/play" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold shadow hover:brightness-110">
