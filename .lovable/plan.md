@@ -1,47 +1,22 @@
-## Masalah
-Card "Lv BONUS" masih tampil tosca/gelap padahal sudah diberi class Tailwind `bg-gradient-to-br from-violet-600 via-rose-500 to-amber-400`.
+## Penyebab lag
 
-Penyebab: di `src/styles.css` ada rule global `.game-theme .honey-card { background: linear-gradient(...) }` yang menimpa kelas Tailwind karena CSS biasa kalah spesifisitas dengan class utility. Akibatnya gradient violet-rose-amber tidak pernah muncul — yang terlihat hanya background default honey-card (kebetulan tampak tosca/gelap di mata).
+Setelah memeriksa kode, biang lag-nya ada di **tombol joystick on-screen** (`TouchControls` di `src/components/GameCanvas.tsx`) dan tombol bantu di pojok kanan atas:
 
-## Solusi
-Bikin varian dedicated `.honey-card.world-bonus` di `src/styles.css` dengan gradient pelangi menyala + glow ungu/magenta/amber, lalu pakai class itu di `BonusAisatsuCard` (gantikan utility Tailwind `bg-gradient-*` yang ter-override).
+- Tombol kiri/kanan, tombol lompat, tombol `?`, dan tombol layar penuh semuanya memakai class `backdrop-blur-sm` / `backdrop-blur`.
+- Tombol-tombol itu menempel **di atas canvas game yang menggambar ulang setiap frame** (langit animasi, awan, partikel, lebah, dll).
+- Setiap frame, browser harus me-render ulang area buram di belakang tombol — efek `backdrop-filter: blur(...)` sangat mahal di HP/laptop kentang dan langsung menurunkan FPS dari ±60 jadi terasa patah-patah.
 
-### Perubahan
+Game `engine.update()` + `engine.draw()` sendiri sudah dijalankan via `requestAnimationFrame` dengan benar dan tidak ada loop tak terbatas; jadi sumber lag bukan logika game, melainkan efek visual backdrop blur di lapisan UI.
 
-1. **`src/styles.css`** — tambah blok baru setelah `.world-meteor`:
-   ```css
-   .game-theme .honey-card.world-bonus {
-     background:
-       linear-gradient(135deg,
-         oklch(0.55 0.25 300) 0%,    /* violet menyala */
-         oklch(0.62 0.26 15) 45%,    /* rose/pink */
-         oklch(0.78 0.20 70) 100%);  /* amber/gold */
-     border-color: oklch(0.90 0.18 50);
-     box-shadow:
-       inset 0 1px 0 color-mix(in oklab, white 30%, transparent),
-       0 0 0 1px oklch(0.85 0.22 340 / 0.6),
-       0 0 30px -2px oklch(0.70 0.28 330 / 0.75),
-       0 0 60px -8px oklch(0.78 0.25 60 / 0.55),
-       0 18px 45px -14px oklch(0.55 0.25 320 / 0.8);
-     animation: bonus-rainbow-pulse 4s ease-in-out infinite;
-   }
-   @keyframes bonus-rainbow-pulse {
-     0%, 100% { filter: saturate(1.05) brightness(1); }
-     50%      { filter: saturate(1.35) brightness(1.12); }
-   }
-   ```
+## Yang akan diubah (UI saja)
 
-2. **`src/routes/play.tsx`** (di `BonusAisatsuCard`, baris 552-561) — hapus utility Tailwind `bg-gradient-to-br from-violet-600 via-rose-500 to-amber-400 border border-white/20 shadow-[...]` dan ganti dengan `world-bonus`:
-   ```tsx
-   className={[
-     "honey-card world-bonus rounded-2xl p-5 transition-all relative overflow-hidden",
-     "hover:-translate-y-1 cursor-pointer",
-   ].join(" ")}
-   ```
+File: `src/components/GameCanvas.tsx`
 
-Tulisan "🎁 Avatar Langka" yang sudah pakai `animate-tease-glow` dibiarkan apa adanya.
+1. **TouchControls (← → ↑)**: hapus `backdrop-blur-sm` dari `dirBtn` dan dari tombol lompat. Ganti background semi-transparan menjadi warna solid lembut (mis. `bg-background/85`) supaya tetap terlihat jelas tanpa biaya blur per frame. Pertahankan `shadow-lg/shadow-xl`, `border-2`, dan `active:scale-95` agar tampilan tombol tetap sama.
+2. **Tombol `?` dan `⛶` di pojok kanan-atas**: hapus `backdrop-blur` dari kedua tombol, naikkan opacity background (`bg-background/85`) supaya tetap kontras di atas latar canvas.
+3. **Tidak menyentuh** logika game, kontrol keyboard, perhitungan benar/salah, tetes madu, HUD, modal kuis, maupun animasi card "Lv BONUS" / "Avatar Langka" yang sudah disepakati sebelumnya.
 
-## Tidak diubah
-- Struktur card (LevelPreview, badge, judul, deskripsi, bintang) tetap sama
-- Animasi `tease-glow` pada "Avatar Langka" tetap
-- Card level lain tidak terdampak (kelas `world-bonus` baru, tidak mengganggu garden/crystal/meteor)
+## Verifikasi
+
+- Pastikan build & typecheck lulus.
+- Buka level mana pun di preview, jalankan beberapa detik, gerakkan karakter — gerakan harusnya kembali halus dan tombol joystick tetap terbaca jelas.

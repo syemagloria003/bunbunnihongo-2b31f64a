@@ -280,7 +280,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
                 type="button"
                 onClick={() => setShowHelp(true)}
                 aria-label="Cara main"
-                className="w-9 h-9 rounded-full bg-background/80 backdrop-blur border-2 border-border text-sm font-bold active:translate-y-0.5"
+                className="w-9 h-9 rounded-full bg-background/85 border-2 border-border text-sm font-bold active:translate-y-0.5"
               >
                 ?
               </button>
@@ -294,7 +294,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
                   }
                 }}
                 aria-label="Layar penuh"
-                className="w-9 h-9 rounded-full bg-background/80 backdrop-blur border-2 border-border text-sm font-bold active:translate-y-0.5"
+                className="w-9 h-9 rounded-full bg-background/85 border-2 border-border text-sm font-bold active:translate-y-0.5"
               >
                 {isFullscreen ? "✕" : "⛶"}
               </button>
@@ -451,7 +451,7 @@ function TouchControls({ onPress }: { onPress: (key: string, down: boolean) => v
   }, []);
 
   const dirBtn =
-    "w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-background/70 border-2 border-background/80 backdrop-blur-sm shadow-lg text-foreground text-2xl font-bold flex items-center justify-center touch-none select-none active:scale-95 active:bg-background";
+    "w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-background/85 border-2 border-background/80 shadow-lg text-foreground text-2xl font-bold flex items-center justify-center touch-none select-none active:scale-95 active:bg-background";
 
   return (
     <>
@@ -485,7 +485,7 @@ function TouchControls({ onPress }: { onPress: (key: string, down: boolean) => v
       <button
         type="button"
         aria-label="Lompat"
-        className="absolute z-30 bottom-4 right-4 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-background/70 border-2 border-background/80 backdrop-blur-sm shadow-xl text-foreground text-3xl font-bold flex items-center justify-center touch-none select-none active:scale-95 active:bg-background"
+        className="absolute z-30 bottom-4 right-4 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-background/85 border-2 border-background/80 shadow-xl text-foreground text-3xl font-bold flex items-center justify-center touch-none select-none active:scale-95 active:bg-background"
         onPointerDown={(e) => { e.preventDefault(); onPress("jump", true); }}
       >
         ↑
