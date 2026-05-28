@@ -562,7 +562,7 @@ function BonusAisatsuCard() {
           <span className="bg-primary text-primary-foreground text-xs font-bold px-2 py-0.5 rounded-full">
             Lv BONUS
           </span>
-          <span className="text-xs font-semibold text-white/90 animate-tease-glow bg-black/70 px-1.5 py-0.5 rounded">🎁 Avatar Langka</span>
+          <span className="text-xs font-semibold text-white bg-black/70 px-1.5 py-0.5 rounded">🎁 Avatar Langka</span>
         </div>
         <h3 className="font-display text-2xl font-bold text-white">Tes Telinga &amp; Aisatsu</h3>
         <p className="text-sm text-white/80">aisatsu &amp; cara baca ala native</p>
