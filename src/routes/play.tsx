@@ -553,20 +553,22 @@ function BonusAisatsuCard() {
     <div
       className={[
         "honey-card rounded-2xl p-5 transition-all relative overflow-hidden",
-        "world-garden",
-        "hover:-translate-y-1 cursor-pointer",
+        "bg-gradient-to-br from-violet-600 via-rose-500 to-amber-400",
+        "border border-white/20",
+        "shadow-[0_0_40px_-10px_rgba(236,72,153,0.6)]",
+        "hover:-translate-y-1 hover:shadow-[0_0_60px_-10px_rgba(236,72,153,0.8)] cursor-pointer",
       ].join(" ")}
     >
       <LevelPreview theme="garden" locked={false} />
       <div className="relative pt-12">
         <div className="flex items-center gap-2 mb-1">
-          <span className="bg-primary text-primary-foreground text-xs font-bold px-2 py-0.5 rounded-full">
+          <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full backdrop-blur-sm">
             Lv BONUS
           </span>
-          <span className="text-xs font-semibold text-muted-foreground">🎁 Avatar Langka</span>
+          <span className="text-xs font-semibold text-white/90 animate-tease-glow">🎁 Avatar Langka</span>
         </div>
-        <h3 className="font-display text-2xl font-bold">Tes Telinga &amp; Aisatsu</h3>
-        <p className="text-sm text-muted-foreground">aisatsu &amp; cara baca ala native</p>
+        <h3 className="font-display text-2xl font-bold text-white">Tes Telinga &amp; Aisatsu</h3>
+        <p className="text-sm text-white/80">aisatsu &amp; cara baca ala native</p>
         <div className="mt-2 flex items-center gap-3">
           <div className="text-base">
             {[1,2,3,4,5].map((i) => (
