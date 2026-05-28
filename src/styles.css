@@ -395,3 +395,11 @@ body.game-theme {
   background-size: 200% 100%;
   animation: shimmer-bar 2.2s linear infinite;
 }
+
+@keyframes tease-glow {
+  0%, 100% { text-shadow: 0 0 4px oklch(0.55 0.25 25 / 0.6), 0 0 10px oklch(0.55 0.25 25 / 0.3); opacity: 0.75; }
+  50% { text-shadow: 0 0 8px oklch(0.55 0.25 25 / 0.9), 0 0 18px oklch(0.55 0.25 25 / 0.55); opacity: 1; }
+}
+.animate-tease-glow {
+  animation: tease-glow 2s ease-in-out infinite;
+}
