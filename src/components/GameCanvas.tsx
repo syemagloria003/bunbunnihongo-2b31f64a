@@ -420,7 +420,13 @@ function HUD({
   );
 }
 
-function TouchControls({ onPress }: { onPress: (key: string, down: boolean) => void }) {
+function TouchControls({
+  onPress,
+  onReleaseMovement,
+}: {
+  onPress: (key: string, down: boolean) => void;
+  onReleaseMovement: () => void;
+}) {
   // Track active pointer/touch per button so a finger sliding off still releases the key.
   // Key in map = pointerId (pointer events) or `t${identifier}` (touch events fallback).
   const heldRef = useRef<Map<string, string>>(new Map());
@@ -442,27 +448,34 @@ function TouchControls({ onPress }: { onPress: (key: string, down: boolean) => v
   const releaseAll = () => {
     heldRef.current.forEach((key) => onPress(key, false));
     heldRef.current.clear();
+    onReleaseMovement();
   };
 
   // Safety net: any pointerup/cancel/blur/visibilitychange/touchend anywhere releases stuck keys.
   useEffect(() => {
-    const onPointerEnd = (e: PointerEvent) => releaseId(`p${e.pointerId}`);
+    const onPointerEnd = (e: PointerEvent) => { releaseId(`p${e.pointerId}`); onReleaseMovement(); };
     const onTouchEnd = (e: TouchEvent) => {
       for (let i = 0; i < e.changedTouches.length; i++) {
         releaseId(`t${e.changedTouches[i].identifier}`);
       }
+      onReleaseMovement();
     };
+    const onAnyEnd = () => releaseAll();
     window.addEventListener("pointerup", onPointerEnd);
     window.addEventListener("pointercancel", onPointerEnd);
+    window.addEventListener("pointerout", onPointerEnd);
     window.addEventListener("touchend", onTouchEnd);
     window.addEventListener("touchcancel", onTouchEnd);
+    window.addEventListener("mouseup", onAnyEnd);
     window.addEventListener("blur", releaseAll);
     document.addEventListener("visibilitychange", releaseAll);
     return () => {
       window.removeEventListener("pointerup", onPointerEnd);
       window.removeEventListener("pointercancel", onPointerEnd);
+      window.removeEventListener("pointerout", onPointerEnd);
       window.removeEventListener("touchend", onTouchEnd);
       window.removeEventListener("touchcancel", onTouchEnd);
+      window.removeEventListener("mouseup", onAnyEnd);
       window.removeEventListener("blur", releaseAll);
       document.removeEventListener("visibilitychange", releaseAll);
     };
