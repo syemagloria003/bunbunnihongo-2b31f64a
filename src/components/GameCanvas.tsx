@@ -191,6 +191,8 @@ export function GameCanvas({ level }: { level: LevelDef }) {
       <HUD
         score={score} lives={lives} coins={coins} levelName={level.name}
         right={right} wrong={wrong}
+        muted={muted} onToggleMute={toggleMute}
+      />
       <div
         ref={containerRef}
         className={
@@ -218,8 +220,6 @@ export function GameCanvas({ level }: { level: LevelDef }) {
           }
         >
 
-          }
-        >
           <canvas ref={canvasRef} width={W} height={H} className="block w-full h-full" />
           {quiz && <KanaGateModal word={quiz.word} options={quiz.options} onAnswer={answer} mode={level.mode} />}
           {result && (
