@@ -71,6 +71,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
       onLives: setLives,
       onCoins: setCoins,
       onQuiz: (idx) => {
+        engine.clearInput();
         const word = wordsRef.current[idx] ?? wordsRef.current[0];
         setQuiz({ word, options: makeOptionsForWord(word, distractorPool) });
       },
@@ -157,10 +158,13 @@ export function GameCanvas({ level }: { level: LevelDef }) {
 
 
   function answer(correct: boolean) {
+    engineRef.current?.clearInput();
     setQuiz(null);
     if (correct) setRight((r) => r + 1);
     else setWrong((w) => w + 1);
     engineRef.current?.resumeFromQuiz(correct);
+    window.setTimeout(() => engineRef.current?.clearInput(), 0);
+    window.setTimeout(() => engineRef.current?.clearInput(), 80);
   }
 
   function touch(key: string, down: boolean) {

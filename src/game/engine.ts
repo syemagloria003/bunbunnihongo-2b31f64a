@@ -132,6 +132,7 @@ export class GameEngine {
   }
 
   resumeFromQuiz(correct: boolean) {
+    this.clearInput();
     if (this.pendingGate) {
       // Gate always opens — wrong answers are FINAL, no retries.
       this.pendingGate.open = true;
@@ -308,6 +309,7 @@ export class GameEngine {
       if (aabb(p, g)) {
         g.triggered = true;
         this.pendingGate = g;
+        this.clearInput();
         this.state = "quiz";
         sfx.gate();
         this.cbs.onQuiz(g.idx);
@@ -347,6 +349,7 @@ export class GameEngine {
     this.player.x = sp.x; this.player.y = sp.y;
     this.player.vx = 0; this.player.vy = 0;
     this.player.invuln = 60;
+    this.clearInput();
   }
 
   tryJump() {
