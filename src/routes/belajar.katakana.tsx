@@ -756,3 +756,201 @@ function DakuonGrid({ onPick, active }: PickProps) {
     </div>
   );
 }
+
+/* ---------- Name-to-Katakana converter ---------- */
+
+function convertNameToKatakana(input: string): string {
+  // Map of syllables to katakana. Order matters: longer matches first.
+  const map: Array<[RegExp, string]> = [
+    // 3-char specials
+    [/^kyo/, "キョ"], [/^kyu/, "キュ"], [/^kya/, "キャ"],
+    [/^gyo/, "ギョ"], [/^gyu/, "ギュ"], [/^gya/, "ギャ"],
+    [/^sho/, "ショ"], [/^shu/, "シュ"], [/^sha/, "シャ"], [/^she/, "シェ"], [/^shi/, "シ"],
+    [/^cho/, "チョ"], [/^chu/, "チュ"], [/^cha/, "チャ"], [/^che/, "チェ"], [/^chi/, "チ"],
+    [/^jyo|^jo/, "ジョ"], [/^jyu|^ju/, "ジュ"], [/^jya|^ja/, "ジャ"], [/^je/, "ジェ"], [/^ji/, "ジ"],
+    [/^nyo/, "ニョ"], [/^nyu/, "ニュ"], [/^nya/, "ニャ"],
+    [/^hyo/, "ヒョ"], [/^hyu/, "ヒュ"], [/^hya/, "ヒャ"],
+    [/^byo/, "ビョ"], [/^byu/, "ビュ"], [/^bya/, "ビャ"],
+    [/^pyo/, "ピョ"], [/^pyu/, "ピュ"], [/^pya/, "ピャ"],
+    [/^myo/, "ミョ"], [/^myu/, "ミュ"], [/^mya/, "ミャ"],
+    [/^ryo|^lyo/, "リョ"], [/^ryu|^lyu/, "リュ"], [/^rya|^lya/, "リャ"],
+    [/^tsu/, "ツ"], [/^tsa/, "ツァ"], [/^tsi/, "ツィ"], [/^tse/, "ツェ"], [/^tso/, "ツォ"],
+    // F + small vowel
+    [/^fa/, "ファ"], [/^fi/, "フィ"], [/^fe/, "フェ"], [/^fo/, "フォ"], [/^fu/, "フ"],
+    // V (use ヴ family)
+    [/^va/, "ヴァ"], [/^vi/, "ヴィ"], [/^vu/, "ヴ"], [/^ve/, "ヴェ"], [/^vo/, "ヴォ"],
+    // Ti/Di/Tu/Du (gairaigo)
+    [/^ti/, "ティ"], [/^di/, "ディ"], [/^tu/, "トゥ"], [/^du/, "ドゥ"],
+    // W + e/i/o (foreign)
+    [/^wi/, "ウィ"], [/^we/, "ウェ"], [/^wo/, "ウォ"], [/^wa/, "ワ"], [/^wu/, "ウ"],
+    // Y row
+    [/^ya/, "ヤ"], [/^yu/, "ユ"], [/^yo/, "ヨ"],
+    // Basic CV
+    [/^ka/, "カ"], [/^ki/, "キ"], [/^ku/, "ク"], [/^ke/, "ケ"], [/^ko/, "コ"],
+    [/^ga/, "ガ"], [/^gi/, "ギ"], [/^gu/, "グ"], [/^ge/, "ゲ"], [/^go/, "ゴ"],
+    [/^sa/, "サ"], [/^su/, "ス"], [/^se/, "セ"], [/^so/, "ソ"],
+    [/^za/, "ザ"], [/^zi/, "ジ"], [/^zu/, "ズ"], [/^ze/, "ゼ"], [/^zo/, "ゾ"],
+    [/^ta/, "タ"], [/^te/, "テ"], [/^to/, "ト"],
+    [/^da/, "ダ"], [/^de/, "デ"], [/^do/, "ド"],
+    [/^na/, "ナ"], [/^ni/, "ニ"], [/^nu/, "ヌ"], [/^ne/, "ネ"], [/^no/, "ノ"],
+    [/^ha/, "ハ"], [/^hi/, "ヒ"], [/^he/, "ヘ"], [/^ho/, "ホ"],
+    [/^ba/, "バ"], [/^bi/, "ビ"], [/^bu/, "ブ"], [/^be/, "ベ"], [/^bo/, "ボ"],
+    [/^pa/, "パ"], [/^pi/, "ピ"], [/^pu/, "プ"], [/^pe/, "ペ"], [/^po/, "ポ"],
+    [/^ma/, "マ"], [/^mi/, "ミ"], [/^mu/, "ム"], [/^me/, "メ"], [/^mo/, "モ"],
+    [/^ra|^la/, "ラ"], [/^ri|^li/, "リ"], [/^ru|^lu/, "ル"], [/^re|^le/, "レ"], [/^ro|^lo/, "ロ"],
+    // Vowels
+    [/^a/, "ア"], [/^i/, "イ"], [/^u/, "ウ"], [/^e/, "エ"], [/^o/, "オ"],
+  ];
+
+  // Normalize: lowercase, strip non-letters except spaces.
+  const cleaned = input.toLowerCase().replace(/[^a-z\s]/g, "");
+  if (!cleaned.trim()) return "";
+
+  function convertWord(word: string): string {
+    let s = word;
+    let out = "";
+    // simple safety cap
+    let guard = 0;
+    while (s.length > 0 && guard++ < 200) {
+      // Handle stranded consonant: if a consonant has no following vowel, add one.
+      // Detect: first char is consonant, second char is also consonant (or end).
+      const c0 = s[0];
+      const c1 = s[1] ?? "";
+      const isV = (ch: string) => "aiueo".includes(ch);
+
+      // Special: standalone "n" (not followed by vowel or y) → ン
+      if (c0 === "n" && !isV(c1) && c1 !== "y") {
+        out += "ン";
+        s = s.slice(1);
+        continue;
+      }
+
+      // Try matching syllable directly
+      let matched = false;
+      for (const [re, kata] of map) {
+        const m = s.match(re);
+        if (m) {
+          out += kata;
+          s = s.slice(m[0].length);
+          matched = true;
+          break;
+        }
+      }
+      if (matched) continue;
+
+      // Stranded consonant: insert a vowel.
+      if (!isV(c0)) {
+        // pick filler vowel
+        let filler = "u";
+        if (c0 === "t" || c0 === "d") filler = "o";
+        else if (c0 === "j" || c0 === "y" || c0 === "c" || c0 === "h" && c1 === "")
+          filler = "i";
+        // 'ch' / 'sh' already handled; remaining 'c' becomes "k"
+        let head = c0;
+        if (head === "c") head = "k";
+        if (head === "x") head = "ku";
+        if (head === "q") head = "ku";
+        s = head + filler + s.slice(1);
+        continue;
+      }
+
+      // Unknown char — skip
+      s = s.slice(1);
+    }
+    return out;
+  }
+
+  return cleaned
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(convertWord)
+    .join(" ・ ");
+}
+
+function NameToKatakana() {
+  const [name, setName] = useState("");
+  const out = convertNameToKatakana(name);
+  return (
+    <div className="space-y-2">
+      <div className="flex gap-2">
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Ketik nama kamu (huruf latin)... cth: Ahmad, Andi, Lia"
+          className="flex-1 h-10 px-3 rounded-lg border-2 border-border bg-background text-sm focus:outline-none focus:border-primary"
+          maxLength={40}
+        />
+        <button
+          type="button"
+          onClick={() => out && speakKana(out.replace(/・/g, " "))}
+          disabled={!out}
+          className="h-10 px-3 rounded-lg bg-primary text-primary-foreground font-bold text-sm hover:brightness-110 disabled:opacity-40"
+          aria-label="Dengar"
+          title="Dengar pelan"
+        >🔊</button>
+      </div>
+      {out && (
+        <div className="rounded-lg bg-background border-2 border-primary/40 p-3 text-center">
+          <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Hasil Katakana</p>
+          <p className="text-3xl sm:text-4xl font-bold mt-1" style={{ fontFamily: "serif" }}>{out}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------- Country names grid ---------- */
+
+const COUNTRIES: Array<{ flag: string; id: string; kata: string; romaji: string }> = [
+  { flag: "🇺🇸", id: "Amerika",    kata: "アメリカ",       romaji: "Amerika" },
+  { flag: "🇪🇬", id: "Mesir/Arab", kata: "エジプト",       romaji: "Ejiputo" },
+  { flag: "🇬🇧", id: "Inggris",    kata: "イギリス",       romaji: "Igirisu" },
+  { flag: "🇦🇺", id: "Australia",  kata: "オーストラリア", romaji: "Ōsutoraria" },
+  { flag: "🇮🇹", id: "Italia",     kata: "イタリア",       romaji: "Itaria" },
+  { flag: "🇨🇦", id: "Kanada",     kata: "カナダ",         romaji: "Kanada" },
+  { flag: "🇮🇳", id: "India",      kata: "インド",         romaji: "Indo" },
+  { flag: "🇪🇸", id: "Spanyol",    kata: "スペイン",       romaji: "Supein" },
+  { flag: "🇮🇩", id: "Indonesia",  kata: "インドネシア",   romaji: "Indoneshia" },
+  { flag: "🇹🇭", id: "Thailand",   kata: "タイ",           romaji: "Tai" },
+  { flag: "🇩🇪", id: "Jerman",     kata: "ドイツ",         romaji: "Doitsu" },
+  { flag: "🇻🇳", id: "Vietnam",    kata: "ベトナム",       romaji: "Betonamu" },
+  { flag: "🇭🇺", id: "Hungaria",   kata: "ハンガリー",     romaji: "Hangarī" },
+  { flag: "🇲🇾", id: "Malaysia",   kata: "マレーシア",     romaji: "Marēshia" },
+  { flag: "🇵🇭", id: "Filipina",   kata: "フィリピン",     romaji: "Firipin" },
+  { flag: "🇲🇽", id: "Meksiko",    kata: "メキシコ",       romaji: "Mekishiko" },
+  { flag: "🇧🇷", id: "Brazil",     kata: "ブラジル",       romaji: "Burajiru" },
+  { flag: "🇷🇺", id: "Rusia",      kata: "ロシア",         romaji: "Roshia" },
+  { flag: "🇫🇷", id: "Perancis",   kata: "フランス",       romaji: "Furansu" },
+  { flag: "🇸🇬", id: "Singapura",  kata: "シンガポール",   romaji: "Shingapōru" },
+  { flag: "🇯🇵", id: "Jepang",     kata: "日本 / ニホン",  romaji: "Nihon" },
+  { flag: "🇰🇷", id: "Korea",      kata: "カンコク",       romaji: "Kankoku" },
+  { flag: "🇨🇳", id: "Tiongkok",   kata: "チュウゴク",     romaji: "Chūgoku" },
+  { flag: "🇳🇱", id: "Belanda",    kata: "オランダ",       romaji: "Oranda" },
+];
+
+function CountryGrid() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      {COUNTRIES.map((c) => (
+        <div
+          key={c.id}
+          className="rounded-xl border-2 border-border bg-background p-3 flex items-center gap-3 hover:border-primary/60 transition"
+        >
+          <div className="text-3xl leading-none shrink-0" aria-hidden>{c.flag}</div>
+          <div className="flex-1 min-w-0">
+            <p className="font-bold text-sm leading-tight">{c.id}</p>
+            <p className="text-xl leading-tight" style={{ fontFamily: "serif" }}>{c.kata}</p>
+            <p className="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider">{c.romaji}</p>
+          </div>
+          <button
+            onClick={() => speakKana(c.kata.replace(/[^ァ-ヶー一-龯]/g, ""))}
+            className="text-xs font-bold bg-primary/10 hover:bg-primary/20 text-primary px-2.5 py-1.5 rounded-lg shrink-0"
+            aria-label={`Dengar ${c.id}`}
+            title="Dengar pelan"
+          >🔊</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
