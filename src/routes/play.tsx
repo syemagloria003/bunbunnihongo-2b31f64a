@@ -552,11 +552,8 @@ function BonusAisatsuCard() {
   const inner = (
     <div
       className={[
-        "honey-card rounded-2xl p-5 transition-all relative overflow-hidden",
-        "bg-gradient-to-br from-violet-600 via-rose-500 to-amber-400",
-        "border border-white/20",
-        "shadow-[0_0_40px_-10px_rgba(236,72,153,0.6)]",
-        "hover:-translate-y-1 hover:shadow-[0_0_60px_-10px_rgba(236,72,153,0.8)] cursor-pointer",
+        "honey-card world-bonus rounded-2xl p-5 transition-all relative overflow-hidden",
+        "hover:-translate-y-1 cursor-pointer",
       ].join(" ")}
     >
       <LevelPreview theme="garden" locked={false} />
