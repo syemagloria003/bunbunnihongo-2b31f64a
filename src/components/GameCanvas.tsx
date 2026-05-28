@@ -191,13 +191,11 @@ export function GameCanvas({ level }: { level: LevelDef }) {
       <HUD
         score={score} lives={lives} coins={coins} levelName={level.name}
         right={right} wrong={wrong}
-        muted={muted} onToggleMute={toggleMute}
-      />
       <div
         ref={containerRef}
         className={
           "relative rounded-2xl overflow-hidden border-4 border-primary shadow-xl bg-black " +
-          (isFullscreen ? `w-screen h-screen flex ${isMobile ? "items-start" : "items-center"} justify-center !rounded-none !border-0` : "")
+          (isFullscreen ? "w-screen h-screen flex items-center justify-center !rounded-none !border-0" : "")
         }
         style={
           isFullscreen
@@ -211,12 +209,15 @@ export function GameCanvas({ level }: { level: LevelDef }) {
             isFullscreen
               ? {
                   aspectRatio: `${W}/${H}`,
-                  maxWidth: "100%",
-                  // On mobile, leave bottom half of the screen empty for the joystick + jump button
-                  maxHeight: isMobile ? "58vh" : "100%",
-                  height: isMobile ? "58vh" : "100%",
+                  width: "100vw",
+                  height: "100vh",
+                  maxWidth: "100vw",
+                  maxHeight: "100vh",
                 }
               : undefined
+          }
+        >
+
           }
         >
           <canvas ref={canvasRef} width={W} height={H} className="block w-full h-full" />
