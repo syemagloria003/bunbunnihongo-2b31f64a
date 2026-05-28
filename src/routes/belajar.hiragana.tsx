@@ -797,30 +797,6 @@ function BelajarHiragana() {
           </div>
         </section>
 
-        <SectionDivider label="Bonus Game · Hadiah Avatar Langka" />
-
-        <section className="rounded-3xl border-2 border-dashed border-amber-400 bg-gradient-to-br from-amber-100 via-rose-100 to-violet-100 dark:from-amber-950/40 dark:via-rose-950/40 dark:to-violet-950/40 p-5 shadow-[0_0_20px_rgba(245,158,11,0.45)] space-y-3">
-          <div className="flex items-center gap-2">
-            <span className="text-3xl">🎁</span>
-            <h2 className="font-display text-xl sm:text-2xl font-extrabold">Bonus Game: Tes Telinga &amp; Aisatsu!</h2>
-          </div>
-          <p className="text-sm leading-relaxed">
-            Sifatnya <b>BONUS</b> — boleh dilewati. Tapi kalau berani ambil, hadiahnya 3 <b>avatar LANGKA</b> yang
-            cuma bisa didapat dari sini dan langsung muncul di pilihan avatar profilmu (yang sebelumnya tergembok 🔒).
-          </p>
-          <ul className="text-sm space-y-1 pl-1">
-            <li>🦊 <b>Kitsune Roh</b> — lulus (skor ≥ 80%).</li>
-            <li>🐲 <b>Naga Sakura</b> — lulus (skor ≥ 80%).</li>
-            <li>🔥 <b>Phoenix Aurora</b> — skor <b>SEMPURNA</b> 100%.</li>
-          </ul>
-          <Link
-            to="/play/bonus-aisatsu"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-rose-500 to-violet-600 text-white font-extrabold shadow-lg hover:brightness-110"
-          >
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/25">🎮 MULAI</span>
-            <span>Tes 17 soal Aisatsu &amp; Telinga Native</span>
-          </Link>
-        </section>
 
         <div className="text-center py-4">
           <Link to="/play" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold shadow hover:brightness-110">
