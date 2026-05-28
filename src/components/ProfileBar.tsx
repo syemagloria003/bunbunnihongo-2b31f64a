@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { fetchMe, updateProfile, type MeResponse } from "@/game/leaderboard";
-import { AVATARS, getAvatarSrc } from "@/game/avatars";
+import { AVATARS, getAvatarSrc, isAvatarUnlocked } from "@/game/avatars";
 
 export function ProfileBar({ size = "sm" }: { size?: "sm" | "lg" } = {}) {
   const [me, setMe] = useState<MeResponse | null>(null);
@@ -130,31 +130,60 @@ function ProfileModal({
           <div className="grid grid-cols-4 gap-2">
             {AVATARS.map((a) => {
               const active = avatar === a.id;
+              const unlocked = isAvatarUnlocked(a);
+              const isRare = a.rarity === "rare";
               return (
                 <button
                   key={a.id}
-                  onClick={() => setAvatar(a.id)}
-                  title={a.name}
+                  onClick={() => {
+                    if (!unlocked) {
+                      setErr(`🔒 ${a.name} masih terkunci. ${a.unlockHint ?? ""}`);
+                      return;
+                    }
+                    setErr("");
+                    setAvatar(a.id);
+                  }}
+                  title={unlocked ? a.name : `🔒 Terkunci · ${a.unlockHint ?? ""}`}
                   className={[
-                    "rounded-2xl p-1.5 transition flex flex-col items-center",
+                    "relative rounded-2xl p-1.5 transition flex flex-col items-center",
                     active
                       ? "bg-primary/25 ring-2 ring-primary"
+                      : isRare && unlocked
+                      ? "bg-gradient-to-b from-amber-100 to-rose-100 dark:from-amber-950/40 dark:to-rose-950/40 hover:brightness-105 ring-2 ring-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.55)]"
                       : "bg-background/60 hover:bg-primary/10 ring-1 ring-border",
+                    !unlocked ? "cursor-not-allowed" : "",
                   ].join(" ")}
                 >
-                  <img
-                    src={a.src}
-                    alt={a.name}
-                    className="w-14 h-14 object-contain"
-                    loading="lazy"
-                    width={56}
-                    height={56}
-                  />
-                  <span className="text-[10px] mt-1 font-semibold text-center leading-tight">{a.name}</span>
+                  {isRare && (
+                    <span className="absolute -top-1 -right-1 text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-amber-400 text-amber-950 shadow">
+                      ✨
+                    </span>
+                  )}
+                  <div className="relative">
+                    <img
+                      src={a.src}
+                      alt={a.name}
+                      className={`w-14 h-14 object-contain ${!unlocked ? "grayscale opacity-40" : ""}`}
+                      loading="lazy"
+                      width={56}
+                      height={56}
+                    />
+                    {!unlocked && (
+                      <span className="absolute inset-0 flex items-center justify-center text-2xl drop-shadow">
+                        🔒
+                      </span>
+                    )}
+                  </div>
+                  <span className={`text-[10px] mt-1 font-semibold text-center leading-tight ${!unlocked ? "text-muted-foreground" : ""}`}>
+                    {a.name}
+                  </span>
                 </button>
               );
             })}
           </div>
+          <p className="text-[11px] text-muted-foreground mt-2 leading-snug">
+            🔒 = avatar langka. Buka dengan menyelesaikan <b>Bonus Game Aisatsu</b> di Taman Hiragana.
+          </p>
 
           {err && <p className="text-sm text-destructive mt-3">{err}</p>}
         </div>
