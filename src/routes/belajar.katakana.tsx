@@ -504,7 +504,90 @@ function BelajarKatakana() {
             </div>
           </div>
           <KanaGrid items={KATAKANA_GAIRAIGO} cols={5} onPick={open} active={active} />
+
+          {/* Tutorial nulis nama asing pake katakana */}
+          <div className="honey-card rounded-2xl p-4 text-sm space-y-3">
+            <h3 className="font-display text-xl font-bold">✍️ Tutorial: Nulis Nama Kamu Pakai Katakana</h3>
+            <p>
+              Nama orang Indonesia itu <b>asing</b> buat orang Jepang, jadi wajib ditulis pakai Katakana.
+              Tapi ada PR-nya: bahasa Jepang <b>nggak punya konsonan mati</b> (huruf konsonan yang berdiri
+              sendiri di akhir suku kata). Solusinya? <b>Tambahin vokal "U"</b> di belakangnya — kecuali
+              beberapa kasus khusus di bawah.
+            </p>
+
+            <div className="rounded-xl border-2 border-dashed border-sky-400 dark:border-sky-400 bg-sky-100 dark:bg-sky-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(56,189,248,0.55)] dark:shadow-[0_0_16px_rgba(56,189,248,0.65)]">
+              <p className="font-bold">📋 Aturan Tambah Vokal di Belakang Konsonan Mati</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Default: tambah <b>"U"</b> → <i>Ahmad → A-fu-ma-do</i> (kecuali D), <i>Ramadan → Ra-ma-da-n</i>.</li>
+                <li>Setelah <b>T</b> atau <b>D</b> → tambah <b>"O"</b> (biar nggak jadi "tsu/zu"). Contoh: <b>Ahmad → アフマド</b> (A-fu-ma-<b>do</b>), <b>Robert → ロバート</b>.</li>
+                <li>Setelah <b>CH / J / SH</b> → tambah <b>"I"</b>. Contoh: <b>March → マーチ</b>.</li>
+                <li>Huruf <b>N</b> di akhir suku kata istimewa — pakai <b>ン</b> tanpa vokal. Contoh: <b>Andi → アンディ</b>, <b>Yanto → ヤント</b>.</li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-violet-400 dark:border-violet-400 bg-violet-100 dark:bg-violet-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(167,139,250,0.55)] dark:shadow-[0_0_16px_rgba(167,139,250,0.65)]">
+              <p className="font-bold">🔁 Ganti Huruf yang Nggak Ada di Jepang</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li><b>L</b> → pakai baris <b>R</b> (ラ リ ル レ ロ). Contoh: <b>Lia → リア</b>, <b>Lulu → ルル</b>.</li>
+                <li><b>V</b> → boleh <b>ヴ</b> atau diganti <b>B</b>. Contoh: <b>Vino → ヴィノ / ビノ</b>.</li>
+                <li><b>F</b> → pakai <b>フ + vokal kecil</b> (ファ フィ フェ フォ). Contoh: <b>Fajar → ファジャル</b>.</li>
+                <li><b>Di / Ti / Tu</b> dari Bunyi Khusus → <b>ディ / ティ / トゥ</b>. Contoh: <b>Dian → ディアン</b>, <b>Tian → ティアン</b>.</li>
+                <li>Suku kata dengan <b>Y</b> (-ya/-yu/-yo) pakai yōon. Contoh: <b>Surya → スルヤ</b>, <b>Wahyu → ワヒュ</b>.</li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-emerald-400 dark:border-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(16,185,129,0.55)] dark:shadow-[0_0_16px_rgba(16,185,129,0.65)]">
+              <p className="font-bold">💡 Contoh Nama Indonesia</p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5 list-disc list-inside">
+                <li><b>Ahmad</b> → <span style={{ fontFamily: "serif" }} className="text-base">アフマド</span> (A-fu-ma-do)</li>
+                <li><b>Andi</b> → <span style={{ fontFamily: "serif" }} className="text-base">アンディ</span></li>
+                <li><b>Budi</b> → <span style={{ fontFamily: "serif" }} className="text-base">ブディ</span></li>
+                <li><b>Citra</b> → <span style={{ fontFamily: "serif" }} className="text-base">チトラ</span></li>
+                <li><b>Dewi</b> → <span style={{ fontFamily: "serif" }} className="text-base">デウィ</span></li>
+                <li><b>Fajar</b> → <span style={{ fontFamily: "serif" }} className="text-base">ファジャル</span></li>
+                <li><b>Lia</b> → <span style={{ fontFamily: "serif" }} className="text-base">リア</span></li>
+                <li><b>Rizal</b> → <span style={{ fontFamily: "serif" }} className="text-base">リザル</span></li>
+                <li><b>Sinta</b> → <span style={{ fontFamily: "serif" }} className="text-base">シンタ</span></li>
+                <li><b>Wahyu</b> → <span style={{ fontFamily: "serif" }} className="text-base">ワヒュ</span></li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-primary bg-primary/15 p-3 space-y-2 shadow-[0_0_14px_hsl(var(--primary)/0.55)] dark:shadow-[0_0_18px_hsl(var(--primary)/0.7)]">
+              <p className="font-bold text-sm">🎮 Coba Tulis Namamu Sendiri!</p>
+              <NameToKatakana />
+              <p className="text-xs italic text-muted-foreground">
+                Catatan: hasil otomatis ini cuma <b>perkiraan</b> berdasarkan aturan di atas. Untuk nama
+                yang punya banyak konsonan numpuk, kadang penulis Jepang nge-tweak sesuai selera bunyinya.
+              </p>
+            </div>
+          </div>
         </section>
+
+        <SectionDivider label="Bonus: Nama-Nama Negara" />
+
+        {/* Bonus: Country names */}
+        <section className="space-y-3">
+          <h2 className="font-display text-2xl font-bold">🌏 Bonus: Nama-Nama Negara dalam Katakana</h2>
+          <div className="honey-card rounded-2xl p-4 text-sm space-y-3">
+            <p>
+              Nama negara asing hampir semuanya ditulis pakai <b>Katakana</b> (karena, ya, asing!). Bunyinya
+              sering diserap dari bahasa lokal negara itu sendiri — bukan dari bahasa Inggris. Makanya
+              <b> "Jerman" jadi ドイツ (Doitsu)</b> dari <i>Deutsch</i>, dan <b>"Belanda" jadi オランダ (Oranda)</b>
+              dari <i>Holland</i>. Yuk hafalan!
+            </p>
+            <CountryGrid />
+            <div className="rounded-xl border-2 border-dashed border-amber-400 dark:border-amber-400 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(245,158,11,0.55)] dark:shadow-[0_0_16px_rgba(245,158,11,0.65)]">
+              <p className="font-bold">💡 Pola yang Bisa Kamu Tangkap</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Konsonan akhir biasanya ditambah <b>U</b> atau <b>O</b>: <i>Egypt → エジプト</i>, <i>Brazil → ブラジル</i>.</li>
+                <li><b>L</b> selalu jadi baris <b>R</b>: <i>Brazil → ブラ<b>ジル</b></i>, <i>Singapore → シンガポー<b>ル</b></i>.</li>
+                <li>Vokal panjang pakai <b>ー</b>: <i>Australia → オースト<b>ラ</b>リア</i>, <i>Singapore → シンガ<b>ポー</b>ル</i>.</li>
+                <li>Bunyi <b>V/F</b> pakai bunyi khusus: <i>Vietnam → <b>ベ</b>トナム</i> (V dilembutkan jadi B), <i>Philippines → <b>フィ</b>リピン</i>.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
 
         <div className="text-center py-4">
           <Link to="/play" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold shadow hover:brightness-110">
@@ -673,3 +756,201 @@ function DakuonGrid({ onPick, active }: PickProps) {
     </div>
   );
 }
+
+/* ---------- Name-to-Katakana converter ---------- */
+
+function convertNameToKatakana(input: string): string {
+  // Map of syllables to katakana. Order matters: longer matches first.
+  const map: Array<[RegExp, string]> = [
+    // 3-char specials
+    [/^kyo/, "キョ"], [/^kyu/, "キュ"], [/^kya/, "キャ"],
+    [/^gyo/, "ギョ"], [/^gyu/, "ギュ"], [/^gya/, "ギャ"],
+    [/^sho/, "ショ"], [/^shu/, "シュ"], [/^sha/, "シャ"], [/^she/, "シェ"], [/^shi/, "シ"],
+    [/^cho/, "チョ"], [/^chu/, "チュ"], [/^cha/, "チャ"], [/^che/, "チェ"], [/^chi/, "チ"],
+    [/^jyo|^jo/, "ジョ"], [/^jyu|^ju/, "ジュ"], [/^jya|^ja/, "ジャ"], [/^je/, "ジェ"], [/^ji/, "ジ"],
+    [/^nyo/, "ニョ"], [/^nyu/, "ニュ"], [/^nya/, "ニャ"],
+    [/^hyo/, "ヒョ"], [/^hyu/, "ヒュ"], [/^hya/, "ヒャ"],
+    [/^byo/, "ビョ"], [/^byu/, "ビュ"], [/^bya/, "ビャ"],
+    [/^pyo/, "ピョ"], [/^pyu/, "ピュ"], [/^pya/, "ピャ"],
+    [/^myo/, "ミョ"], [/^myu/, "ミュ"], [/^mya/, "ミャ"],
+    [/^ryo|^lyo/, "リョ"], [/^ryu|^lyu/, "リュ"], [/^rya|^lya/, "リャ"],
+    [/^tsu/, "ツ"], [/^tsa/, "ツァ"], [/^tsi/, "ツィ"], [/^tse/, "ツェ"], [/^tso/, "ツォ"],
+    // F + small vowel
+    [/^fa/, "ファ"], [/^fi/, "フィ"], [/^fe/, "フェ"], [/^fo/, "フォ"], [/^fu/, "フ"],
+    // V (use ヴ family)
+    [/^va/, "ヴァ"], [/^vi/, "ヴィ"], [/^vu/, "ヴ"], [/^ve/, "ヴェ"], [/^vo/, "ヴォ"],
+    // Ti/Di/Tu/Du (gairaigo)
+    [/^ti/, "ティ"], [/^di/, "ディ"], [/^tu/, "トゥ"], [/^du/, "ドゥ"],
+    // W + e/i/o (foreign)
+    [/^wi/, "ウィ"], [/^we/, "ウェ"], [/^wo/, "ウォ"], [/^wa/, "ワ"], [/^wu/, "ウ"],
+    // Y row
+    [/^ya/, "ヤ"], [/^yu/, "ユ"], [/^yo/, "ヨ"],
+    // Basic CV
+    [/^ka/, "カ"], [/^ki/, "キ"], [/^ku/, "ク"], [/^ke/, "ケ"], [/^ko/, "コ"],
+    [/^ga/, "ガ"], [/^gi/, "ギ"], [/^gu/, "グ"], [/^ge/, "ゲ"], [/^go/, "ゴ"],
+    [/^sa/, "サ"], [/^su/, "ス"], [/^se/, "セ"], [/^so/, "ソ"],
+    [/^za/, "ザ"], [/^zi/, "ジ"], [/^zu/, "ズ"], [/^ze/, "ゼ"], [/^zo/, "ゾ"],
+    [/^ta/, "タ"], [/^te/, "テ"], [/^to/, "ト"],
+    [/^da/, "ダ"], [/^de/, "デ"], [/^do/, "ド"],
+    [/^na/, "ナ"], [/^ni/, "ニ"], [/^nu/, "ヌ"], [/^ne/, "ネ"], [/^no/, "ノ"],
+    [/^ha/, "ハ"], [/^hi/, "ヒ"], [/^he/, "ヘ"], [/^ho/, "ホ"],
+    [/^ba/, "バ"], [/^bi/, "ビ"], [/^bu/, "ブ"], [/^be/, "ベ"], [/^bo/, "ボ"],
+    [/^pa/, "パ"], [/^pi/, "ピ"], [/^pu/, "プ"], [/^pe/, "ペ"], [/^po/, "ポ"],
+    [/^ma/, "マ"], [/^mi/, "ミ"], [/^mu/, "ム"], [/^me/, "メ"], [/^mo/, "モ"],
+    [/^ra|^la/, "ラ"], [/^ri|^li/, "リ"], [/^ru|^lu/, "ル"], [/^re|^le/, "レ"], [/^ro|^lo/, "ロ"],
+    // Vowels
+    [/^a/, "ア"], [/^i/, "イ"], [/^u/, "ウ"], [/^e/, "エ"], [/^o/, "オ"],
+  ];
+
+  // Normalize: lowercase, strip non-letters except spaces.
+  const cleaned = input.toLowerCase().replace(/[^a-z\s]/g, "");
+  if (!cleaned.trim()) return "";
+
+  function convertWord(word: string): string {
+    let s = word;
+    let out = "";
+    // simple safety cap
+    let guard = 0;
+    while (s.length > 0 && guard++ < 200) {
+      // Handle stranded consonant: if a consonant has no following vowel, add one.
+      // Detect: first char is consonant, second char is also consonant (or end).
+      const c0 = s[0];
+      const c1 = s[1] ?? "";
+      const isV = (ch: string) => "aiueo".includes(ch);
+
+      // Special: standalone "n" (not followed by vowel or y) → ン
+      if (c0 === "n" && !isV(c1) && c1 !== "y") {
+        out += "ン";
+        s = s.slice(1);
+        continue;
+      }
+
+      // Try matching syllable directly
+      let matched = false;
+      for (const [re, kata] of map) {
+        const m = s.match(re);
+        if (m) {
+          out += kata;
+          s = s.slice(m[0].length);
+          matched = true;
+          break;
+        }
+      }
+      if (matched) continue;
+
+      // Stranded consonant: insert a vowel.
+      if (!isV(c0)) {
+        // pick filler vowel
+        let filler = "u";
+        if (c0 === "t" || c0 === "d") filler = "o";
+        else if (c0 === "j" || c0 === "y" || c0 === "c" || c0 === "h" && c1 === "")
+          filler = "i";
+        // 'ch' / 'sh' already handled; remaining 'c' becomes "k"
+        let head = c0;
+        if (head === "c") head = "k";
+        if (head === "x") head = "ku";
+        if (head === "q") head = "ku";
+        s = head + filler + s.slice(1);
+        continue;
+      }
+
+      // Unknown char — skip
+      s = s.slice(1);
+    }
+    return out;
+  }
+
+  return cleaned
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(convertWord)
+    .join(" ・ ");
+}
+
+function NameToKatakana() {
+  const [name, setName] = useState("");
+  const out = convertNameToKatakana(name);
+  return (
+    <div className="space-y-2">
+      <div className="flex gap-2">
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Ketik nama kamu (huruf latin)... cth: Ahmad, Andi, Lia"
+          className="flex-1 h-10 px-3 rounded-lg border-2 border-border bg-background text-sm focus:outline-none focus:border-primary"
+          maxLength={40}
+        />
+        <button
+          type="button"
+          onClick={() => out && speakKana(out.replace(/・/g, " "))}
+          disabled={!out}
+          className="h-10 px-3 rounded-lg bg-primary text-primary-foreground font-bold text-sm hover:brightness-110 disabled:opacity-40"
+          aria-label="Dengar"
+          title="Dengar pelan"
+        >🔊</button>
+      </div>
+      {out && (
+        <div className="rounded-lg bg-background border-2 border-primary/40 p-3 text-center">
+          <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Hasil Katakana</p>
+          <p className="text-3xl sm:text-4xl font-bold mt-1" style={{ fontFamily: "serif" }}>{out}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------- Country names grid ---------- */
+
+const COUNTRIES: Array<{ flag: string; id: string; kata: string; romaji: string }> = [
+  { flag: "🇺🇸", id: "Amerika",    kata: "アメリカ",       romaji: "Amerika" },
+  { flag: "🇪🇬", id: "Mesir/Arab", kata: "エジプト",       romaji: "Ejiputo" },
+  { flag: "🇬🇧", id: "Inggris",    kata: "イギリス",       romaji: "Igirisu" },
+  { flag: "🇦🇺", id: "Australia",  kata: "オーストラリア", romaji: "Ōsutoraria" },
+  { flag: "🇮🇹", id: "Italia",     kata: "イタリア",       romaji: "Itaria" },
+  { flag: "🇨🇦", id: "Kanada",     kata: "カナダ",         romaji: "Kanada" },
+  { flag: "🇮🇳", id: "India",      kata: "インド",         romaji: "Indo" },
+  { flag: "🇪🇸", id: "Spanyol",    kata: "スペイン",       romaji: "Supein" },
+  { flag: "🇮🇩", id: "Indonesia",  kata: "インドネシア",   romaji: "Indoneshia" },
+  { flag: "🇹🇭", id: "Thailand",   kata: "タイ",           romaji: "Tai" },
+  { flag: "🇩🇪", id: "Jerman",     kata: "ドイツ",         romaji: "Doitsu" },
+  { flag: "🇻🇳", id: "Vietnam",    kata: "ベトナム",       romaji: "Betonamu" },
+  { flag: "🇭🇺", id: "Hungaria",   kata: "ハンガリー",     romaji: "Hangarī" },
+  { flag: "🇲🇾", id: "Malaysia",   kata: "マレーシア",     romaji: "Marēshia" },
+  { flag: "🇵🇭", id: "Filipina",   kata: "フィリピン",     romaji: "Firipin" },
+  { flag: "🇲🇽", id: "Meksiko",    kata: "メキシコ",       romaji: "Mekishiko" },
+  { flag: "🇧🇷", id: "Brazil",     kata: "ブラジル",       romaji: "Burajiru" },
+  { flag: "🇷🇺", id: "Rusia",      kata: "ロシア",         romaji: "Roshia" },
+  { flag: "🇫🇷", id: "Perancis",   kata: "フランス",       romaji: "Furansu" },
+  { flag: "🇸🇬", id: "Singapura",  kata: "シンガポール",   romaji: "Shingapōru" },
+  { flag: "🇯🇵", id: "Jepang",     kata: "日本 / ニホン",  romaji: "Nihon" },
+  { flag: "🇰🇷", id: "Korea",      kata: "カンコク",       romaji: "Kankoku" },
+  { flag: "🇨🇳", id: "Tiongkok",   kata: "チュウゴク",     romaji: "Chūgoku" },
+  { flag: "🇳🇱", id: "Belanda",    kata: "オランダ",       romaji: "Oranda" },
+];
+
+function CountryGrid() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      {COUNTRIES.map((c) => (
+        <div
+          key={c.id}
+          className="rounded-xl border-2 border-border bg-background p-3 flex items-center gap-3 hover:border-primary/60 transition"
+        >
+          <div className="text-3xl leading-none shrink-0" aria-hidden>{c.flag}</div>
+          <div className="flex-1 min-w-0">
+            <p className="font-bold text-sm leading-tight">{c.id}</p>
+            <p className="text-xl leading-tight" style={{ fontFamily: "serif" }}>{c.kata}</p>
+            <p className="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider">{c.romaji}</p>
+          </div>
+          <button
+            onClick={() => speakKana(c.kata.replace(/[^ァ-ヶー一-龯]/g, ""))}
+            className="text-xs font-bold bg-primary/10 hover:bg-primary/20 text-primary px-2.5 py-1.5 rounded-lg shrink-0"
+            aria-label={`Dengar ${c.id}`}
+            title="Dengar pelan"
+          >🔊</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
