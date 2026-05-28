@@ -169,6 +169,13 @@ export function GameCanvas({ level }: { level: LevelDef }) {
     engineRef.current?.setKey(key, down);
   }
 
+  function releaseMovement() {
+    engineRef.current?.setKey("ArrowLeft", false);
+    engineRef.current?.setKey("ArrowRight", false);
+    engineRef.current?.setKey("a", false);
+    engineRef.current?.setKey("d", false);
+  }
+
   function retry() {
     setResult(null);
     setScore(0); setLives(3); setCoins(0);
@@ -345,7 +352,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
 
         {/* On-screen D-pad controls — visible on mobile AND desktop. Keyboard still works on desktop. */}
         {!needsRotate && !quiz && !result && (
-          <TouchControls onPress={touch} />
+          <TouchControls onPress={touch} onReleaseMovement={releaseMovement} />
         )}
 
         {/* Mobile landscape, not yet fullscreen — guide user to tap the ⛶ button */}
