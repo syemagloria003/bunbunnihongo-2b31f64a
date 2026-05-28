@@ -138,10 +138,11 @@ export function GameCanvas({ level }: { level: LevelDef }) {
   }, [isMobile, isPortrait, mounted]);
 
   // On win/lose finalize stars and persist progress
+  // On win/lose finalize stars and persist progress
   useEffect(() => {
     if (!result) return;
-    const total = right + wrong;
-    const s = result === "won" ? computeStars(right, Math.max(total, wordsRef.current.length)) : Math.max(1, computeStars(right, Math.max(1, total)));
+    const total = Math.max(right + wrong, wordsRef.current.length);
+    const s = computeStars(right, total);
     setStars(s);
     if (result === "won") {
       const next = nextLevelId(level.id);
@@ -153,6 +154,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
       void submitScore(score, level.id, level.name);
     }
   }, [result]); // eslint-disable-line react-hooks/exhaustive-deps
+
 
   function answer(correct: boolean) {
     setQuiz(null);
