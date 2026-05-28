@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { LevelPreview } from "@/components/LevelPreview";
 import { ProfileBar } from "@/components/ProfileBar";
 import { NotificationTicker } from "@/components/NotificationTicker";
-import { getAvatarSrc } from "@/game/avatars";
+import { getAvatarSrc, isAvatarUnlocked, AVATARS } from "@/game/avatars";
 import { fetchMe, type MeResponse } from "@/game/leaderboard";
 
 function rankBadgeClass(i: number): string {
