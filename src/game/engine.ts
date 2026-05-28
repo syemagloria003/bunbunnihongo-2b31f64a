@@ -128,15 +128,15 @@ export class GameEngine {
 
   resumeFromQuiz(correct: boolean) {
     if (this.pendingGate) {
+      // Gate always opens — wrong answers are FINAL, no retries.
+      this.pendingGate.open = true;
       if (correct) {
-        this.pendingGate.open = true;
         this.score += 50;
         this.cbs.onScore(this.score);
         sfx.correct();
       } else {
         this.lives = Math.max(0, this.lives - 1);
         this.cbs.onLives(this.lives);
-        this.pendingGate.triggered = false; // can retry
         sfx.wrong();
         if (this.lives <= 0) { this.state = "lost"; sfx.lose(); this.cbs.onLose(); return; }
       }
@@ -144,6 +144,7 @@ export class GameEngine {
     }
     this.state = "playing";
   }
+
 
   isSolidAt(px: number, py: number, includePlatform = false, prevBottom?: number) {
     const tx = Math.floor(px / TILE);
