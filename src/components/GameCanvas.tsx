@@ -488,12 +488,13 @@ function TouchControls({
   const dirHandlers = (key: string) => ({
     // Pointer events (desktop + modern mobile)
     onPointerDown: (e: React.PointerEvent) => {
-      // Don't preventDefault — it can suppress subsequent pointerup on some mobile browsers.
+      e.currentTarget.setPointerCapture?.(e.pointerId);
       pressId(`p${e.pointerId}`, key);
     },
-    onPointerUp: (e: React.PointerEvent) => releaseId(`p${e.pointerId}`),
-    onPointerCancel: (e: React.PointerEvent) => releaseId(`p${e.pointerId}`),
-    onPointerLeave: (e: React.PointerEvent) => releaseId(`p${e.pointerId}`),
+    onPointerUp: (e: React.PointerEvent) => { releaseId(`p${e.pointerId}`); onReleaseMovement(); },
+    onPointerCancel: (e: React.PointerEvent) => { releaseId(`p${e.pointerId}`); onReleaseMovement(); },
+    onPointerLeave: (e: React.PointerEvent) => { releaseId(`p${e.pointerId}`); onReleaseMovement(); },
+    onLostPointerCapture: (e: React.PointerEvent) => { releaseId(`p${e.pointerId}`); onReleaseMovement(); },
     // Touch events fallback (iOS Safari sometimes drops pointer events)
     onTouchStart: (e: React.TouchEvent) => {
       e.preventDefault();
@@ -505,11 +506,13 @@ function TouchControls({
       for (let i = 0; i < e.changedTouches.length; i++) {
         releaseId(`t${e.changedTouches[i].identifier}`);
       }
+      onReleaseMovement();
     },
     onTouchCancel: (e: React.TouchEvent) => {
       for (let i = 0; i < e.changedTouches.length; i++) {
         releaseId(`t${e.changedTouches[i].identifier}`);
       }
+      onReleaseMovement();
     },
     onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
   });
