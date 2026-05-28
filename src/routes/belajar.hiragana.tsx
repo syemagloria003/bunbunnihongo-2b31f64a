@@ -548,6 +548,153 @@ function BelajarHiragana() {
 
         </section>
 
+        <SectionDivider label="Bonus: Telinga & Mulut Native" />
+
+        {/* Bonus 1: Rahasia Telinga Sakti */}
+        <section className="space-y-3">
+          <h2 className="font-display text-2xl font-bold">🎧 Rahasia Telinga Sakti: Cara Baca ala Native Speaker!</h2>
+          <div className="honey-card rounded-2xl p-4 text-sm space-y-3">
+            <p>
+              Pernah nggak kamu nonton dorama atau dengerin orang Jepang ngobrol, terus mbatin: <i>"Lho, kok cara ngomongnya beda sama tulisannya?"</i>
+            </p>
+            <p>
+              Tenang, telingamu nggak rusak kok! Di dunia nyata, orang Jepang punya kebiasaan "menyingkat" atau membelokkan suara biar ngomongnya lebih cepat dan natural. Memang sih nggak semua orang Jepang begini, tapi sebagian besar melakukannya.
+            </p>
+            <p>
+              Kalau kamu tahu rahasia ini dari sekarang, dijamin kemampuan Listening dan bicaramu bakal langsung terdengar luwes ala orang lokal! Yuk, bongkar rahasianya:
+            </p>
+
+            <div className="rounded-xl border-2 border-dashed border-amber-400 dark:border-amber-400 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(245,158,11,0.55)] dark:shadow-[0_0_16px_rgba(245,158,11,0.65)]">
+              <p className="font-bold">1. Jurus Vokal Pemalas (Melebur Suara)</p>
+              <p>Orang Jepang itu kadang "malas" menggerakkan bibir terlalu banyak untuk kombinasi huruf tertentu. Jadi, suaranya dilebur aja:</p>
+              <ul className="list-disc list-inside space-y-1">
+                <li><b>OU dibaca OO</b>: Kalau O ketemu U, baca aja O panjang. Contoh: <i>Arigatou</i> (ありがとう) bukan Ariga-to-u, tapi <b>Arigatoo</b>.</li>
+                <li><b>EI dibaca EE</b>: E ketemu I dibaca E panjang. Contoh: <i>Sensei</i> (せんせい) bukan Sen-se-i, tapi <b>Sensee</b>.</li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-rose-400 dark:border-rose-400 bg-rose-100 dark:bg-rose-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(244,63,94,0.55)] dark:shadow-[0_0_16px_rgba(244,63,94,0.65)]">
+              <p className="font-bold">2. Lidah Nanggung (Huruf R)</p>
+              <p>Kalau kamu bisa bilang huruf "R" dengan getaran kencang ala orang Indonesia... lupakan sejenak!</p>
+              <p><b>R dibaca setengah L</b>: Lidah orang Jepang nggak bisa menggetarkan huruf R. Suaranya itu perpaduan "R" dan "L". Cukup sentuhkan ujung lidahmu ke langit-langit atas <b>sekali aja</b> (jangan digetarin). Agak cadel, tapi itulah yang benar!</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-violet-400 dark:border-violet-400 bg-violet-100 dark:bg-violet-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(167,139,250,0.55)] dark:shadow-[0_0_16px_rgba(167,139,250,0.65)]">
+              <p className="font-bold">3. Pasukan Suara Sengau (N & G)</p>
+              <p>Kadang, suara di tenggorokan dinaikkan sedikit ke hidung biar lebih gampang diucap:</p>
+              <ul className="list-disc list-inside space-y-1">
+                <li><b>N (ん) dibaca NG/M</b>: Apalagi kalau ada di akhir kata atau ketemu huruf tertentu. <i>Senpai</i> sering terdengar seperti <b>Sempai</b>.</li>
+                <li><b>G dibaca NG</b>: Rahasia yang jarang diajarin di buku! Kalau geng "GA-GI-GU-GE-GO" ada di tengah kalimat, suaranya sering berubah jadi <b>NGA-NGI-NGU-NGE-NGO</b>. Contoh: <i>Watashi wa anata ga suki desu</i> ➡️ jadi <b>Watashi wa anata nga suki desu</b>.</li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-sky-400 dark:border-sky-400 bg-sky-100 dark:bg-sky-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(56,189,248,0.55)] dark:shadow-[0_0_16px_rgba(56,189,248,0.65)]">
+              <p className="font-bold">4. Si Vokal Gaib (Huruf U & I yang Kabur)</p>
+              <p>Ini dia penyumbang kebingungan terbesar buat pemula! Huruf "U" dan "I" sering banget di-suara-dalam-hati-kan alias hampir hilang.</p>
+              <p><b>U dan I di tengah kata suka hilang!</b></p>
+              <ul className="list-disc list-inside space-y-1">
+                <li><i>Suki</i> (suka) ➡️ 'U' kabur, kedengaran <b>Ski</b>!</li>
+                <li><i>Shita</i> (bawah) ➡️ 'I' kabur, kedengaran <b>Shta</b>!</li>
+              </ul>
+              <p><b>U di akhir kalimat (Desu/Masu) = Hilang!</b></p>
+              <ul className="list-disc list-inside space-y-1">
+                <li><i>Arigatou Gozaimasu</i> ➡️ cukup <b>Arigatoo Gozaimas</b>.</li>
+                <li><i>Sou desu</i> ➡️ cukup <b>Soo des</b>.</li>
+              </ul>
+              <p className="text-xs italic">Pengecualian: "U" di akhir tetap dibaca jelas kalau yang ngomong perempuan yang mau terdengar super imut, atau dalam situasi formal/sopan banget.</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-primary bg-primary/15 p-3 space-y-2 shadow-[0_0_14px_hsl(var(--primary)/0.55)] dark:shadow-[0_0_18px_hsl(var(--primary)/0.7)]">
+              <p className="font-bold text-sm">🎮 Buktikan Sendiri!</p>
+              <p className="text-sm">
+                <b>Kuis Telinga Native!</b> Kalau kamu lihat tulisan: <i>"Gakusei desu"</i> (Artinya: Saya murid). Kira-kira, bagaimana orang Jepang asli mengucapkannya di jalanan Tokyo?
+              </p>
+              <ul className="text-sm list-none space-y-0.5 pl-2">
+                <li><b>A.</b> Ga-ku-se-i de-su (Dibaca jelas semua)</li>
+                <li><b>B.</b> Gak-see des (Vokal dilebur dan U dihilangkan)</li>
+              </ul>
+              <Quiz
+                question={<>Pilih jawabanmu:</>}
+                placeholder="Ketik 'A' atau 'B' di sini..."
+                accept={["b"]}
+                successMsg="KEREN! Kamu udah punya insting telinga native. 'Ku' kehilangan vokal U, 'Sei' melebur jadi See, dan 'Desu' ujungnya hilang. Sempurna!"
+                errorMsg="Belum tepat. Inget jurus vokal pemalas + vokal gaib di akhir Desu. Coba lagi ya!"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Bonus 2: Simulasi Mulut */}
+        <section className="space-y-3">
+          <h2 className="font-display text-2xl font-bold">🗣️ Simulasi Mulut: Ekspektasi vs Realita!</h2>
+          <div className="honey-card rounded-2xl p-4 text-sm space-y-3">
+            <p>
+              Teori tanpa praktik itu ibarat sayur tanpa garam. Karena kamu belum pernah ke Jepang, yuk kita simulasikan langsung di mulutmu pakai salam sehari-hari (<i>Aisatsu</i>).
+            </p>
+            <p>Coba baca keras-keras bagian "Cara Baca Native" di bawah ini, dan rasakan bedanya di lidahmu!</p>
+
+            <div className="rounded-xl border-2 border-dashed border-amber-400 dark:border-amber-400 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(245,158,11,0.55)] dark:shadow-[0_0_16px_rgba(245,158,11,0.65)]">
+              <p className="font-bold">1. Selamat Pagi ☀️</p>
+              <p><b>Tulisan Asli:</b> <span style={{ fontFamily: "serif" }} className="text-lg">おはようございます</span> (O-ha-yo-u go-za-i-ma-su)</p>
+              <p>🤖 <b>Cara Baca Kaku:</b> Ohayou Gozaimasu</p>
+              <p>😎 <b>Cara Baca Native:</b> <b>Ohayoo Gozaimas!</b></p>
+              <p className="text-xs">💡 U di belakang 'yo' melebur jadi O panjang. U di akhir 'su' dihilangkan (ngerem di S).</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-pink-400 dark:border-pink-400 bg-pink-100 dark:bg-pink-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(244,114,182,0.55)] dark:shadow-[0_0_16px_rgba(244,114,182,0.65)]">
+              <p className="font-bold">2. Terima Kasih 🌸</p>
+              <p><b>Tulisan Asli:</b> <span style={{ fontFamily: "serif" }} className="text-lg">ありがとうございます</span> (A-ri-ga-to-u go-za-i-ma-su)</p>
+              <p>🤖 <b>Cara Baca Kaku:</b> Arigatou Gozaimasu</p>
+              <p>😎 <b>Cara Baca Native:</b> <b>Aligatoo Gozaimas!</b></p>
+              <p className="text-xs">💡 RI jangan digetarin, sentuhin langit-langit sekali aja (mirip Ali). 'tou' jadi too, ujung berhenti di 'mas'.</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-violet-400 dark:border-violet-400 bg-violet-100 dark:bg-violet-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(167,139,250,0.55)] dark:shadow-[0_0_16px_rgba(167,139,250,0.65)]">
+              <p className="font-bold">3. Permisi / Maaf 🙏</p>
+              <p><b>Tulisan Asli:</b> <span style={{ fontFamily: "serif" }} className="text-lg">すみません</span> (Su-mi-ma-se-n)</p>
+              <p>🤖 <b>Cara Baca Kaku:</b> Su-mi-ma-se-n</p>
+              <p>😎 <b>Cara Baca Native:</b> <b>Smi-ma-seng!</b></p>
+              <p className="text-xs">💡 U di depan kabur (Su jadi S). N (ん) di akhir naik ke hidung jadi sengau NG.</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-emerald-400 dark:border-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(16,185,129,0.55)] dark:shadow-[0_0_16px_rgba(16,185,129,0.65)]">
+              <p className="font-bold">4. Apa Kabar? (Sehat?) 💪</p>
+              <p><b>Tulisan Asli:</b> <span style={{ fontFamily: "serif" }} className="text-lg">げんきですか</span> (Ge-n-ki de-su ka)</p>
+              <p>🤖 <b>Cara Baca Kaku:</b> Gen-ki de-su ka</p>
+              <p>😎 <b>Cara Baca Native:</b> <b>Geng-ki des-ka?</b></p>
+              <p className="text-xs">💡 N (ん) ketemu K otomatis jadi sengau NG. U pada 'desu' dihilangkan.</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-rose-400 dark:border-rose-400 bg-rose-100 dark:bg-rose-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(244,63,94,0.55)] dark:shadow-[0_0_16px_rgba(244,63,94,0.65)]">
+              <p className="font-bold">5. Saya Suka! (Level Mahir) ❤️</p>
+              <p><b>Tulisan Asli:</b> <span style={{ fontFamily: "serif" }} className="text-lg">がすきです</span> (Ga su-ki de-su)</p>
+              <p>🤖 <b>Cara Baca Kaku:</b> Ga su-ki de-su</p>
+              <p>😎 <b>Cara Baca Native:</b> <b>Nga ski des!</b></p>
+              <p className="text-xs">💡 GA di tengah kalimat berubah jadi sengau NGA. U di 'su' kabur, U di 'desu' hilang.</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-primary bg-primary/15 p-3 space-y-2 shadow-[0_0_14px_hsl(var(--primary)/0.55)] dark:shadow-[0_0_18px_hsl(var(--primary)/0.7)]">
+              <p className="font-bold text-sm">🎮 Kuis Uji Coba Lidah!</p>
+              <p className="text-sm">
+                Kalau kamu mau bilang <b>"Sampai Jumpa"</b> (<span style={{ fontFamily: "serif" }} className="text-base">さようなら</span> / Sa-yo-u-na-ra) ala native speaker di stasiun Tokyo, gimana kira-kira cara bibir dan lidahmu mengucapkannya?
+              </p>
+              <ul className="text-sm list-none space-y-0.5 pl-2">
+                <li><b>A.</b> Sayounara (U dibaca jelas, R digetar kencang)</li>
+                <li><b>B.</b> Sayoonala (U dilebur jadi O, lidah nyentuh langit-langit tanpa getar)</li>
+              </ul>
+              <Quiz
+                question={<>Pilih jawabanmu:</>}
+                placeholder="Ketik 'A' atau 'B' di sini..."
+                accept={["b"]}
+                successMsg="CAKEEEP! Mulutmu udah lulus sertifikasi native! 'You' dilebur jadi 'Yoo', dan 'Ra' diucapkan setengah L tanpa getar. Sampai jumpa di materi selanjutnya!"
+                errorMsg="Belum tepat. Inget: OU melebur jadi OO, dan R orang Jepang nggak digetarin. Coba lagi!"
+              />
+            </div>
+          </div>
+        </section>
+
+
+
         <div className="text-center py-4">
           <Link to="/play" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold shadow hover:brightness-110">
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/20">▶️ MAIN</span>
