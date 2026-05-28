@@ -37,14 +37,12 @@ export function saveProgress(p: Progress) {
 }
 
 export function computeStars(correct: number, total: number): number {
-  if (total <= 0) return 1;
-  const ratio = correct / total;
-  if (ratio >= 0.99) return 5;
-  if (ratio >= 0.8) return 4;
-  if (ratio >= 0.6) return 3;
-  if (ratio >= 0.4) return 2;
-  return 1;
+  if (total <= 0) return 0;
+  // Linear: total/5 jawaban benar = 1 bintang. Max 5.
+  const perStar = total / 5;
+  return Math.max(0, Math.min(5, Math.floor(correct / perStar)));
 }
+
 
 export function completeLevel(
   id: string,
