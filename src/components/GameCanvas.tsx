@@ -340,9 +340,9 @@ export function GameCanvas({ level }: { level: LevelDef }) {
           )}
         </div>
 
-        {/* Mobile joystick + jump button — siblings of canvas wrapper so they sit in the empty bottom band in fullscreen */}
-        {isMobile && !needsRotate && !quiz && !result && (
-          <MobileControls onPress={touch} />
+        {/* On-screen D-pad controls — visible on mobile AND desktop. Keyboard still works on desktop. */}
+        {!needsRotate && !quiz && !result && (
+          <TouchControls onPress={touch} />
         )}
 
         {/* Mobile landscape, not yet fullscreen — guide user to tap the ⛶ button */}
@@ -362,11 +362,11 @@ export function GameCanvas({ level }: { level: LevelDef }) {
       </div>
 
       {!isMobile && (
-        <p className="text-xs text-muted-foreground">← → bergerak · Space / ↑ lompat (tekan 2x untuk flap)</p>
+        <p className="text-xs text-muted-foreground">← → bergerak · Space / ↑ lompat (tekan 2x untuk flap) · atau gunakan tombol di layar</p>
       )}
       {isMobile && !needsRotate && !isFullscreen && (
         <p className="text-xs text-muted-foreground px-3 text-center">
-          Pakai stik bulat untuk jalan · Tombol merah untuk lompat
+          Tombol ← → untuk jalan · Tombol ↑ untuk lompat (tekan 2× = flap)
         </p>
       )}
     </div>
