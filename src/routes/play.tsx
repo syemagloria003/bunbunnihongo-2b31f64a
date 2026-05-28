@@ -428,6 +428,32 @@ function PlayerStatusCard({
               {world.sub}
             </span>
           </div>
+function BonusAisatsuCard() {
+  return (
+    <Link
+      to="/play/bonus-aisatsu"
+      className="honey-card rounded-2xl p-5 transition-all relative overflow-hidden hover:-translate-y-1 cursor-pointer border-2 border-dashed border-amber-400 bg-gradient-to-br from-amber-100 via-rose-100 to-violet-100 dark:from-amber-950/40 dark:via-rose-950/40 dark:to-violet-950/40 shadow-[0_0_20px_rgba(245,158,11,0.45)] block"
+    >
+      <div className="flex items-center gap-2 mb-1">
+        <span className="bg-gradient-to-r from-amber-500 via-rose-500 to-violet-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+          BONUS
+        </span>
+        <span className="text-xs font-semibold text-amber-700 dark:text-amber-300">🎁 Avatar Langka</span>
+      </div>
+      <h3 className="font-display text-2xl font-bold flex items-center gap-2">
+        <span>🎧</span> Tes Telinga &amp; Aisatsu
+      </h3>
+      <p className="text-sm text-muted-foreground mb-2">
+        17 soal — sifatnya bonus, boleh dilewati. Lulus = avatar langka 🦊🐲, sempurna = 🔥 Phoenix Aurora.
+      </p>
+      <ul className="text-xs space-y-0.5 pl-1">
+        <li>🦊 <b>Kitsune Roh</b> & 🐲 <b>Naga Sakura</b> — skor ≥ 80%</li>
+        <li>🔥 <b>Phoenix Aurora</b> — skor SEMPURNA 100%</li>
+      </ul>
+    </Link>
+  );
+}
+
 
           <div className="flex items-center justify-between text-xs font-semibold mb-1.5">
             <span className="text-muted-foreground uppercase tracking-wider text-[10px]">
