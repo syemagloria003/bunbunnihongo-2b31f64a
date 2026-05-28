@@ -126,6 +126,11 @@ export class GameEngine {
 
   setKey(k: string, down: boolean) { this.keys[k] = down; }
 
+  clearInput() {
+    this.keys = {};
+    this.player.vx = 0;
+  }
+
   resumeFromQuiz(correct: boolean) {
     if (this.pendingGate) {
       // Gate always opens — wrong answers are FINAL, no retries.
