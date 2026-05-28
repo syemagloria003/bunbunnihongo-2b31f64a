@@ -693,7 +693,109 @@ function BelajarHiragana() {
           </div>
         </section>
 
+        <SectionDivider label="Bonus: Aisatsu Salam &amp; Sapa" />
 
+        {/* Bonus 3: Aisatsu — Salam & Sapa Sehari-hari */}
+        <section className="space-y-3">
+          <h2 className="font-display text-2xl font-bold">🙇 Aisatsu: Kumpulan Salam yang Wajib Dikuasai Pemula!</h2>
+          <div className="honey-card rounded-2xl p-4 text-sm space-y-3">
+            <p>
+              Setelah latihan telinga dan lidah, sekarang kita belajar hal paling penting sebelum masuk ke dunia nyata Jepang: <b>Aisatsu</b> (挨拶) alias salam dan sapaan.
+            </p>
+            <p>
+              Di Jepang, <b>etika menyapa itu saklek dan wajib hukumnya.</b> Lupakan menyapa? Bisa dianggap arogan! Jadi catat baik-baik ya.
+            </p>
+
+            <div className="rounded-xl border-2 border-dashed border-amber-400 dark:border-amber-400 bg-amber-100 dark:bg-amber-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(245,158,11,0.55)] dark:shadow-[0_0_16px_rgba(245,158,11,0.65)]">
+              <p className="font-bold">☀️ 1. Ohayou Gozaimasu (おはようございます) — "Selamat Pagi!"</p>
+              <p><b>Tulisan:</b> <span style={{ fontFamily: "serif" }} className="text-lg">おはようございます</span></p>
+              <p><b>Cara baca native:</b> <b>Ohayoo Gozaimas!</b></p>
+              <p><b>Kapan dipakai:</b> Dari bangun tidur sampai sekitar <b>pukul 10 pagi</b>. Kalau kelewat jam 10, ucapannya berganti!</p>
+              <p><b>Tip:</b> Antar teman sebaya bisa cukup <i>Ohayou!</i> Tanpa <i>gozaimasu</i>. Tapi kalau ke guru atau bos, wajib lengkap + bungkuk sedikit!</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-sky-400 dark:border-sky-400 bg-sky-100 dark:bg-sky-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(56,189,248,0.55)] dark:shadow-[0_0_16px_rgba(56,189,248,0.65)]">
+              <p className="font-bold">🌤️ 2. Konnichiwa (こんにちは) — "Selamat Siang / Halo!"</p>
+              <p><b>Tulisan:</b> <span style={{ fontFamily: "serif" }} className="text-lg">こんにちは</span></p>
+              <p><b>Cara baca native:</b> <b>Kon-nichiwa</b> (n-nya pelan, wa jangan ditekan)</p>
+              <p><b>Kapan dipakai:</b> Dari <b>sekitar jam 10/11 pagi sampai matahari terbenam</b> (biasanya jam 5-6 sore). Ini salam serba guna yang paling sering kamu dengar.</p>
+              <p><b>Tip:</b> Jangan sampai salah ucap "Konichiwa" tanpa N ganda. Double N itu penting biar lidahnya sempet ngerem!</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-violet-400 dark:border-violet-400 bg-violet-100 dark:bg-violet-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(167,139,250,0.55)] dark:shadow-[0_0_16px_rgba(167,139,250,0.65)]">
+              <p className="font-bold">🌙 3. Konbanwa (こんばんは) — "Selamat Malam!"</p>
+              <p><b>Tulisan:</b> <span style={{ fontFamily: "serif" }} className="text-lg">こんばんは</span></p>
+              <p><b>Cara baca native:</b> <b>Kom-bang-wa</b> (N sebelum B otomatis berubah suara jadi M)</p>
+              <p><b>Kapan dipakai:</b> Begitu <b>matahari tenggelam / gelap</b> (biasanya sekitar jam 6 sore ke atas) sampai sebelum tidur.</p>
+              <p><b>Tip:</b> Sama kayak Konnichiwa, huruf terakhir adalah <b>WA</b> bukan HA. Penulisannya は (ha) tapi dibaca "wa" karena ini partikel! Jangan kaget ya.</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-emerald-400 dark:border-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(16,185,129,0.55)] dark:shadow-[0_0_16px_rgba(16,185,129,0.65)]">
+              <p className="font-bold">😴 4. Oyasuminasai (おやすみなさい) — "Selamat Tidur!"</p>
+              <p><b>Tulisan:</b> <span style={{ fontFamily: "serif" }} className="text-lg">おやすみなさい</span></p>
+              <p><b>Cara baca native:</b> <b>Oyasumi-nasai</b></p>
+              <p><b>Kapan dipakai:</b> Saat <b>mau tidur</b> atau pulang ke rumah mau istirahat. Bisa juga ke orang yang baru pulang kerja (artinya: "Istirahat yang cukup ya!").</p>
+              <p><b>Tip:</b> Versi santai antar teman: <i>Oyasumi!</i> (tanpa nasai). Tapi ke orang tua, wajib lengkap + nada lembut!</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-rose-400 dark:border-rose-400 bg-rose-100 dark:bg-rose-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(244,63,94,0.55)] dark:shadow-[0_0_16px_rgba(244,63,94,0.65)]">
+              <p className="font-bold">🙏 5. Sumimasen (すみません) — "Permisi / Maaf / Terima kasih (informal)"</p>
+              <p><b>Tulisan:</b> <span style={{ fontFamily: "serif" }} className="text-lg">すみません</span></p>
+              <p><b>Cara baca native:</b> <b>Sumimasen!</b> (mi-masen digetar pelan, N-nya sengau)</p>
+              <p><b>Kapan dipakai:</b> <b>Kapan aja!</b> Ini kata serba guna:</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Mau nanya ke orang asing? <i>Sumimasen!</i></li>
+                <li>Ngeluarin orang dari lift? <i>Sumimasen!</i></li>
+                <li>Nginjek kaki orang di kereta? <i>Sumimasen!</i></li>
+                <li>Terima kasih ringan (kalau orang repotin)? <i>Sumimasen!</i></li>
+              </ul>
+              <p><b>Tip:</b> Kalau mau lebih sopan untuk benar-benar "Maaf", gunakan <i>Gomennasai</i> (<span style={{ fontFamily: "serif" }} className="text-base">ごめんなさい</span>) — tapi jangan sembarang ke bos ya, itu buat teman atau keluarga.</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-pink-400 dark:border-pink-400 bg-pink-100 dark:bg-pink-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(244,114,182,0.55)] dark:shadow-[0_0_16px_rgba(244,114,182,0.65)]">
+              <p className="font-bold">🌸 6. Arigatou Gozaimasu (ありがとうございます) — "Terima Kasih!"</p>
+              <p><b>Tulisan:</b> <span style={{ fontFamily: "serif" }} className="text-lg">ありがとうございます</span></p>
+              <p><b>Cara baca native:</b> <b>Aligatoo Gozaimas!</b></p>
+              <p><b>Kapan dipakai:</b> Setiap kali kamu <b>menerima kebaikan, bantuan, atau pelayanan</b>. Di Jepang, ucapkan ini bahkan untuk hal sekecil kasir menerima uangmu!</p>
+              <p><b>Tip:</b> Antar teman bisa cukup <i>Arigatou!</i> Tapi kalau pelayan restoran kasih air gratis? Wajib <i>Arigatou Gozaimasu!</i> + angguk kepala.</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-teal-400 dark:border-teal-400 bg-teal-100 dark:bg-teal-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(45,212,191,0.55)] dark:shadow-[0_0_16px_rgba(45,212,191,0.65)]">
+              <p className="font-bold">🗣️ 7. Hai (はい) & Iie (いいえ) — "Ya" & "Tidak"</p>
+              <p><b>Tulisan:</b> <span style={{ fontFamily: "serif" }} className="text-lg">はい</span> (Hai) · <span style={{ fontFamily: "serif" }} className="text-lg">いいえ</span> (Iie)</p>
+              <p><b>Cara baca native:</b> <b>Hai</b> (pendek, tegas) · <b>Iie</b> (I-i-e, ditahan sedikit)</p>
+              <p><b>Kapan dipakai:</b> Setiap ditanya apa pun!</p>
+              <p><b>Tip:</b> Orang Jepang jarang bilang "Tidak" langsung. Kalau nolak ajakan, biasanya mereka jawab: <i>Chotto…</i> (Ehm, susah ya…) daripada <i>Iie</i> yang terdengar keras. Jadi <i>Iie</i> dipakai kalau benar-benar perlu membetulkan fakta, bukan nolak sopan.</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-lime-400 dark:border-lime-400 bg-lime-100 dark:bg-lime-900/50 p-3 space-y-1 shadow-[0_0_12px_rgba(132,204,22,0.55)] dark:shadow-[0_0_16px_rgba(132,204,22,0.65)]">
+              <p className="font-bold">🍽️ 8. Itadakimasu (いただきます) & Gochisousama (ごちそうさまでした)</p>
+              <p><b>Tulisan:</b> <span style={{ fontFamily: "serif" }} className="text-lg">いただきます</span> (Itadakimasu) · <span style={{ fontFamily: "serif" }} className="text-lg">ごちそうさまでした</span> (Gochisousama deshita)</p>
+              <p><b>Cara baca native:</b> <b>Itadakimas!</b> (U-nya hilang) · <b>Gochisousama deshta!</b></p>
+              <p><b>Kapan dipakai:</b> <b>Sebelum dan sesudah makan.</b> Sebelum makan: tangan rapat di depan dada, ucapkan <i>Itadakimasu!</i> (Saya akan menikmati hidangan ini). Sesudah makan: <i>Gochisousama deshita!</i> (Terima kasih atas hidangannya!).</p>
+              <p><b>Tip:</b> Kalau di restoran, ucapkan yang kedua sambil bungkuk ke pelayan sebelum pergi. Dijamin dilihat sopan banget!</p>
+            </div>
+
+            <div className="rounded-xl border-2 border-dashed border-primary bg-primary/15 p-3 space-y-2 shadow-[0_0_14px_hsl(var(--primary)/0.55)] dark:shadow-[0_0_18px_hsl(var(--primary)/0.7)]">
+              <p className="font-bold text-sm">🎮 Kuis Aisatsu!</p>
+              <p className="text-sm">
+                Bayangin ini: jam 7 malam, kamu baru buka pintu rumah mertua pacarmu yang orang Jepang. Kamu mau menyapa beliau yang baru buka pintu. Salam mana yang paling pas?
+              </p>
+              <ul className="text-sm list-none space-y-0.5 pl-2">
+                <li><b>A.</b> Ohayou Gozaimasu</li>
+                <li><b>B.</b> Konbanwa</li>
+                <li><b>C.</b> Oyasuminasai</li>
+              </ul>
+              <Quiz
+                question={<>Pilih jawabanmu:</>}
+                placeholder="Ketik 'A', 'B', atau 'C' di sini..."
+                accept={["b"]}
+                successMsg="PERFECT! Jam 7 malam = matahari sudah tenggelam, jadi pakai Konbanwa. Oyasuminasai cuma kalau mau tidur, dan Ohayou cuma sampai jam 10 pagi. Kamu sudah siap bertemu mertua!"
+                errorMsg="Belum tepat. Coba inget rentang waktunya: Ohayou = pagi, Konnichiwa = siang, Konbanwa = malam/sudah gelap, Oyasuminasai = mau tidur."
+              />
+            </div>
+          </div>
+        </section>
 
         <div className="text-center py-4">
           <Link to="/play" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold shadow hover:brightness-110">
