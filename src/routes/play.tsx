@@ -258,7 +258,9 @@ function LevelSelect() {
               />
             );
           })}
+          <BonusAisatsuCard />
         </div>
+
 
         <WorldDivider />
 
