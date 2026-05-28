@@ -138,10 +138,11 @@ export function GameCanvas({ level }: { level: LevelDef }) {
   }, [isMobile, isPortrait, mounted]);
 
   // On win/lose finalize stars and persist progress
+  // On win/lose finalize stars and persist progress
   useEffect(() => {
     if (!result) return;
-    const total = right + wrong;
-    const s = result === "won" ? computeStars(right, Math.max(total, wordsRef.current.length)) : Math.max(1, computeStars(right, Math.max(1, total)));
+    const total = Math.max(right + wrong, wordsRef.current.length);
+    const s = computeStars(right, total);
     setStars(s);
     if (result === "won") {
       const next = nextLevelId(level.id);
@@ -153,6 +154,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
       void submitScore(score, level.id, level.name);
     }
   }, [result]); // eslint-disable-line react-hooks/exhaustive-deps
+
 
   function answer(correct: boolean) {
     setQuiz(null);
@@ -195,7 +197,7 @@ export function GameCanvas({ level }: { level: LevelDef }) {
         ref={containerRef}
         className={
           "relative rounded-2xl overflow-hidden border-4 border-primary shadow-xl bg-black " +
-          (isFullscreen ? `w-screen h-screen flex ${isMobile ? "items-start" : "items-center"} justify-center !rounded-none !border-0` : "")
+          (isFullscreen ? "w-screen h-screen flex items-center justify-center !rounded-none !border-0" : "")
         }
         style={
           isFullscreen
@@ -209,14 +211,15 @@ export function GameCanvas({ level }: { level: LevelDef }) {
             isFullscreen
               ? {
                   aspectRatio: `${W}/${H}`,
-                  maxWidth: "100%",
-                  // On mobile, leave bottom half of the screen empty for the joystick + jump button
-                  maxHeight: isMobile ? "58vh" : "100%",
-                  height: isMobile ? "58vh" : "100%",
+                  width: "100vw",
+                  height: "100vh",
+                  maxWidth: "100vw",
+                  maxHeight: "100vh",
                 }
               : undefined
           }
         >
+
           <canvas ref={canvasRef} width={W} height={H} className="block w-full h-full" />
           {quiz && <KanaGateModal word={quiz.word} options={quiz.options} onAnswer={answer} mode={level.mode} />}
           {result && (
