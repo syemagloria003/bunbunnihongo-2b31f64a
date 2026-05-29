@@ -137,7 +137,7 @@ function Landing() {
             <ul className="space-y-1.5 mb-4 text-sm md:text-[15px]">
               {[
                 <><strong>Sensei terjamin</strong> — minimal lulusan JLPT N2</>,
-                <><strong>Kurikulum standar internasional</strong> sesuai level JLPT (N5 → N3)</>,
+                <><strong>Kurikulum berbasis JLPT</strong> — terstruktur dari N5 hingga N3</>,
                 <><strong>Belajar dari mana saja</strong> via Zoom — nggak terbatas tempat</>,
                 <><strong>Maksimal 10 murid</strong> per kelas, kecil & efektif</>,
                 <><strong>Senin–Jumat</strong> ketemu sensei — intensif tapi ramah kantong</>,
